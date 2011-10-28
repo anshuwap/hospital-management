@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ece651.model.Appointment" table="Appointment" >
+		<id name="appointmentId" column="AppointmentId" unsaved-value="0">
+			<generator class="increment"/>
+		</id>
+		<property name="patientId" column="PatientId"/>
+		<property name="doctorId" column="DoctorId"/>
+		<property name="nurseId" column="NurseId"/>
+		<property name="appointmentDate" column="AppointmentDate"/>
+		<property name="startTime" column="StartTime"/>
+		<property name="endTime" column="EndTime"/>
+		<property name="status" column="Status"/>
+	</class>
+</hibernate-mapping>
