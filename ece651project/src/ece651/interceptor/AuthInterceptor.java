@@ -7,7 +7,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
-import ece750.t18.model.User;
+import ece651.model.SystemUser;
 
 public class AuthInterceptor extends AbstractInterceptor {
 
