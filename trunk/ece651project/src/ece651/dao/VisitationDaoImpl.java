@@ -7,10 +7,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
-import ece651.model.Appointment;
+import ece651.model.Visitation;
 
-
-public class AppointmentDaoImpl implements AppointmentDao {
+public class VisitationDaoImpl implements VisitationDao {
 	Logger log = Logger.getLogger(getClass().toString());
 	
 	private Session session; 
@@ -25,42 +24,27 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		HibernateUtil.shutdown();
 	}
 
-	public AppointmentDaoImpl() {
+	public VisitationDaoImpl() {
 		log.info(getClass().toString());
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
-	public Appointment searchAppointment(int appointmentId) throws DAOException {
-		Appointment appointment;
+	public Visitation searchVisitation(int visitationId) throws DAOException {
+		Visitation visitation;
 		try{
-			appointment = (Appointment)session.get(Appointment.class, appointmentId);
+			visitation = (Visitation)session.get(Visitation.class, visitationId);
 		}catch (HibernateException e) {
 			throw new DAOException(e.getMessage());
 		}
-
-		return appointment;
+		return visitation;
 	}
 
-	public void saveAppointment(Appointment appointment) throws DAOException {
+	public void saveVisitation(Visitation visitation) throws DAOException {
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();
 			tran.begin();
-			session.save(appointment);
-			tran.commit();
-		}catch (HibernateException e) {
-			tran.rollback();
-			throw new DAOException(e.getMessage());
-		}
-
-	}
-
-	public void updateAppointment(Appointment appointment) throws DAOException {
-		Transaction tran = null;
-		try{
-			tran = session.beginTransaction();
-			tran.begin();
-			session.update(appointment);
+			session.save(visitation);
 			tran.commit();
 		}catch (HibernateException e) {
 			tran.rollback();
@@ -68,4 +52,16 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 	}
 
+	public void updateVisitation(Visitation visitation) throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.update(visitation);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
 }
