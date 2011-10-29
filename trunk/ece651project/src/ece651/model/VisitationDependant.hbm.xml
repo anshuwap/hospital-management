@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ece651.model.Prescription" table="Prescription" >
+		<id name="prescriptionId" column="PrescriptionId" >
+		</id>
+		<many-to-one name="doctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="DoctorId"></column>
+		</many-to-one>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<property name="prescriptionDescription" column="PrescriptionDescription"/>
+		<property name="prescriptionDate" column="PrescriptionDate"/>
+	</class>
+	
+	<class name="ece651.model.DiagnosisTest" table="DiagnosisTest" >
+		<composite-id>
+			<key-property name="diagnosisTestId" column="DiagnosisTestId" />
+			<key-property name="visitationId" column="VisitationId"/>
+		</composite-id>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="doctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="DoctorId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="testType" column="TestType"/>
+		<property name="issueDate" column="IssueDate"/>
+		<property name="testRequestDescription" column="TestRequestDescription"/>
+		<property name="testResultDescription" column="TestResultDescription"/>
+	</class>
+	
+	<class name="ece651.model.Surgery" table="Surgery" >
+		<composite-id>
+			<key-property name="surgeryId" column="SurgeryId" />
+			<key-property name="visitationId" column="VisitationId"/>
+		</composite-id>
+		<property name="surgeryDate" column="SurgeryDate"/>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="issueDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="IssueDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="surgetyDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="SurgetyDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="arrangementDescription" column="ArrangementDescription"/>
+		<property name="surgerySummary" column="SurgerySummary"/>
+	</class>
+
+	<class name="ece651.model.Inpatient" table="Inpatient" >
+		<id name="medicineId" column="MedicineId" unsaved-value="0">
+			<generator class="increment"/>
+		</id>
+		<property name="medicineName" column="MedicineName"/>
+		<property name="manufacturer" column="Manufacturer"/>
+		<property name="instruction" column="Instruction"/>
+	</class>
+	
+    <class name="ece651.model.InpatientDairy" table="InpatientDairy" >
+		<composite-id>
+			<key-property name="visitationId" column="VisitationId" />
+			<key-property name="versionNo" column="VersionNo"/>
+			<key-property name="prescriptionId" column="PrescriptionId"/>
+ 			<key-many-to-one name="medicine" column="MedicineId" class="ece750.t18.model.Medicine" lazy="false"></key-many-to-one>
+		</composite-id>
+	</class>	
+</hibernate-mapping>
