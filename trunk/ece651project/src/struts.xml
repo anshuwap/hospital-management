@@ -10,6 +10,27 @@
 
     <include file="example.xml"/>
 
-    <!-- Add packages here -->
+    <package name="systemuser" extends="struts-default">
+    	<interceptors>
+    		<interceptor name="authInterceptor" class="ece651.interceptor.AuthInterceptor">
+    		</interceptor>
+    		<interceptor-stack name="authStack">
+    		<interceptor-ref name="authInterceptor"></interceptor-ref>
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<global-results>
+    		<result name="return">/login.jsp</result>
+    	</global-results>
+    
+        <action name="login" class="ece651.action.LoginAction">
+        	<result name="isDoctor" type="dispatcher">/WEB-INF/doctor/doctorHome.jsp</result>
+        	<result name="isNurse" type="dispatcher">/WEB-INF/nurse/nurseHome.jsp</result>
+        	<result name="isLawyer" type="dispatcher">/WEB-INF/lawyer/lawyerHome.jsp</result>
+        	<result name="isITGuy" type="dispatcher">/WEB-INF/itguy/itguyHome.jsp</result>
+        	<result name="error" type="dispatcher">/login.jsp</result>
+        </action>
+    </package>
 
 </struts>
