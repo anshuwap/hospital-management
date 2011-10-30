@@ -7,10 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
-import ece651.model.Appointment;
+import ece651.model.InpatientDairy;
+import ece651.model.InpatientDairyKey;
 
-
-public class AppointmentDaoImpl implements AppointmentDao {
+public class InpatientDairyDaoImpl implements InpatientDairyDao {
 	Logger log = Logger.getLogger(getClass().toString());
 	
 	private Session session; 
@@ -25,41 +25,18 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		HibernateUtil.shutdown();
 	}
 
-	public AppointmentDaoImpl() {
+	public InpatientDairyDaoImpl() {
 		log.info(getClass().toString());
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
-	public Appointment searchAppointment(int appointmentId) throws DAOException {
-		Appointment appointment;
-		try{
-			appointment = (Appointment)session.get(Appointment.class, appointmentId);
-		}catch (HibernateException e) {
-			throw new DAOException(e.getMessage());
-		}
-		return appointment;
-	}
-
-	public void saveAppointment(Appointment appointment) throws DAOException {
+	public void saveInpatientDairy(InpatientDairy inpatientDairy)
+			throws DAOException {
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();
 			tran.begin();
-			session.save(appointment);
-			tran.commit();
-		}catch (HibernateException e) {
-			tran.rollback();
-			throw new DAOException(e.getMessage());
-		}
-
-	}
-
-	public void updateAppointment(Appointment appointment) throws DAOException {
-		Transaction tran = null;
-		try{
-			tran = session.beginTransaction();
-			tran.begin();
-			session.update(appointment);
+			session.save(inpatientDairy);
 			tran.commit();
 		}catch (HibernateException e) {
 			tran.rollback();
@@ -67,4 +44,31 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 	}
 
+	public InpatientDairy searchInpatientDairy(int inpatientDairyId,
+			int inpatientId) throws DAOException {
+		InpatientDairy inpatientDairy;
+		InpatientDairyKey inpatientDairyKey = new InpatientDairyKey();
+		inpatientDairyKey.setInpatientDairyId(inpatientDairyId);
+		inpatientDairyKey.setInpatientId(inpatientId);
+		try{
+			inpatientDairy = (InpatientDairy)session.get(InpatientDairy.class, inpatientDairyKey);
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return inpatientDairy;
+	}
+
+	public void updateInpatientDairy(InpatientDairy inpatientDairy)
+			throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.update(inpatientDairy);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
 }

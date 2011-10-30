@@ -2,31 +2,34 @@ package ece651.model;
 
 import java.io.Serializable;
 
-public class VisitationID implements Serializable {
+public class DiagnosisTestKey implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1364923394564989389L;
-	private Integer visitationId;
-	private Integer versionNo;
+	private static final long serialVersionUID = 1L;
+	private Integer diagnosisTestId;
+	private Integer visitationId;	
+	public Integer getDiagnosisTestId() {
+		return diagnosisTestId;
+	}
+	public void setDiagnosisTestId(Integer diagnosisTestId) {
+		this.diagnosisTestId = diagnosisTestId;
+	}
 	public Integer getVisitationId() {
 		return visitationId;
 	}
 	public void setVisitationId(Integer visitationId) {
 		this.visitationId = visitationId;
 	}
-	public Integer getVersionNo() {
-		return versionNo;
-	}
-	public void setVersionNo(Integer versionNo) {
-		this.versionNo = versionNo;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((versionNo == null) ? 0 : versionNo.hashCode());
+				+ ((diagnosisTestId == null) ? 0 : diagnosisTestId.hashCode());
 		result = prime * result
 				+ ((visitationId == null) ? 0 : visitationId.hashCode());
 		return result;
@@ -39,11 +42,11 @@ public class VisitationID implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VisitationID other = (VisitationID) obj;
-		if (versionNo == null) {
-			if (other.versionNo != null)
+		DiagnosisTestKey other = (DiagnosisTestKey) obj;
+		if (diagnosisTestId == null) {
+			if (other.diagnosisTestId != null)
 				return false;
-		} else if (!versionNo.equals(other.versionNo))
+		} else if (!diagnosisTestId.equals(other.diagnosisTestId))
 			return false;
 		if (visitationId == null) {
 			if (other.visitationId != null)
@@ -54,8 +57,8 @@ public class VisitationID implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "VisitationID [visitationId=" + visitationId + ", versionNo="
-				+ versionNo + "]";
+		return "DiagnosisTestKey [diagnosisTestId=" + diagnosisTestId
+				+ ", visitationId=" + visitationId + "]";
 	}
 
 }

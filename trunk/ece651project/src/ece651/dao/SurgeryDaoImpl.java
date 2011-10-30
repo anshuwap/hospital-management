@@ -7,9 +7,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
-import ece651.model.Visitation;
+import ece651.model.Surgery;
+import ece651.model.SurgeryKey;
 
-public class VisitationDaoImpl implements VisitationDao {
+public class SurgeryDaoImpl implements SurgeryDao {
 	Logger log = Logger.getLogger(getClass().toString());
 	
 	private Session session; 
@@ -24,27 +25,17 @@ public class VisitationDaoImpl implements VisitationDao {
 		HibernateUtil.shutdown();
 	}
 
-	public VisitationDaoImpl() {
+	public SurgeryDaoImpl() {
 		log.info(getClass().toString());
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
-	public Visitation searchVisitation(int visitationId) throws DAOException {
-		Visitation visitation;
-		try{
-			visitation = (Visitation)session.get(Visitation.class, visitationId);
-		}catch (HibernateException e) {
-			throw new DAOException(e.getMessage());
-		}
-		return visitation;
-	}
-
-	public void saveVisitation(Visitation visitation) throws DAOException {
+	public void saveSurgery(Surgery surgery) throws DAOException {
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();
 			tran.begin();
-			session.save(visitation);
+			session.save(surgery);
 			tran.commit();
 		}catch (HibernateException e) {
 			tran.rollback();
@@ -52,12 +43,25 @@ public class VisitationDaoImpl implements VisitationDao {
 		}
 	}
 
-	public void updateVisitation(Visitation visitation) throws DAOException {
+	public Surgery searchSurgery(int surgeryId, int visitationId) throws DAOException {
+		Surgery surgery;
+		SurgeryKey surgeryKey = new SurgeryKey();
+		surgeryKey.setVisitationId(visitationId);
+		surgeryKey.setSurgeryId(surgeryId);
+		try{
+			surgery = (Surgery)session.get(Surgery.class, surgeryKey);
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return surgery;
+	}
+
+	public void updateSurgery(Surgery surgery) throws DAOException {
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();
 			tran.begin();
-			session.update(visitation);
+			session.update(surgery);
 			tran.commit();
 		}catch (HibernateException e) {
 			tran.rollback();
