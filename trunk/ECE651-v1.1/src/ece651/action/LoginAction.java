@@ -16,7 +16,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	private SystemUser user;
 	private String nextActionName;
 	private String errorMessage;
-	private String returnCode;
+	private String result;
 	
 	public SystemUser getUser() {
 		return user;
@@ -59,25 +59,24 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		this.errorMessage = errorMessage;
 	}
 
-	public String getReturnCode() {
-		return returnCode;
+	public String getResult() {
+		return result;
 	}
 
-	public void setReturnCode(String returnCode) {
-		this.returnCode = returnCode;
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 	public String login(){
 		System.out.println("LoginAction is executed");
-		System.out.println("loginId:"+user.getUsername()+", password:"+user.getPassword());		
+		System.out.println("Username:"+user.getUsername()+", password:"+user.getPassword());		
 		SystemUserDao userdao = new SystemUserDaoImpl();
 		SystemUser userdb;
 		try {
 			userdb = userdao.searchUserByUsername(user.getUsername());
 			if(userdb==null){
-				returnCode = ERROR;
-				errorMessage = "LoginId: " + user.getUsername() + " doesn't exist";
-				return returnCode;
+				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
+				return ERROR;
 			}
 			System.out.println("DB password:"+userdb.getPassword());
 			if (user.getPassword().equals(userdb.getPassword())){
@@ -96,31 +95,30 @@ public class LoginAction extends ActionSupport implements SessionAware{
 				if (userdb.getRoleType().equals("L")){
 					this.nextActionName = "LEGAL";
 				}	
-				returnCode = SUCCESS;
+				result = SUCCESS;
 				session.put("CurrentUser",userdb);
-				session.put("loginId",userdb.getUsername());	
-				session.put("loginName",userdb.getFirstName()+" "+userdb.getLastName());	
+				session.put("Username",userdb.getUsername());
 			}
 			else {
-				returnCode = ERROR;
+				result = ERROR;
 				errorMessage = "User name or password is not correct";				
 			}
 		} catch (DAOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			returnCode = ERROR;
+			result = ERROR;
 			errorMessage = "Database access error";			
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
-			returnCode = ERROR;
+			result = ERROR;
 			errorMessage = "System error";
 		}
-		return returnCode;
+		return result;
 	}
 	public String logout() throws Exception {
 		System.out.println("LogoutAction is executed");
-		//System.out.println("username:" + user.getLoginId() + ", password:" + user.getPassword());
+		//System.out.println("Username:" + user.getUsername() + ", password:" + user.getPassword());
 		if (session.containsKey("CurrentUser")){
 			session.remove("CurrentUser");
 		}
