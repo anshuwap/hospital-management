@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ece651.model.Prescription" table="Prescription" >
+		<id name="prescriptionId" column="PrescriptionId" >
+		</id>
+		<many-to-one name="doctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="DoctorId"></column>
+		</many-to-one>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<property name="prescriptionDescription" column="PrescriptionDescription"/>
+		<property name="prescriptionDate" column="PrescriptionDate"/>
+	</class>
+	
+	<class name="ece651.model.DiagnosisTest" table="DiagnosisTest" >
+		<composite-id class="ece651.model.DiagnosisTestKey" mapped="true">
+			<key-property name="diagnosisTestId" column="DiagnosisTestId" />
+			<key-property name="visitationId" column="VisitationId"/>
+		</composite-id>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="doctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="DoctorId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="testType" column="TestType"/>
+		<property name="issueDate" column="IssueDate"/>
+		<property name="testRequestDescription" column="TestRequestDescription"/>
+		<property name="testResultDescription" column="TestResultDescription"/>
+	</class>
+	
+	<class name="ece651.model.Surgery" table="Surgery" >
+		<composite-id class="ece651.model.SurgeryKey" mapped="true">
+			<key-property name="surgeryId" column="SurgeryId" />
+			<key-property name="visitationId" column="VisitationId"/>
+		</composite-id>
+		<property name="surgeryDate" column="SurgeryDate"/>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="issueDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="IssueDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="surgetyDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="SurgetyDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="arrangementDescription" column="ArrangementDescription"/>
+		<property name="surgerySummary" column="SurgerySummary"/>
+	</class>
+
+	<class name="ece651.model.Inpatient" table="Inpatient" >
+		<composite-id class="ece651.model.InpatientKey" mapped="true">
+			<key-property name="inpatientId" column="InpatientId" />
+			<key-property name="visitationId" column="VisitationId"/>
+		</composite-id>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="issueDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="IssueDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="inpatientDoctor" class="ece651.model.SystemUser" lazy="false">
+			<column name="InpatientDoctorId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="inpatientDate" column="InpatientDate"/>
+		<property name="dischargetDate" column="DischargetDate"/>
+		<property name="arrangementDescription" column="ArrangementDescription"/>
+		<property name="dischargeSummary" column="DischargeSummary"/>
+	</class>
+	
+    <class name="ece651.model.InpatientDairy" table="InpatientDairy" >
+		<composite-id class="ece651.model.InpatientDairyKey" mapped="true">
+			<key-property name="inpatientDairyId" column="InpatientDairyId" />
+			<key-property name="inpatientId" column="InpatientId"/>
+		</composite-id>
+		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
+			<column name="PatientId"></column>
+		</many-to-one>
+		<many-to-one name="nurse" class="ece651.model.SystemUser" lazy="false">
+			<column name="NurseId"></column>
+		</many-to-one>
+		<property name="recordDate" column="RecordDate"/>
+		<property name="dairyDescription" column="DairyDescription"/>
+	</class>	
+</hibernate-mapping>
