@@ -20,12 +20,13 @@ public class AuthInterceptor extends AbstractInterceptor {
 	public String intercept(ActionInvocation invocation) throws Exception {
 		// Map session = invocation.getInvocationContext().getSession();
 		Map session = ActionContext.getContext().getSession();
-		if((SystemUser) session.get("CurrentUser") == null) {
-			System.out.println("CurrentUser didn't login, go to login page");
+		SystemUser user = (SystemUser) session.get("CurrentUser");
+		if(user == null) {
+			System.out.println("User didn't login, please go to login page");
 			return Action.LOGIN;  // return "login"/;
 		}else{			
 			String result = invocation.invoke();
-			System.out.println("CurrentUser did login, then result="+result);
+			System.out.println(user.getUsername() + " authentication check ok");
 			return result;
 		}		
 	}
