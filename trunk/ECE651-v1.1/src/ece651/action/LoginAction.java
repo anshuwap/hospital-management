@@ -78,7 +78,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
 				return ERROR;
 			}
-			System.out.println("DB password:"+userdb.getPassword());
+			System.out.println(userdb.getUsername() + " password in database:"+userdb.getPassword());
 			if (user.getPassword().equals(userdb.getPassword())){
 				if (userdb.getRoleType().equals("D")){
 					this.nextActionName = "DOCTOR";
