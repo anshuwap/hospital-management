@@ -5,9 +5,11 @@ import java.util.logging.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.dao.DAOException;
+import ece651.model.Patient;
 import ece651.model.SystemUser;
 
 public class SystemUserDaoImpl implements SystemUserDao {
@@ -57,5 +59,42 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 		return user;
 	}
+	public void saveUser (SystemUser user) throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.save(user);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
 
+	public void deleteUser(SystemUser user) throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.delete(user);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
+
+	public void updateUser(SystemUser user) throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.update(user);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
 }
