@@ -72,6 +72,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		System.out.println("Username:"+user.getUsername()+", password:"+user.getPassword());		
 		SystemUserDao userdao = new SystemUserDaoImpl();
 		SystemUser userdb;
+		String Role="";
 		try {
 			userdb = userdao.searchUserByUsername(user.getUsername());
 			if(userdb==null){
@@ -82,22 +83,26 @@ public class LoginAction extends ActionSupport implements SessionAware{
 			if (user.getPassword().equals(userdb.getPassword())){
 				if (userdb.getRoleType().equals("D")){
 					this.nextActionName = "DOCTOR";
-				}
-				if (userdb.getRoleType().equals("S")){
-					this.nextActionName = "STAFF";
-				}
-				if (userdb.getRoleType().equals("A")){
-					this.nextActionName = "ADMIN";
-				}
-				if (userdb.getRoleType().equals("F")){
-					this.nextActionName = "FINANCIAL";
+					Role = "Doctor";
+				}	
+				if (userdb.getRoleType().equals("N")){
+					this.nextActionName = "NURSE";
+					Role = "Nurse";
 				}
 				if (userdb.getRoleType().equals("L")){
-					this.nextActionName = "LEGAL";
-				}	
+					this.nextActionName = "LAWYER";
+					Role = "Lawyer";
+				}
+				if (userdb.getRoleType().equals("I")){
+					this.nextActionName = "ITGUY";
+					Role = "ITGuy";
+				}
 				result = SUCCESS;
 				session.put("CurrentUser",userdb);
 				session.put("Username",userdb.getUsername());
+				session.put("Firstname", userdb.getFirstName());
+				session.put("Lastname", userdb.getLastName());
+				session.put("Role",Role);
 			}
 			else {
 				result = ERROR;
@@ -116,6 +121,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		}
 		return result;
 	}
+	
 	public String logout() throws Exception {
 		System.out.println("LogoutAction is executed");
 		//System.out.println("Username:" + user.getUsername() + ", password:" + user.getPassword());
