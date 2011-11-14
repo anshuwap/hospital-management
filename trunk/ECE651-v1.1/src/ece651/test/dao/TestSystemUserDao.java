@@ -179,7 +179,7 @@ public class TestSystemUserDao extends TestCase {
 		control = createNiceControl();
 		Session session = control.createMock(Session.class);
 		Transaction tran = control.createMock(Transaction.class);
-		//training
+		//training mock objects
 		session.beginTransaction();
 		expectLastCall().andReturn(tran);
 		tran.begin();
