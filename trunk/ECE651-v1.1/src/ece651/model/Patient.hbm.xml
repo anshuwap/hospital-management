@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="ece651.model.Patient" table="Patient" >
 		<id name="patientId" column="PatientId" unsaved-value="0">
-			<generator class="increment"/>
+			<generator class="native"/>
 		</id>
 		<property name="patientName" column="PatientName"/>
 		<property name="gender" column="Gender"/>

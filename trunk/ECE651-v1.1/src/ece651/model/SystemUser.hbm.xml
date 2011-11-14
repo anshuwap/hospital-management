@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="ece651.model.SystemUser" table="SystemUser" >
 		<id name="systemUserId" column="SystemUserId" unsaved-value="0">
-			<generator class="increment"/>
+			<generator class="native"/>
 		</id>
 		<property name="username" column="Username"/>
 		<property name="password" column="Password"/>
