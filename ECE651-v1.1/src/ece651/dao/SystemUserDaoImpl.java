@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.dao.DAOException;
-import ece651.model.Patient;
 import ece651.model.SystemUser;
 
 public class SystemUserDaoImpl implements SystemUserDao {
@@ -18,6 +17,10 @@ public class SystemUserDaoImpl implements SystemUserDao {
 	
 	private Session session; 
 	
+	public void setSession(Session session) {
+		this.session = session;
+	}
+
 	public Session getSession()
 	{
 		return this.session;
@@ -71,7 +74,20 @@ public class SystemUserDaoImpl implements SystemUserDao {
 			throw new DAOException(e.getMessage());
 		}
 	}
-
+	
+	public void updateUser(SystemUser user) throws DAOException {
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();
+			session.update(user);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
+	
 	public void deleteUser(SystemUser user) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -85,16 +101,4 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 	}
 
-	public void updateUser(SystemUser user) throws DAOException {
-		Transaction tran = null;
-		try{
-			tran = session.beginTransaction();
-			tran.begin();
-			session.update(user);
-			tran.commit();
-		}catch (HibernateException e) {
-			tran.rollback();
-			throw new DAOException(e.getMessage());
-		}
-	}
 }
