@@ -21,8 +21,6 @@
 		</global-results>
 		
 		<action name="login" class="ece651.action.LoginAction" method="login">
-			<!--<result name="success" type="dispatcher">/WEB-INF/admin/adminMain.jsp</result>-->
-			<!--<result name="success" type="dispatcher">/WEB-INF/doctor/doctorMain.jsp</result>-->
 			<result name="success" type="chain">${nextActionName}</result>
 			<result name="error" type="dispatcher">/login.jsp</result>
 			<result name="input">/login.jsp</result>
@@ -31,28 +29,20 @@
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		
- 		<action name="ADMIN">
- 			<result>/WEB-INF/admin/adminMain.jsp</result> 			
+ 		<action name="NURSE">
+ 			<result>/WEB-INF/nurse/nurseMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action>
  		<action name="DOCTOR">
  			<result>/WEB-INF/doctor/doctorMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action>
- 		<action name="STAFF">
- 			<result>/WEB-INF/staff/staffMain.jsp</result> 			
+ 		<action name="ITGUY">
+ 			<result>/WEB-INF/itguy/itguyMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action>
- 		<action name="PATIENT">
- 			<result>/WEB-INF/patient/patientMain.jsp</result> 			
- 			<interceptor-ref name="authStack"></interceptor-ref>
- 		</action>
- 		<action name="FINANCIAL">
- 			<result>/WEB-INF/financial/financialMain.jsp</result> 			
- 			<interceptor-ref name="authStack"></interceptor-ref>
- 		</action>
- 		<action name="LEGAL">
- 			<result>/WEB-INF/legal/legalMain.jsp</result> 			
+ 		<action name="LAWYER">
+ 			<result>/WEB-INF/lawyer/lawyerMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action> 		 	
 		<action name="logout" class="ece651.action.LoginAction" method="logout">
