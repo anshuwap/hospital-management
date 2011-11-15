@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <body>
 <h2>Login As: <em> <s:property value="%{#session.CurrentUser.firstName}"/> <s:property value="%{#session.CurrentUser.lastName}"/> </em>     Role: <em><s:property value="%{#session.Role}"/></em></h2>
-<h2><a href="<s:url action='logout'></s:url>">Logout</a><h2>
+<h2><a href="<s:url action='logout' namespace="/" ></s:url>">Logout</a><h2>
 </body>
 
 

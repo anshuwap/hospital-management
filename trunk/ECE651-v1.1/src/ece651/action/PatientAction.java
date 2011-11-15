@@ -16,6 +16,8 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private Map<String, Object> request;
 	private Patient patient;
 	private String healthCardID;
+	private Patient retrievePatient;
+	private String roleName;
 
 	public Patient getPatient() {
 		return patient;
@@ -33,6 +35,14 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.healthCardID = healthCardID;
 	}
 
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -47,22 +57,29 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		PatientDao patientDao = new PatientDaoImpl(); //initiate PatientDao instance
 		request.put("Operation", "Create New Patient:"+patient.getPatientName());
 		//if failed return String "fail"
-		try{
-			patientDao.savePatient(patient);
-		}catch (Exception e){
-			request.put("ReasonOfFailure", e.getMessage());
+		if((!patient.getPatientName().trim().isEmpty())&&(!patient.getHealthCardId().trim().isEmpty())){
+		  try{
+			  patientDao.savePatient(patient);
+		  }catch (Exception e){
+			//String errorInfo =  + e.getCause().toString();
+			request.put("OperationStatus","Create New Patient Failed:"+e.getMessage());
 			return ERROR;
-		}		
+		  }	
+		}
+		else{
+			request.put("OperationStatus", "Create New Patient Failed: Patient Name or Patient HealthcardID is null");
+		    return ERROR;
+		}
 		//if success return String "success"
+		request.put("OperationStatus", "Create New Patient Succeeded!");
 		return SUCCESS;		
 	}
 	
 	public String ViewPatient(){
 		System.out.println("ViewPatient is executed");
 		PatientDao patientDao = new PatientDaoImpl();
-		Patient retrievePatient;
+		
 		try{
-			//TODO the parameter for "searchPatient should be patient's healthcardID"
 			retrievePatient = patientDao.searchPatient(healthCardID);
 			 if (retrievePatient == null){
 				request.put("ReasonOfFailure", "Patient with Health Card ID"+ healthCardID +"Does not Exist");
@@ -72,7 +89,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 				request.put("ReasonOfFailure", e.getMessage());
 				return ERROR;
 			}//end of catch
-			request.put("RetrievedPatient", retrievePatient);
+			session.put("RetrievedPatient", retrievePatient);
 			return SUCCESS;
 		}//end of ViewPatient
 	
@@ -87,6 +104,17 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			return ERROR;
 		}
 		return SUCCESS;
+	}
+
+	public String BackToMainPage(){
+		
+		roleName = (String) session.get("Role");
+		if (!roleName.isEmpty()){
+		return SUCCESS;
+		}
+		else {
+			return ERROR;
+		}
 	}
 }
 
