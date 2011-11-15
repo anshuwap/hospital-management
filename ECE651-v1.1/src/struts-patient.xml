@@ -1,0 +1,37 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="patient" extends="struts-default"  namespace="/patient">
+<interceptors>
+<interceptor name="authInterceptor" class="ece651.interceptor.AuthInterceptor"></interceptor>
+<interceptor name="timer" class="com.opensymphony.xwork2.interceptor.TimerInterceptor"></interceptor>
+
+<interceptor-stack name="authStack">
+<interceptor-ref name="authInterceptor"></interceptor-ref>
+<interceptor-ref name="timer"></interceptor-ref>
+<interceptor-ref name="defaultStack"></interceptor-ref>
+</interceptor-stack>
+
+</interceptors>
+		
+		<action name="createPatient" class="ece651.action.PatientAction" method="CreatePatient">
+			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="viewPatient" class="ece651.action.PatientAction" method="ViewPatient">
+			<result name="success" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+	
+		<action name="editPatient" class="ece651.action.PatientAction" method="EditPatient">
+			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>
