@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "struts-2.1.dtd" >
+
+
+<struts>
+	<package name="patient" extends="struts-default" namespace="/patient">
+		<default-interceptor-ref name="authStack"/>
+		
+		<action name="createPatient" class="ece651.action.PatientAction" method="CreatePatient">
+			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+		</action>
+		
+		<action name="viewPatient" class="ece651.action.PatientAction" method="ViewPatient">
+			<result name="success" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+		</action>
+	
+		<action name="editPatient" class="ece651.action.PatientAction" method="EditPatient">
+			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+		</action>
+	</package>
+</struts>
