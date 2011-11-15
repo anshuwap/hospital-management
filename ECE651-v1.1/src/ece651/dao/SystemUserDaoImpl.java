@@ -62,6 +62,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 		return user;
 	}
+	
 	public void saveUser (SystemUser user) throws DAOException {
 		Transaction tran = null;
 		try{
