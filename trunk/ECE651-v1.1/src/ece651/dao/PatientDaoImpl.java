@@ -3,11 +3,13 @@ package ece651.dao;
 import java.util.logging.Logger;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Patient;
+import ece651.model.SystemUser;
 
 public class PatientDaoImpl implements PatientDao {
 
@@ -40,7 +42,22 @@ public class PatientDaoImpl implements PatientDao {
 		}
 		return patient;
 	}
-
+	
+	public Patient searchPatientByHId(String healthCardId) throws DAOException {
+		Patient patient = null;
+		try{
+			String sql ="select patient from Patient as patient where patient.healthCardId =?";
+			Query q =session.createQuery(sql);
+			q.setString(0, healthCardId);
+			if( q.list().size()>0){
+				patient = (Patient)q.list().get(0);
+			}
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return patient;
+	}
+	
 	public void savePatient(Patient patient) throws DAOException {
 		Transaction tran = null;
 		try{

@@ -6,10 +6,14 @@ import junit.framework.TestCase;
 
 import ece651.dao.DAOException;
 import ece651.dao.PatientDaoImpl;
+import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Patient;
+import ece651.model.SystemUser;
 
 public class TestPatientDao extends TestCase {
 
+	public static Integer patientId;
+	
 	public void testsavePatient() throws DAOException{
 		PatientDaoImpl patientdao = new PatientDaoImpl();
 		
@@ -21,35 +25,44 @@ public class TestPatientDao extends TestCase {
 		patient.setHealthCardId("OHIP123456");
 		patient.setMedication("VC");
 		patient.setAllergy("fish");
-
-		System.out.println("new Patient before save is:"+patient);
+		
 		patientdao.savePatient(patient);
-		System.out.println("new Patient after save is:"+patient);
+		patientId = patient.getPatientId();
+		assertNotSame(0, patientId);
 	}
 
 	public void testsearchPatient() throws DAOException{
 		PatientDaoImpl patientdao = new PatientDaoImpl();
-		Patient patient = patientdao.searchPatient(1);
-		System.out.println("Patient is:"+patient);
+		Patient patient = patientdao.searchPatient(patientId);
+		assertNotNull(patient);
+		assertEquals("OHIP123456", patient.getHealthCardId());
 	}
 
+	public void testsearchPatient2() throws DAOException{
+		PatientDaoImpl patientdao = new PatientDaoImpl();
+		Patient patient = patientdao.searchPatientByHId("OHIP123456");
+		assertNotNull(patient);
+		assertEquals("OHIP123456", patient.getHealthCardId());
+	}
 
 	public void testupdatePatient() throws DAOException{
 		PatientDaoImpl patientdao = new PatientDaoImpl();
-		Patient patient = patientdao.searchPatient(1);
-		patient.setHealthCardId("OHIP8888");
+		Patient patient = patientdao.searchPatient(patientId);
+		patient.setHealthCardId("OHIP1234567");
 		patientdao.updatePatient(patient);
-		System.out.print("Patient is:"+patient);
+		
+		Patient patientdb = patientdao.searchPatient(patientId);
+		assertEquals("OHIP1234567", patientdb.getHealthCardId());
 	}
 
 
 	public void testdeletePatient() throws DAOException{
 		PatientDaoImpl patientdao = new PatientDaoImpl();
-		Patient patient = patientdao.searchPatient(5);
-		System.out.print("before delete Patient is:"+patient);
+		Patient patient = patientdao.searchPatient(patientId);
 		patientdao.deletePatient(patient);
-		patient = patientdao.searchPatient(5);
-		System.out.print("after delete Patient is:"+patient);
+		
+		Patient patientdb = patientdao.searchPatient(patientId);
+		assertNull(patientdb);
 	}
 
 }
