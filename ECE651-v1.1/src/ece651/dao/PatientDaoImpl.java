@@ -97,4 +97,19 @@ public class PatientDaoImpl implements PatientDao {
 		}
 	}
 
+	public Patient searchPatient(String healthCardID) throws DAOException {
+		Patient patient = null;
+		try{
+			String sql ="select patient from Patient as patient where patient.healthCardId =?";
+			Query q =session.createQuery(sql);
+			q.setString(0,healthCardID);
+			if( q.list().size()>0){
+				patient = (Patient)q.list().get(0);
+			}
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return patient;
+	}
+
 }
