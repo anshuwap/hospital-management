@@ -1,5 +1,7 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.hibernate.HibernateException;
@@ -45,8 +47,8 @@ public class PatientDaoImpl implements PatientDao {
 	public Patient searchPatientByHId(String healthCardId) throws DAOException {
 		Patient patient = null;
 		try{
-			String sql ="select patient from Patient as patient where patient.healthCardId =?";
-			Query q =session.createQuery(sql);
+			String hql ="select patient from Patient as patient where patient.healthCardId =?";
+			Query q =session.createQuery(hql);
 			q.setString(0, healthCardId);
 			if( q.list().size()>0){
 				patient = (Patient)q.list().get(0);
@@ -55,6 +57,17 @@ public class PatientDaoImpl implements PatientDao {
 			throw new DAOException(e.getMessage());
 		}
 		return patient;
+	}
+	
+	public List<Patient> searchAllPatient() throws DAOException {
+		List<Patient> patientList = new ArrayList<Patient>();
+		try{
+			Query q = session.createQuery("from Patient");
+			patientList = q.list();
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return patientList;
 	}
 	
 	public void savePatient(Patient patient) throws DAOException {

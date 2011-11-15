@@ -1,6 +1,8 @@
 package ece651.test.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -29,6 +31,13 @@ public class TestSystemUserDao extends TestCase {
 		SystemUser user = userdao.searchUserBySystemUserId(1);
 		assertNotNull(user);
 		assertEquals("jzhang", user.getUsername());
+	}
+	
+	public void testSearchAllUser() throws DAOException{
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		List<SystemUser> userList = new ArrayList<SystemUser>();
+		userList = userdao.searchAllUser();
+		assertNotSame(0, userList.size());
 	}
 	
 	public void testSaveUser() throws DAOException{
@@ -202,5 +211,26 @@ public class TestSystemUserDao extends TestCase {
 			assertEquals("mockTest", e.getMessage());
 		}
 	}
-	
+
+	public void testsearchAllUserFail(){	
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		//create mock objects
+		IMocksControl control;
+		control = createNiceControl();
+		Session session = control.createMock(Session.class);
+		//training mock objects
+		session.createQuery((String) notNull());
+		expectLastCall().andThrow(new HibernateException("mockTest"));
+		//replay
+		control.replay();
+		//call Dao method
+		try {			
+			userdao.setSession(session);
+			userdao.searchAllUser();
+			fail();
+		} catch (DAOException e) {
+			assertNotNull(e.getMessage());
+			assertEquals("mockTest", e.getMessage());
+		}
+	}
 }
