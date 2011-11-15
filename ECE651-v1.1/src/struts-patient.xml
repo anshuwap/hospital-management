@@ -14,15 +14,18 @@
 			</interceptor-stack>
 		</interceptors>
 		
+<!-- Logic Action		-->
 		<action name="createPatient" class="ece651.action.PatientAction" method="CreatePatient">
-			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<result name="success" type="dispatcher">/WEB-INF/patient/createPatient.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/patient/createPatient.jsp</result>
+			<result name="invalid.token">/WEB-INF/patient/createPatient.jsp</result>
+			<interceptor-ref name="token" />
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
 		<action name="viewPatient" class="ece651.action.PatientAction" method="ViewPatient">
 			<result name="success" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<result name="error" type="chain">${roleName}</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 	
@@ -31,5 +34,43 @@
 			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
+	
+<!--	Page Navigation Action	-->
+		<action name="toCreatePatientPage">
+			<result name="success">/WEB-INF/patient/createPatient.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="toViewPatientPage">
+			<result name="success">/WEB-INF/patient/viewPatient.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="toEditPatientPage">
+			<result name="success">/WEB-INF/patient/editPatient.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="toMainPage" class="ece651.action.PatientAction" method="BackToMainPage" >
+			<result name="success" type="chain">${roleName}</result>
+			<result name="error">/login.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="Doctor">
+			<result>/WEB-INF/doctor/doctorMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="Nurse">
+			<result>/WEB-INF/nurse/nurseMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="Lawyer">
+			<result>/WEB-INF/lawyer/lawyerMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
 	</package>
 </struts>
