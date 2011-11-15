@@ -6,14 +6,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-
 <html>
-  <head>   
-  <!--<link href="<s:url value="/css/main.css"/>" rel="stylesheet" type="text/css"/>-->
-  </head>
-  <body>
-      <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-    <hr><br>
+  <head>
+   <s:debug></s:debug>
+</head>
+  
+  <body> 
+ View Patient page
 
-  </body>
+</body>
 </html>

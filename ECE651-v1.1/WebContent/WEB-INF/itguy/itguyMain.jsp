@@ -16,6 +16,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
     <hr><br>
 
-    <!--<a href="<s:url action='logout'><s:param name="loginId" value="%{user.loginId}"/></s:url>">Logout</a><br> -->
   </body>
 </html>
