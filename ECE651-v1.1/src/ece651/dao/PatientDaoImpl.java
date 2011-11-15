@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Patient;
-import ece651.model.SystemUser;
 
 public class PatientDaoImpl implements PatientDao {
 
