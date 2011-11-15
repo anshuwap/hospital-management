@@ -1,14 +1,14 @@
 package ece651.test.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
 import ece651.dao.DAOException;
 import ece651.dao.PatientDaoImpl;
-import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Patient;
-import ece651.model.SystemUser;
 
 public class TestPatientDao extends TestCase {
 
@@ -44,7 +44,14 @@ public class TestPatientDao extends TestCase {
 		assertNotNull(patient);
 		assertEquals("OHIP123456", patient.getHealthCardId());
 	}
-
+	
+	public void testsearchAllPatient() throws DAOException{
+		PatientDaoImpl patientdao = new PatientDaoImpl();
+		List<Patient> patientList = new ArrayList<Patient>();
+		patientList = patientdao.searchAllPatient();
+		assertNotSame(0, patientList.size());
+	}
+	
 	public void testupdatePatient() throws DAOException{
 		PatientDaoImpl patientdao = new PatientDaoImpl();
 		Patient patient = patientdao.searchPatient(patientId);

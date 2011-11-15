@@ -1,5 +1,7 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.hibernate.HibernateException;
@@ -51,8 +53,8 @@ public class SystemUserDaoImpl implements SystemUserDao {
 	public SystemUser searchUserByUsername(String Username) throws DAOException {
 		SystemUser user = null;
 		try{
-			String sql ="select user from SystemUser as user where user.username=?";
-			Query q =session.createQuery(sql);
+			String hql ="select user from SystemUser as user where user.username=?";
+			Query q =session.createQuery(hql);
 			q.setString(0, Username);
 			if( q.list().size()>0){
 				user = (SystemUser)q.list().get(0);
@@ -61,6 +63,17 @@ public class SystemUserDaoImpl implements SystemUserDao {
 			throw new DAOException(e.getMessage());
 		}
 		return user;
+	}
+	
+	public List<SystemUser> searchAllUser() throws DAOException {
+		List<SystemUser> userList = new ArrayList<SystemUser>();
+		try{
+			Query q = session.createQuery("from SystemUser");
+			userList = q.list();
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return userList;
 	}
 	
 	public void saveUser (SystemUser user) throws DAOException {
