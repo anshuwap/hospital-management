@@ -1,5 +1,6 @@
 package ece651.action;
 
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -18,6 +19,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private String healthCardID;
 	private Patient retrievePatient;
 	private String roleName;
+	private String patientBirthday;
 
 	public Patient getPatient() {
 		return patient;
@@ -51,6 +53,14 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.retrievePatient = retrievePatient;
 	}
 
+	public String getPatientBirthday() {
+		return patientBirthday;
+	}
+
+	public void setPatientBirthday(String patientBirthday) {
+		this.patientBirthday = patientBirthday;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -64,9 +74,11 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		System.out.println("CreatePatient is executed");//used for debug
 		PatientDao patientDao = new PatientDaoImpl(); //initiate PatientDao instance
 		request.put("Operation", "Create New Patient:"+patient.getPatientName());
+		Date birthday =Date.valueOf(patientBirthday);
 		//if failed return String "fail"
 		if((!patient.getPatientName().trim().isEmpty())&&(!patient.getHealthCardId().trim().isEmpty())){
 		  try{
+			  patient.setBirthday(birthday);
 			  patientDao.savePatient(patient);
 		  }catch (Exception e){
 			//String errorInfo =  + e.getCause().toString();
