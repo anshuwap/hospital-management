@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/> 
  		<s:textfield name="retrievePatient.healthCardId" label="HealthCard ID (ReadOnly)" readonly="true"/>
  		<s:textarea name="retrievePatient.medication" label="Medication" cols="40" rows="10"/>
-        <s:textarea name="retrievePatient.allergy" label="Comments" cols="40" rows="10"/>
+        <s:textarea name="retrievePatient.allergy" label="Allergy" cols="40" rows="10"/>
         <s:token name="token"></s:token>
         <tr>
  		<td><s:submit value="Update"/></td>
