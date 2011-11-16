@@ -3,7 +3,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-	<package name="visitation" extends="struts-default"  namespace="/visitation">
+		<package name="systemuser" extends="struts-default"  namespace="/systemuser">
 		<interceptors>
 			<interceptor name="authInterceptor" class="ece651.interceptor.AuthInterceptor"></interceptor>            
 			<interceptor name="timer" class="com.opensymphony.xwork2.interceptor.TimerInterceptor"></interceptor>
@@ -14,20 +14,21 @@
 			</interceptor-stack>
 		</interceptors>
 		
-		<action name="createVisitation" class="ece651.action.VisitationAction" method="CreateVisitation">
-			<result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+		<action name="createSystemUser" class="ece651.action.SystemUserAction" method="CreateSystemUser">
+		    <result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/patient/createSystemUser.jsp</result>
+			<result name="invalid.token">/WEB-INF/patient/createPatient.jsp</result>
+			<interceptor-ref name="token" />
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="editVisitation" class="ece651.action.VisitationAction" method ="EditVisitation">
-		    <result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+		<action name="editSystemUser" class="ece651.action.SystemUserAction" method="EditSystemUser">
+		      <interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="viewSystemUser" class="ece651.action.SystemUserAction" method="ViewSystemUser">
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="viewVisitation" class="ece651.action.VisitationAction" method ="ViewVisitation">
-		    <result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>
-		
-	</package>
+		</package>
 </struts>

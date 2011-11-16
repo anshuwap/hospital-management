@@ -43,6 +43,14 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.roleName = roleName;
 	}
 
+	public Patient getRetrievePatient() {
+		return retrievePatient;
+	}
+
+	public void setRetrievePatient(Patient retrievePatient) {
+		this.retrievePatient = retrievePatient;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -89,7 +97,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 				request.put("ReasonOfFailure", e.getMessage());
 				return ERROR;
 			}//end of catch
-			session.put("RetrievedPatient", retrievePatient);
+			request.put("RetrievedPatient", retrievePatient);
 			return SUCCESS;
 		}//end of ViewPatient
 	

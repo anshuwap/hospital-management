@@ -3,7 +3,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-		<package name="appointment" extends="struts-default"  namespace="/appointment">
+		<package name="inpatient" extends="struts-default"  namespace="/inpatient">
 		<interceptors>
 			<interceptor name="authInterceptor" class="ece651.interceptor.AuthInterceptor"></interceptor>            
 			<interceptor name="timer" class="com.opensymphony.xwork2.interceptor.TimerInterceptor"></interceptor>

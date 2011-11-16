@@ -30,8 +30,8 @@
 		</action>
 	
 		<action name="editPatient" class="ece651.action.PatientAction" method="EditPatient">
-			<result name="success" type="dispatcher">/WEB-INF/mis/operationSuccess.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/mis/operationFail.jsp</result>
+			<result name="success" type="dispatcher">/WEB-INF/patient/editPatient.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/patient/editPatient.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 	

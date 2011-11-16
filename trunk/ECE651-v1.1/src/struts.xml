@@ -4,8 +4,15 @@
 
 <struts>
 
+    <include file="struts-appointment.xml"/>
+    <include file="struts-diagnosistest.xml"/>
+    <include file="struts-inpatient.xml"/>
 	<include file="struts-patient.xml"/>
+	<include file="struts-prescription.xml"/>
+	<include file="struts-surgery.xml"/>
+	<include file="struts-systemuser.xml"/>
 	<include file="struts-visitation.xml"/>
+	
 	
 
 

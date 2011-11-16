@@ -21,13 +21,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<tr>
 			<td>Operation on Patient</td>
 				<td><s:a href="patient/toCreatePatientPage.action">Create Patient</s:a></td>
-				  <s:form action="viewPatient" method="post" namespace="/patient">
-                  <s:textfield name="healthCardID" label="HealthCardID"/>
-                  <s:token name="token"></s:token>
- 		          <s:submit value="Search"/>
-                  </s:form>
-<!--				<td><s:a href="patient/toEditPatientPage.action">Edit Patient</s:a></td>-->
-<!--				<td><s:a href="patient/toViewPatientPage.action">View Patient</s:a></td>-->
+				
+				<td><s:a href="patient/toEditPatientPage.action">Edit Patient</s:a></td>
+				<td><s:a href="patient/toViewPatientPage.action">View Patient</s:a></td>
 			</tr>
 		</table>
   </body>
