@@ -19,11 +19,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</center>
 		<table>
 			<tr>
-			<td>Operation on Patient</td>
-				<td><s:a href="patient/toCreatePatientPage.action">Create Patient</s:a></td>
-				
-				<td><s:a href="patient/toEditPatientPage.action">Edit Patient</s:a></td>
-				<td><s:a href="patient/toViewPatientPage.action">View Patient</s:a></td>
+			<td><h4>Operation on Patient</h4></td>
+				<td><h4><s:a href="patient/toCreatePatientPage.action">Create Patient</s:a></h4></td>
+				<td><h4><s:a href="patient/toEditPatientPage.action">Edit&View Patient</s:a></h4></td>
 			</tr>
 		</table>
   </body>

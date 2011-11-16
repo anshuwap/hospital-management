@@ -20,6 +20,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private Patient retrievePatient;
 	private String roleName;
 	private String patientBirthday;
+	private String operationStatus;
 
 	public Patient getPatient() {
 		return patient;
@@ -61,6 +62,14 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.patientBirthday = patientBirthday;
 	}
 
+	public String getOperationStatus() {
+		return operationStatus;
+	}
+
+	public void setOperationStatus(String operationStatus) {
+		this.operationStatus = operationStatus;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -74,60 +83,105 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		System.out.println("CreatePatient is executed");//used for debug
 		PatientDao patientDao = new PatientDaoImpl(); //initiate PatientDao instance
 		request.put("Operation", "Create New Patient:"+patient.getPatientName());
-		Date birthday =Date.valueOf(patientBirthday);
+		
 		//if failed return String "fail"
 		if((!patient.getPatientName().trim().isEmpty())&&(!patient.getHealthCardId().trim().isEmpty())){
 		  try{
-			  patient.setBirthday(birthday);
+			  Date birthday =Date.valueOf(patientBirthday);
+				patient.setBirthday(birthday);
+				if(patient.getGender()=="1")
+					patient.setGender("F");
+				else
+					patient.setGender("M");
 			  patientDao.savePatient(patient);
 		  }catch (Exception e){
 			//String errorInfo =  + e.getCause().toString();
-			request.put("OperationStatus","Create New Patient Failed:"+e.getMessage());
+		  this.setOperationStatus("Create New Patient Failed: Exception Happened: "+e.getMessage());
 			patient = null;
+			patientBirthday = null;
 			return ERROR;
 		  }	
 		}
 		else{
-			request.put("OperationStatus", "Create New Patient Failed: Patient Name or Patient HealthcardID is null");
+			this.setOperationStatus("Create New Patient Failed: Patient Name or Patient HealthcardID is null");
 		    patient = null;
+		    patientBirthday = null;
 			return ERROR;
 		}
 		//if success return String "success"
-		request.put("OperationStatus", "Create New Patient Succeeded!");
+		this.setOperationStatus("Create New Patient Succeeded!");
 		patient = null;
+		patientBirthday = null;
 		return SUCCESS;		
 	}
 	
-	public String ViewPatient(){
+	public String SearchPatient(){
 		System.out.println("ViewPatient is executed");
-		PatientDao patientDao = new PatientDaoImpl();
-		
-		try{
-			retrievePatient = patientDao.searchPatient(healthCardID);
-			 if (retrievePatient == null){
-				request.put("ReasonOfFailure", "Patient with Health Card ID"+ healthCardID +"Does not Exist");
-			  return ERROR;
-			  }//end of if
-			} catch (Exception e){
-				request.put("ReasonOfFailure", e.getMessage());
-				return ERROR;
-			}//end of catch
-			request.put("RetrievedPatient", retrievePatient);
+		Object searchResult = QueryPatient(healthCardID);
+		if(searchResult instanceof String){
+		    this.setOperationStatus("Search Patient: Failed, Reason: "+(String)searchResult);
+		    healthCardID = null;
+		    return ERROR;
+		}
+		else{
+			retrievePatient = (Patient)searchResult;
+			this.setPatientBirthday(retrievePatient.getBirthday().toString().substring(0, 10));
+			if(retrievePatient.getGender()=="M")
+				retrievePatient.setGender("0");
+			else
+				retrievePatient.setGender("1");
+			this.setOperationStatus("Search Patient: Found.");
+			healthCardID = null;
 			return SUCCESS;
+		}
+			
+			//request.put("RetrievedPatient", retrievePatient);
+			
 		}//end of ViewPatient
 	
 	public String EditPatient(){
 		System.out.println("EditPatient is executed");
 		PatientDao patientDao = new PatientDaoImpl();
-		request.put("Operation", "Edit Patient Info:"+patient.getPatientName());
+		
 		try{
+			Date birthday =Date.valueOf(patientBirthday);
+			retrievePatient.setBirthday(birthday);
+			if(retrievePatient.getGender()=="1")
+				retrievePatient.setGender("F");
+			else
+				retrievePatient.setGender("M");
+			
 			patientDao.updatePatient(retrievePatient);
 		}catch (Exception e){
-			request.put("ReasonOfFailure", e.getMessage());
+			//request.put("OperationStatus","Update Patient: Exception Happened" +e.getMessage());
+			this.setOperationStatus("Update Patient Info Failed. Exception Happened: "+e.getMessage());
+			retrievePatient = null;
+			patientBirthday = null;
 			return ERROR;
 		}
+		retrievePatient = null;
+		patientBirthday = null;
+		this.setOperationStatus("Edit Patient Info Succeeded!");
 		return SUCCESS;
 	}
+	
+	private Object QueryPatient(String healthcard){
+		Patient resultPatient = null;	
+		try{
+			PatientDao patientDao = new PatientDaoImpl();
+			resultPatient = patientDao.searchPatient(healthcard);
+			 if (resultPatient == null){
+				 //request.put("OperationStatus","Search Patient: Patient Not Exist");
+				 return "Patient Not Found";
+			  }//end of if
+			} catch (Exception e){
+				//request.put("OperationStatus","Search Patient: Exception Happened" +e.getMessage());
+				return "Exception Happened"+e.getMessage();
+			}//end of catch
+		
+		return resultPatient;
+	}
+	
 
 	public String BackToMainPage(){
 		
