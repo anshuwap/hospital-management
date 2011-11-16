@@ -23,9 +23,9 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="viewPatient" class="ece651.action.PatientAction" method="ViewPatient">
-			<result name="success" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
-			<result name="error" type="chain">${roleName}</result>
+		<action name="searchPatient" class="ece651.action.PatientAction" method="SearchPatient">
+			<result name="success" type="dispatcher">/WEB-INF/patient/editPatient.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/patient/editPatient.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 	
