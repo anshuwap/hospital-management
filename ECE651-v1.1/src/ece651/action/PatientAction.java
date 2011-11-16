@@ -89,10 +89,11 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		  try{
 			  Date birthday =Date.valueOf(patientBirthday);
 				patient.setBirthday(birthday);
-				if(patient.getGender()=="1")
+				if(patient.getGender().equalsIgnoreCase("0"))
 					patient.setGender("F");
 				else
 					patient.setGender("M");
+				patient.setHealthCardId(patient.getHealthCardId().toLowerCase());
 			  patientDao.savePatient(patient);
 		  }catch (Exception e){
 			//String errorInfo =  + e.getCause().toString();
@@ -117,7 +118,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	
 	public String SearchPatient(){
 		System.out.println("ViewPatient is executed");
-		Object searchResult = QueryPatient(healthCardID);
+		Object searchResult = QueryPatient(healthCardID.toLowerCase());
 		if(searchResult instanceof String){
 		    this.setOperationStatus("Search Patient: Failed, Reason: "+(String)searchResult);
 		    healthCardID = null;
@@ -126,10 +127,10 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		else{
 			retrievePatient = (Patient)searchResult;
 			this.setPatientBirthday(retrievePatient.getBirthday().toString().substring(0, 10));
-			if(retrievePatient.getGender()=="M")
-				retrievePatient.setGender("0");
-			else
+			if(retrievePatient.getGender().equalsIgnoreCase("M"))
 				retrievePatient.setGender("1");
+			else
+				retrievePatient.setGender("0");
 			this.setOperationStatus("Search Patient: Found.");
 			healthCardID = null;
 			return SUCCESS;
@@ -146,10 +147,11 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		try{
 			Date birthday =Date.valueOf(patientBirthday);
 			retrievePatient.setBirthday(birthday);
-			if(retrievePatient.getGender()=="1")
-				retrievePatient.setGender("F");
-			else
+			if(retrievePatient.getGender().equalsIgnoreCase("1"))
 				retrievePatient.setGender("M");
+			else
+				retrievePatient.setGender("F");
+			retrievePatient.setHealthCardId(retrievePatient.getHealthCardId().toLowerCase());
 			
 			patientDao.updatePatient(retrievePatient);
 		}catch (Exception e){
