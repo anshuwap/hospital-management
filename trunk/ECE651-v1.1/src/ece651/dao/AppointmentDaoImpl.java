@@ -1,14 +1,16 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Appointment;
-
 
 public class AppointmentDaoImpl implements AppointmentDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -67,4 +69,15 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 	}
 
+	public List<Appointment> searchApptListBypId(Integer patiendId)throws DAOException {
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		try {
+			Query hql = session.createQuery("from Appointment as app where app.patient.patientId=?");
+			hql.setInteger(0, patiendId);
+			appointmentList = hql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return appointmentList;
+	}
 }
