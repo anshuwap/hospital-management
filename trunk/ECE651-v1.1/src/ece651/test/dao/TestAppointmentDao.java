@@ -1,6 +1,9 @@
 package ece651.test.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import ece651.dao.DAOException;
@@ -12,6 +15,8 @@ import ece651.model.Patient;
 import ece651.model.SystemUser;
 
 public class TestAppointmentDao extends TestCase {
+	
+	public static Integer appId;
 	
 	public void  testsaveAppointment() throws DAOException{
 		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
@@ -32,27 +37,36 @@ public class TestAppointmentDao extends TestCase {
 		appointment.setEndTime("13:30");
 		appointment.setStatus("A");
 		
-		System.out.print("New Appointment is:"+appointment);
 		appointmentdao.saveAppointment(appointment);
-		System.out.print("After save() new Appointment is:"+appointment);
+		appId = appointment.getAppointmentId();
+		assertNotSame(0, appId);
 	}
 	
 	public void  testsearchAppointment() throws DAOException{
 		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
 		
-		Appointment appointment = appointmentdao.searchAppointment(1);
-		System.out.print("Appointment is:"+appointment);
+		Appointment appointment = appointmentdao.searchAppointment(appId);
+		//assertEquals("13:00", appointment.getStartTime());
+		assertEquals("Bill Gates", appointment.getPatient().getPatientName());
 	}
 
 	public void  testupdateAppointment() throws DAOException{
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();	
 		
-		Appointment appointment = appointmentdao.searchAppointment(1);
-		System.out.print("Before update Appointment is:"+appointment);
+		Appointment appointment = appointmentdao.searchAppointment(appId);
 		appointment.setStatus("V");
 		appointmentdao.updateAppointment(appointment);
-		appointment = appointmentdao.searchAppointment(1);
-		System.out.print("After update Appointment is:"+appointment);
+		Appointment appdb = appointmentdao.searchAppointment(appId);
+		assertEquals("V", appdb.getStatus());
 	}
-
+	
+	public void  testsearchApptListBypId() throws DAOException{
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		
+		appointmentList = appointmentdao.searchApptListBypId(1);
+		Appointment appointment = appointmentList.get(0);
+		//assertEquals("13:00", appointment.getStartTime());
+		assertEquals("Bill Gates", appointment.getPatient().getPatientName());
+	}
 }
