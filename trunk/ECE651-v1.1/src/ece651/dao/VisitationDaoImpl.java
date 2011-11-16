@@ -1,8 +1,11 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -63,5 +66,17 @@ public class VisitationDaoImpl implements VisitationDao {
 			tran.rollback();
 			throw new DAOException(e.getMessage());
 		}
+	}
+	
+	public List<Visitation> searchVisitListBypId(Integer patiendId)throws DAOException {
+		List<Visitation> visitList = new ArrayList<Visitation>();
+		try {
+			Query hql = session.createQuery("from Visitation as visit where visit.patient.patientId=?");
+			hql.setInteger(0, patiendId);
+			visitList = hql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return visitList;
 	}
 }
