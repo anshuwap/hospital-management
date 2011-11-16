@@ -26,7 +26,7 @@ function ClearForm(){
  		<table border="1">
  		<s:textfield name="patient.patientName" label="First Name" required="true" />
  		<s:radio list="#{'1':'male' ,'0': 'female'}" name="patient.gender" value="1" label="Gender"/>
-   		<s:date name="patient.birthday" id="bDateId" format="yyyy-MM-dd"/>  
+   		<sx:datetimepicker name="patient.birthday" label="Patient Birthday" displayFormat="yyyy-MM-dd"/> 
         <s:textfield name="birthDate" id="%{bDateId}" label="Birth Date (yyyy-MM-dd)"/>
  		<s:textfield name="patient.healthCardId" label="HealthCard ID" required="true"/>
  		<s:textarea name="patient.medication" label="Medication" cols="40" rows="10"/>

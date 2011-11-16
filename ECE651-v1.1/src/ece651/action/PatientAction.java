@@ -71,15 +71,18 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		  }catch (Exception e){
 			//String errorInfo =  + e.getCause().toString();
 			request.put("OperationStatus","Create New Patient Failed:"+e.getMessage());
+			patient = null;
 			return ERROR;
 		  }	
 		}
 		else{
 			request.put("OperationStatus", "Create New Patient Failed: Patient Name or Patient HealthcardID is null");
-		    return ERROR;
+		    patient = null;
+			return ERROR;
 		}
 		//if success return String "success"
 		request.put("OperationStatus", "Create New Patient Succeeded!");
+		patient = null;
 		return SUCCESS;		
 	}
 	
@@ -106,7 +109,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		PatientDao patientDao = new PatientDaoImpl();
 		request.put("Operation", "Edit Patient Info:"+patient.getPatientName());
 		try{
-			patientDao.updatePatient(patient);
+			patientDao.updatePatient(retrievePatient);
 		}catch (Exception e){
 			request.put("ReasonOfFailure", e.getMessage());
 			return ERROR;
