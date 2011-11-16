@@ -1,6 +1,9 @@
 package ece651.test.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import ece651.dao.DAOException;
@@ -13,6 +16,8 @@ import ece651.model.Visitation;
 
 public class TestVisitationDao extends TestCase {
 	
+	public static Integer visitId = 3;
+	
 	public void  testsaveVisitation() throws DAOException{
 		VisitationDaoImpl visitationDao = new VisitationDaoImpl();
 		PatientDaoImpl patientdao = new PatientDaoImpl();		
@@ -22,7 +27,8 @@ public class TestVisitationDao extends TestCase {
 		Patient patient = patientdao.searchPatient(1);
 		
 		Visitation visitation = new Visitation();
-		visitation.setVisitationId(2);
+		
+		visitation.setVisitationId(visitId);
 		visitation.setPatient(patient);
 		visitation.setDoctor(doctor);
 		visitation.setVisitationType("A");
@@ -33,27 +39,35 @@ public class TestVisitationDao extends TestCase {
 		visitation.setSymptomDescription("feel bad");
 		visitation.setDiagnosisResult("good");
 		
-		System.out.print("New Visitation is:"+visitation);
 		visitationDao.saveVisitation(visitation);
-		System.out.print("After save() new visitation is:"+visitation);
+		Visitation visitdb = visitationDao.searchVisitation(visitId);
+		assertEquals(visitId, visitdb.getVisitationId());
+
 	}
 	
 	public void  testsearchVisitation() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
-		Visitation visitation = visitationdao.searchVisitation(1);
-		System.out.print("Visitation is:"+visitation);
+		Visitation visitation = visitationdao.searchVisitation(visitId);
+		assertEquals(visitId, visitation.getVisitationId());
 	}
 
 	public void  testupdateVisitation() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
-		Visitation visitation = visitationdao.searchVisitation(1);
-		System.out.print("Before update Visitation is:"+visitation);
+		Visitation visitation = visitationdao.searchVisitation(visitId);
 		visitation.setDiagnosisResult("healthy");
 		visitationdao.updateVisitation(visitation);
-		visitation = visitationdao.searchVisitation(1);
-		System.out.print("After update Visitation is:"+visitation);
+		Visitation visitdb = visitationdao.searchVisitation(visitId);
+		assertEquals("healthy", visitdb.getDiagnosisResult());
 	}
-
+	
+	public void  testsearchApptListBypId() throws DAOException{
+		List<Visitation> visitList = new ArrayList<Visitation>();
+		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
+		
+		visitList = visitationdao.searchVisitListBypId(1);
+		Visitation visitation = visitList.get(0);
+		assertEquals("Bill Gates", visitation.getPatient().getPatientName());
+	}
 }
