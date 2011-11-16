@@ -8,6 +8,8 @@ import ece651.dao.DAOException;
 import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
 import ece651.model.SystemUser;
+import ece651.services.SystemUserService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements SessionAware{
@@ -121,6 +123,59 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		}
 		return result;
 	}
+
+	public String loginByCache(){
+		System.out.println("LoginAction is executed");
+		System.out.println("Username:"+user.getUsername()+", password:"+user.getPassword());		
+		String Role="";
+		try {
+			SystemUser userdb = SystemUserService.getInstance().searchUserByUsername(user.getUsername());
+			if(userdb==null){
+				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
+				return ERROR;
+			}
+			System.out.println(userdb.getUsername() + " password in database:"+userdb.getPassword());
+			if (user.getPassword().equals(userdb.getPassword())){
+				if (userdb.getRoleType().equals("D")){
+					this.nextActionName = "DOCTOR";
+					Role = "Doctor";
+				}	
+				if (userdb.getRoleType().equals("N")){
+					this.nextActionName = "NURSE";
+					Role = "Nurse";
+				}
+				if (userdb.getRoleType().equals("L")){
+					this.nextActionName = "LAWYER";
+					Role = "Lawyer";
+				}
+				if (userdb.getRoleType().equals("I")){
+					this.nextActionName = "ITGUY";
+					Role = "ITGuy";
+				}
+				result = SUCCESS;
+				session.put("CurrentUser",userdb);
+				session.put("Username",userdb.getUsername());
+				session.put("Firstname", userdb.getFirstName());
+				session.put("Lastname", userdb.getLastName());
+				session.put("Role",Role);
+			}
+			else {
+				result = ERROR;
+				errorMessage = "User name or password is not correct";				
+			}
+		} catch (DAOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = ERROR;
+			errorMessage = "Database access error";			
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			result = ERROR;
+			errorMessage = "System error";
+		}
+		return result;
+	}	
 	
 	public String logout() throws Exception {
 		System.out.println("LogoutAction is executed");
