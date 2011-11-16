@@ -15,6 +15,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
     <hr><br>
-
+		<center>
+			<h2>IT Guy's Main Page</h2>
+			purpose: <br>
+			1.create new system user<br>
+			2.
+		</center>
   </body>
 </html>

@@ -15,17 +15,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <hr><br>
   <td><s:a href="patient/toMainPage.action">Back</s:a></td>
   <h2>View Patient</h2><br>
+    <s:form action="viewPatient" method="post" namespace="/patient">
+                  <s:textfield name="healthCardID" label="HealthCardID"/>
+                  <s:token name="token"></s:token>
+ 		          <s:submit value="Search"/>
+                  </s:form>
  <hr> 
- <s:form action="editPatient" method ="post" namespace="/patient">
- <s:textfield name="patient.patientName" Label="Patient Name" value="#session.RetrievedPatient.patientName"/>
- <s:textfield name="patient.healthCardId" Label="Patient HealthCard ID" value="%{retrievePatient.healthCardId}"/>
- <s:textfield name="patient.medication" Label="Patient Medication" value="%{retrievePatient.medication}"/>
- <s:textfield name="patient.allergy" Label="Patient Allergy" value="%{retrievePatient.allergy}"/>
-  <s:token name="token"></s:token>
-        <s:if test = "%{#session.Role=='Nurse'}">
- 		   <s:submit value="Update"/>
- 		</s:if>
- </s:form>
+ Patient name: <s:property value="retrievePatient.patientName"/><br>
+ Patient healthcard: <s:property value="retrievePatient.healthCardId"/><br>
+ 
  
  
  
