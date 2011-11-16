@@ -13,24 +13,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body> 
     <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-    <hr><br>
-     <jsp:include page="/WEB-INF/patient/searchPatient.jsp"/>
- <hr> 
+    <hr><br> 
  <td><s:a href="patient/toMainPage.action">Back</s:a></td>
+ 
+  <s:form action="searchForEditPatient" method="post" namespace="/patient">
+                  <s:textfield name="healthCardID" label="HealthCardID"/>
+                  <s:token name="token"></s:token>
+ 		          <s:submit value="Search"/>
+                  </s:form>
+ <hr><br>                 
   <h2>Edit Patient</h2><br>
   <s:form name="editPatientForm" action="editPatient" method="post" namespace="/patient">
  		<table border="1">
  		<s:textfield name="retrievePatient.patientId" label="PatientID (ReadOnly)" readonly="true"/>
  		<s:textfield name="retrievePatient.patientName" label="First Name" required="true" />
- 		<s:radio list="#{'1':'male' ,'0': 'female'}" name="patient.gender" value="1" label="Gender"/>
+ 		<s:radio list="#{'1':'male' ,'0': 'female'}" name="retrievePatient.gender" label="Gender"/>
    		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/> 
  		<s:textfield name="retrievePatient.healthCardId" label="HealthCard ID (ReadOnly)" readonly="true"/>
  		<s:textarea name="retrievePatient.medication" label="Medication" cols="40" rows="10"/>
         <s:textarea name="retrievePatient.allergy" label="Comments" cols="40" rows="10"/>
         <s:token name="token"></s:token>
         <tr>
-        <td><s:reset value="Reset" /></td>
- 		<td><s:submit value="Create"/></td>
+ 		<td><s:submit value="Update"/></td>
  		</tr>
  		</table> 		
 	 </s:form>

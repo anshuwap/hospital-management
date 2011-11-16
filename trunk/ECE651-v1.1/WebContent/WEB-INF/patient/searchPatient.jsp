@@ -14,10 +14,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-          <s:form action="searchPatient" method="post" namespace="/patient">
-                  <s:textfield name="healthCardID" label="HealthCardID"/>
-                  <s:token name="token"></s:token>
- 		          <s:submit value="Search"/>
-                  </s:form>
+         
   </body>
 
