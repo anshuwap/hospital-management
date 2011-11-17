@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import ece651.dao.HibernateUtil;
 import ece651.model.Surgery;
 import ece651.model.SurgeryKey;
+import ece651.model.Visitation;
 
 public class SurgeryDaoImpl implements SurgeryDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -67,5 +68,11 @@ public class SurgeryDaoImpl implements SurgeryDao {
 			tran.rollback();
 			throw new DAOException(e.getMessage());
 		}
+	}
+
+	@Override
+	public Surgery searchSurgery(Visitation visitation) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Appointment;
+import ece651.model.SystemUser;
 
 public class AppointmentDaoImpl implements AppointmentDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -79,5 +80,12 @@ public class AppointmentDaoImpl implements AppointmentDao {
 			throw new DAOException(e.getMessage());
 		}
 		return appointmentList;
+	}
+
+	@Override
+	public ArrayList<Appointment> searchApppintment(SystemUser doctor)
+			throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
