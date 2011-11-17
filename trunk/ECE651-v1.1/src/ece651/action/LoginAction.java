@@ -1,7 +1,7 @@
 package ece651.action;
 
 import java.util.Map;
-
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import ece651.dao.DAOException;
@@ -13,6 +13,7 @@ import ece651.services.SystemUserService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements SessionAware{
+	private Logger log = Logger.getLogger(getClass().toString());
 	private static final long serialVersionUID = 6066592355639005936L;
 	private Map<String, Object> session;
 	private SystemUser user;
@@ -38,7 +39,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	}	
 	
 	public LoginAction() {
-		System.out.println("LoginAction is created");
+		log.info("LoginAction is created");
 	}
 	
 	public static long getSerialversionuid() {
@@ -70,8 +71,8 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	}
 
 	public String login(){
-		System.out.println("LoginAction is executed");
-		System.out.println("Username:"+user.getUsername()+", password:"+user.getPassword());		
+		log.info("LoginAction is executed");
+		log.info("Username:"+user.getUsername()+", password:"+user.getPassword());		
 		SystemUserDao userdao = new SystemUserDaoImpl();
 		SystemUser userdb;
 		String Role="";
@@ -81,7 +82,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
 				return ERROR;
 			}
-			System.out.println(userdb.getUsername() + " password in database:"+userdb.getPassword());
+			log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
 			if (user.getPassword().equals(userdb.getPassword())){
 				if (userdb.getRoleType().equals("D")){
 					this.nextActionName = "DOCTOR";
@@ -125,8 +126,8 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	}
 
 	public String loginByCache(){
-		System.out.println("LoginAction is executed");
-		System.out.println("Username:"+user.getUsername()+", password:"+user.getPassword());		
+		log.info("LoginAction is executed");
+		log.info("Username:"+user.getUsername()+", password:"+user.getPassword());		
 		String Role="";
 		try {
 			SystemUser userdb = SystemUserService.getInstance().searchUserByUsername(user.getUsername());
@@ -134,7 +135,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
 				return ERROR;
 			}
-			System.out.println(userdb.getUsername() + " password in database:"+userdb.getPassword());
+			log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
 			if (user.getPassword().equals(userdb.getPassword())){
 				if (userdb.getRoleType().equals("D")){
 					this.nextActionName = "DOCTOR";
@@ -178,8 +179,8 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	}	
 	
 	public String logout() throws Exception {
-		System.out.println("LogoutAction is executed");
-		//System.out.println("Username:" + user.getUsername() + ", password:" + user.getPassword());
+		log.info("LogoutAction is executed");
+		//log.info("Username:" + user.getUsername() + ", password:" + user.getPassword());
 		if (session.containsKey("CurrentUser")){
 			session.remove("CurrentUser");
 		}
