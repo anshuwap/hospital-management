@@ -128,9 +128,11 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	public String loginByCache(){
 		log.info("LoginAction is executed");
 		log.info("Username:"+user.getUsername()+", password:"+user.getPassword());		
+		SystemUserService userService = new SystemUserService();
+		SystemUser userdb;
 		String Role="";
 		try {
-			SystemUser userdb = SystemUserService.getInstance().searchUserByUsername(user.getUsername());
+			userdb = userService.searchUserByUsername(user.getUsername());
 			if(userdb==null){
 				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
 				return ERROR;
