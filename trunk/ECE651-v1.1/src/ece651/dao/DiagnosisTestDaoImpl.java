@@ -1,6 +1,6 @@
 package ece651.dao;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
