@@ -1,5 +1,7 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import org.hibernate.HibernateException;
@@ -9,6 +11,7 @@ import org.hibernate.Transaction;
 import ece651.dao.HibernateUtil;
 import ece651.model.DiagnosisTest;
 import ece651.model.DiagnosisTestKey;
+import ece651.model.Visitation;
 
 public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -70,5 +73,12 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 			tran.rollback();
 			throw new DAOException(e.getMessage());
 		}
+	}
+
+	@Override
+	public ArrayList<DiagnosisTest> searchDiagnosisTest(Visitation visitation)
+			throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

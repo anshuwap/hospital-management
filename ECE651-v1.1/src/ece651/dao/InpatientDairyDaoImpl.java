@@ -1,5 +1,7 @@
 package ece651.dao;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import org.hibernate.HibernateException;
@@ -7,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
+import ece651.model.Inpatient;
 import ece651.model.InpatientDairy;
 import ece651.model.InpatientDairyKey;
 
@@ -70,5 +73,12 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 			tran.rollback();
 			throw new DAOException(e.getMessage());
 		}
+	}
+
+	@Override
+	public ArrayList<InpatientDairy> searchInpatientDairy(Inpatient inpatient)
+			throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

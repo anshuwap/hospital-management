@@ -22,14 +22,17 @@ public class SystemUserAction extends ActionSupport implements SessionAware,
 	}
 	
 	public String CreateSystemUser(){
+		return null;
 		
 	}
 	
 	public String EditSystemUser(){
+		return null;
 		
 	}
 	
 	public String ViewSystemUser(){
+		return null;
 		
 	}
 

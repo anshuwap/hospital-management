@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
+import ece651.model.Patient;
 import ece651.model.Visitation;
 
 public class VisitationDaoImpl implements VisitationDao {
@@ -78,5 +79,12 @@ public class VisitationDaoImpl implements VisitationDao {
 			throw new DAOException(e.getMessage());
 		}
 		return visitList;
+	}
+
+	@Override
+	public ArrayList<Visitation> searchVisitation(Patient patient)
+			throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
