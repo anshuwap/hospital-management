@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Appointment;
-import ece651.model.SystemUser;
 
 public class AppointmentDaoImpl implements AppointmentDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -70,7 +69,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 	}
 
-	public List<Appointment> searchApptListBypId(Integer patiendId)throws DAOException {
+	public List<Appointment> searchApptListBypId(int patiendId)throws DAOException {
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
 		try {
 			Query hql = session.createQuery("from Appointment as app where app.patient.patientId=?");
@@ -82,10 +81,16 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		return appointmentList;
 	}
 
-	@Override
-	public ArrayList<Appointment> searchApppintment(SystemUser doctor)
+	public List<Appointment> searchApptListBydId(int doctorId)
 			throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		try {
+			Query hql = session.createQuery("from Appointment as app where app.doctor.doctorId=?");
+			hql.setInteger(0, doctorId);
+			appointmentList = hql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return appointmentList;
 	}
 }

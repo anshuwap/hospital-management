@@ -69,7 +69,7 @@ public class VisitationDaoImpl implements VisitationDao {
 		}
 	}
 	
-	public List<Visitation> searchVisitListBypId(Integer patiendId)throws DAOException {
+	public List<Visitation> searchVisitListBypId(int patiendId)throws DAOException {
 		List<Visitation> visitList = new ArrayList<Visitation>();
 		try {
 			Query hql = session.createQuery("from Visitation as visit where visit.patient.patientId=?");
@@ -81,10 +81,4 @@ public class VisitationDaoImpl implements VisitationDao {
 		return visitList;
 	}
 
-	@Override
-	public ArrayList<Visitation> searchVisitation(Patient patient)
-			throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

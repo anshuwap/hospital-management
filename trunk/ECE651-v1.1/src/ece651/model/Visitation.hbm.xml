@@ -21,5 +21,30 @@
 		<property name="diagnosisResult" column="DiagnosisResult"/>
 		<property name="startTime" column="StartTime"/>
 		<property name="endTime" column="EndTime"/>
+		
+ 		<set name="diagnosisTestSet" table="DiagnosisTest" cascade="save-update" order-by="DiagnosisTestId" lazy="false">
+			<key>
+				<column name="VisitationId"></column>
+			</key>
+			<one-to-many class="ece651.model.DiagnosisTest"/>
+		</set>
+		<set name="surgerySet" table="Surgery" cascade="save-update" order-by="SurgeryId" lazy="false">
+			<key>
+				<column name="VisitationId"></column>
+			</key>
+			<one-to-many class="ece651.model.Surgery"/>
+		</set>
+ 		<set name="inpatientSet" table="Inpatient" cascade="save-update" order-by="InpatientId" lazy="false">
+			<key>
+				<column name="VisitationId"></column>
+			</key>
+			<one-to-many class="ece651.model.Inpatient"/>
+		</set>		
+ 		<set name="prescriptionSet" table="Prescription" cascade="save-update" order-by="PrescriptionId" lazy="false">
+			<key>
+				<column name="PrescriptionId"></column>
+			</key>
+			<one-to-many class="ece651.model.Prescription"/>
+		</set>
 	</class>
 </hibernate-mapping>

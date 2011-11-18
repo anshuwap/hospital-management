@@ -18,7 +18,8 @@ import ece651.model.Visitation;
 
 public class TestVisitationDao extends TestCase {
 	
-	public static Integer visitId;
+	public static Integer visitId_with_App;
+	public static Integer visitId_without_App;
 	
 	public void  testsaveVisitation_with_App() throws DAOException{
 		VisitationDaoImpl visitationDao = new VisitationDaoImpl();
@@ -44,10 +45,10 @@ public class TestVisitationDao extends TestCase {
 		visitation.setDiagnosisResult("good");
 		
 		visitationDao.saveVisitation(visitation);
-		visitId = visitation.getVisitationId();
+		visitId_with_App = visitation.getVisitationId();
 		
-		Visitation visitdb = visitationDao.searchVisitation(visitId);
-		assertEquals(visitId, visitdb.getVisitationId());
+		Visitation visitdb = visitationDao.searchVisitation(visitId_with_App);
+		assertEquals(visitId_with_App, visitdb.getVisitationId());
 
 	}
 	
@@ -72,27 +73,34 @@ public class TestVisitationDao extends TestCase {
 		visitation.setDiagnosisResult("good");
 		
 		visitationDao.saveVisitation(visitation);
-		visitId = visitation.getVisitationId();
+		visitId_without_App = visitation.getVisitationId();
 		
-		Visitation visitdb = visitationDao.searchVisitation(visitId);
-		assertEquals(visitId, visitdb.getVisitationId());
+		Visitation visitdb = visitationDao.searchVisitation(visitId_without_App);
+		assertEquals(visitId_without_App, visitdb.getVisitationId());
 
+	}
+
+	public void  testsearchVisitation_default() throws DAOException{
+		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
+		Integer visitId = 1;
+		Visitation visitation = visitationdao.searchVisitation(visitId);
+		assertEquals(visitId, visitation.getVisitationId());
 	}
 	
 	public void  testsearchVisitation() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
-		Visitation visitation = visitationdao.searchVisitation(visitId);
-		assertEquals(visitId, visitation.getVisitationId());
+		Visitation visitation = visitationdao.searchVisitation(visitId_with_App);
+		assertEquals(visitId_with_App, visitation.getVisitationId());
 	}
 
 	public void  testupdateVisitation() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
-		Visitation visitation = visitationdao.searchVisitation(visitId);
+		Visitation visitation = visitationdao.searchVisitation(visitId_with_App);
 		visitation.setDiagnosisResult("healthy");
 		visitationdao.updateVisitation(visitation);
-		Visitation visitdb = visitationdao.searchVisitation(visitId);
+		Visitation visitdb = visitationdao.searchVisitation(visitId_with_App);
 		assertEquals("healthy", visitdb.getDiagnosisResult());
 	}
 	
