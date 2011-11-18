@@ -4,6 +4,9 @@
 <hibernate-mapping>
 	<class name="ece651.model.Prescription" table="Prescription" >
 		<id name="prescriptionId" column="PrescriptionId" >
+			<generator class="foreign">
+				<param name="property">visitation</param>
+			</generator>
 		</id>
 		<many-to-one name="doctor" class="ece651.model.SystemUser" lazy="false">
 			<column name="DoctorId"></column>
@@ -13,6 +16,7 @@
 		</many-to-one>
 		<property name="prescriptionDescription" column="PrescriptionDescription"/>
 		<property name="prescriptionDate" column="PrescriptionDate"/>
+		<one-to-one name="visitation" class="ece651.model.Visitation" constrained="true"></one-to-one>
 	</class>
 	
 	<class name="ece651.model.DiagnosisTest" table="DiagnosisTest" >

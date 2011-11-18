@@ -13,6 +13,7 @@ public class Prescription implements Serializable {
 	private SystemUser doctor;
 	private String  PrescriptionDescription;
 	private Date    PrescriptionDate;
+	private Visitation visitation;
 	public Integer getPrescriptionId() {
 		return PrescriptionId;
 	}
@@ -45,6 +46,12 @@ public class Prescription implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Visitation getVisitation() {
+		return visitation;
+	}
+	public void setVisitation(Visitation visitation) {
+		this.visitation = visitation;
 	}
 	@Override
 	public int hashCode() {

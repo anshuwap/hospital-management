@@ -224,7 +224,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		ArrayList<Visitation> resultVisitationList;
 		try{
 			VisitationDao visitationDao = new VisitationDaoImpl();
-			resultVisitationList = visitationDao.searchVisitation(patient);
+			resultVisitationList = (ArrayList<Visitation>) visitationDao.searchVisitListBypId(patient.getPatientId());
 			if (resultVisitationList.isEmpty()){
 				return "Visitation Not Found";
 			}

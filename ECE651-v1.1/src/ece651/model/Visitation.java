@@ -23,8 +23,8 @@ public class Visitation implements Serializable{
 	private Set<DiagnosisTest> diagnosisTestSet;
 	private Set<Surgery> surgerySet;
 	private Set<Inpatient> inpatientSet;
-	private Set<Prescription> prescriptionSet;
-	//private Prescription prescription;
+	//private Set<Prescription> prescriptionSet;
+	private Prescription prescription;
 	public Integer getVisitationId() {
 		return visitationId;
 	}
@@ -106,11 +106,11 @@ public class Visitation implements Serializable{
 	public void setInpatientSet(Set<Inpatient> inpatientSet) {
 		this.inpatientSet = inpatientSet;
 	}
-	public Set<Prescription> getPrescriptionSet() {
-		return prescriptionSet;
+	public Prescription getPrescription() {
+		return prescription;
 	}
-	public void setPrescriptionSet(Set<Prescription> prescriptionSet) {
-		this.prescriptionSet = prescriptionSet;
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
 	}
 	@Override
 	public int hashCode() {
