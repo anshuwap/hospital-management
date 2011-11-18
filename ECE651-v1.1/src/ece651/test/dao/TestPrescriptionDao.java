@@ -22,7 +22,7 @@ public class TestPrescriptionDao extends TestCase {
 		Patient patient = patientdao.searchPatient(1);
 		
 		Prescription prescription = new Prescription();
-		prescription.setPrescriptionId(1);
+		prescription.setPrescriptionId(2);
 		prescription.setPatient(patient);
 		prescription.setDoctor(doctor);
 
@@ -38,18 +38,18 @@ public class TestPrescriptionDao extends TestCase {
 	public void  testsearchPrescription() throws DAOException{
 		PrescriptionDaoImpl prescriptionDao = new PrescriptionDaoImpl();
 		
-		Prescription prescription = prescriptionDao.searchPrescription(1);
+		Prescription prescription = prescriptionDao.searchPrescription(2);
 		System.out.print("Prescription is:"+prescription);
 	}
 
 	public void  testupdatePrescription() throws DAOException{
 		PrescriptionDaoImpl prescriptionDao = new PrescriptionDaoImpl();
 		
-		Prescription prescription = prescriptionDao.searchPrescription(1);
+		Prescription prescription = prescriptionDao.searchPrescription(2);
 		System.out.print("Before update Prescription is:"+prescription);
 		prescription.setPrescriptionDescription("VD+VC+sun light");
 		prescriptionDao.updatePrescription(prescription);
-		prescription = prescriptionDao.searchPrescription(1);
+		prescription = prescriptionDao.searchPrescription(2);
 		System.out.print("After update Prescription is:"+prescription);
 	}
 

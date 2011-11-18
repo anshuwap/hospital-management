@@ -2,6 +2,7 @@ package ece651.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Set;
 
 import ece651.model.Appointment;
 
@@ -19,6 +20,11 @@ public class Visitation implements Serializable{
 	private String startTime;
 	private String endTime;
 	private Appointment appointment;
+	private Set<DiagnosisTest> diagnosisTestSet;
+	private Set<Surgery> surgerySet;
+	private Set<Inpatient> inpatientSet;
+	private Set<Prescription> prescriptionSet;
+	//private Prescription prescription;
 	public Integer getVisitationId() {
 		return visitationId;
 	}
@@ -81,6 +87,30 @@ public class Visitation implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Set<DiagnosisTest> getDiagnosisTestSet() {
+		return diagnosisTestSet;
+	}
+	public void setDiagnosisTestSet(Set<DiagnosisTest> diagnosisTestSet) {
+		this.diagnosisTestSet = diagnosisTestSet;
+	}
+	public Set<Surgery> getSurgerySet() {
+		return surgerySet;
+	}
+	public void setSurgerySet(Set<Surgery> surgerySet) {
+		this.surgerySet = surgerySet;
+	}
+	public Set<Inpatient> getInpatientSet() {
+		return inpatientSet;
+	}
+	public void setInpatientSet(Set<Inpatient> inpatientSet) {
+		this.inpatientSet = inpatientSet;
+	}
+	public Set<Prescription> getPrescriptionSet() {
+		return prescriptionSet;
+	}
+	public void setPrescriptionSet(Set<Prescription> prescriptionSet) {
+		this.prescriptionSet = prescriptionSet;
 	}
 	@Override
 	public int hashCode() {
