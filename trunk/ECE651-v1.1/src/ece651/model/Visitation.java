@@ -23,7 +23,6 @@ public class Visitation implements Serializable{
 	private Set<DiagnosisTest> diagnosisTestSet;
 	private Set<Surgery> surgerySet;
 	private Set<Inpatient> inpatientSet;
-	//private Set<Prescription> prescriptionSet;
 	private Prescription prescription;
 	public Integer getVisitationId() {
 		return visitationId;
@@ -120,11 +119,20 @@ public class Visitation implements Serializable{
 				+ ((appointment == null) ? 0 : appointment.hashCode());
 		result = prime * result
 				+ ((diagnosisResult == null) ? 0 : diagnosisResult.hashCode());
+		result = prime
+				* result
+				+ ((diagnosisTestSet == null) ? 0 : diagnosisTestSet.hashCode());
 		result = prime * result + ((doctor == null) ? 0 : doctor.hashCode());
 		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result
+				+ ((inpatientSet == null) ? 0 : inpatientSet.hashCode());
 		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
 		result = prime * result
+				+ ((prescription == null) ? 0 : prescription.hashCode());
+		result = prime * result
 				+ ((startTime == null) ? 0 : startTime.hashCode());
+		result = prime * result
+				+ ((surgerySet == null) ? 0 : surgerySet.hashCode());
 		result = prime
 				* result
 				+ ((symptomDescription == null) ? 0 : symptomDescription
@@ -156,6 +164,11 @@ public class Visitation implements Serializable{
 				return false;
 		} else if (!diagnosisResult.equals(other.diagnosisResult))
 			return false;
+		if (diagnosisTestSet == null) {
+			if (other.diagnosisTestSet != null)
+				return false;
+		} else if (!diagnosisTestSet.equals(other.diagnosisTestSet))
+			return false;
 		if (doctor == null) {
 			if (other.doctor != null)
 				return false;
@@ -166,15 +179,30 @@ public class Visitation implements Serializable{
 				return false;
 		} else if (!endTime.equals(other.endTime))
 			return false;
+		if (inpatientSet == null) {
+			if (other.inpatientSet != null)
+				return false;
+		} else if (!inpatientSet.equals(other.inpatientSet))
+			return false;
 		if (patient == null) {
 			if (other.patient != null)
 				return false;
 		} else if (!patient.equals(other.patient))
 			return false;
+		if (prescription == null) {
+			if (other.prescription != null)
+				return false;
+		} else if (!prescription.equals(other.prescription))
+			return false;
 		if (startTime == null) {
 			if (other.startTime != null)
 				return false;
 		} else if (!startTime.equals(other.startTime))
+			return false;
+		if (surgerySet == null) {
+			if (other.surgerySet != null)
+				return false;
+		} else if (!surgerySet.equals(other.surgerySet))
 			return false;
 		if (symptomDescription == null) {
 			if (other.symptomDescription != null)
@@ -206,6 +234,8 @@ public class Visitation implements Serializable{
 				+ ", symptomDescription=" + symptomDescription
 				+ ", diagnosisResult=" + diagnosisResult + ", startTime="
 				+ startTime + ", endTime=" + endTime + ", appointment="
-				+ appointment + "]";
+				+ appointment + ", diagnosisTestSet=" + diagnosisTestSet
+				+ ", surgerySet=" + surgerySet + ", inpatientSet="
+				+ inpatientSet + ", prescription=" + prescription + "]";
 	}
 }
