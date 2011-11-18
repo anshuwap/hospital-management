@@ -1,6 +1,7 @@
 package ece651.action;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -21,6 +22,8 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private String roleName;
 	private String patientBirthday;
 	private String operationStatus;
+	private ArrayList<Visitation> patientVisitation;
+	private String visitationQuery;
 
 	public Patient getPatient() {
 		return patient;
@@ -70,6 +73,22 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.operationStatus = operationStatus;
 	}
 
+	public ArrayList<Visitation> getPatientVisitation() {
+		return patientVisitation;
+	}
+
+	public String getVisitationQuery() {
+		return visitationQuery;
+	}
+
+	public void setVisitationQuery(String visitationQuery) {
+		this.visitationQuery = visitationQuery;
+	}
+
+	public void setPatientVisitation(ArrayList<Visitation> patientVisitation) {
+		this.patientVisitation = patientVisitation;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -116,6 +135,8 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		return SUCCESS;		
 	}
 	
+	
+	@SuppressWarnings("unchecked")
 	public String SearchPatient(){
 		System.out.println("ViewPatient is executed");
 		Object searchResult = QueryPatient(healthCardID.toLowerCase());
@@ -125,14 +146,28 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		    return ERROR;
 		}
 		else{
+			
+			
 			retrievePatient = (Patient)searchResult;
+			
+			Object searchVisitation = QueryVisitation(retrievePatient);
+			if(searchVisitation instanceof String){
+				this.setVisitationQuery("Visitation Not Found, Reason: "+(String)searchVisitation);
+			}
+			else {
+				this.setPatientVisitation((ArrayList<Visitation>)searchVisitation);
+				this.session.put("PatientVisitationList", patientVisitation);
+			}
+			this.session.put("RetrievePatient", retrievePatient);
 			this.setPatientBirthday(retrievePatient.getBirthday().toString().substring(0, 10));
 			if(retrievePatient.getGender().equalsIgnoreCase("M"))
 				retrievePatient.setGender("1");
 			else
 				retrievePatient.setGender("0");
 			this.setOperationStatus("Search Patient: Found.");
+			roleName = (String) session.get("Role");
 			healthCardID = null;
+			
 			return SUCCESS;
 		}
 			
@@ -182,6 +217,21 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			}//end of catch
 		
 		return resultPatient;
+	}
+	
+	
+	private Object QueryVisitation(Patient patient){
+		ArrayList<Visitation> resultVisitationList;
+		try{
+			VisitationDao visitationDao = new VisitationDaoImpl();
+			resultVisitationList = visitationDao.searchVisitation(patient);
+			if (resultVisitationList.isEmpty()){
+				return "Visitation Not Found";
+			}
+		} catch(Exception e){
+			return "Exception Happened"+e.getMessage();		
+		}		
+		return resultVisitationList;
 	}
 	
 

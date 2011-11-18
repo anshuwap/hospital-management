@@ -14,7 +14,23 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<action name="createAppointment" class="ece651.action.AppointmentAction" method="CreateAppointment">
+			<result name="success" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
+		<action name="editAppointment" class="ece651.action.AppointmentAction" method="editAppointment">
+			<result name="success" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchAppointment" class="ece651.action.AppointmentAction" method ="SearchAppointment">
+		    <result name="success" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 		</package>
 </struts>

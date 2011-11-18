@@ -10,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>   
   <!--<link href="<s:url value="/css/main.css"/>" rel="stylesheet" type="text/css"/>-->
+  <s:debug></s:debug>
   </head>
   <body>
     <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>

@@ -21,5 +21,17 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreateInpatientDairy(){
+		return SUCCESS;
+	}
+	
+	public String EditInpatientDairy(){
+		return SUCCESS;
+	}
+	
+	public String SearchInpatientDairy(){
+		return SUCCESS;
+	}
 
 }

@@ -21,5 +21,17 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreateInpatient(){
+		return SUCCESS;
+	}
+	
+	public String EditInpatient(){
+		return SUCCESS;
+	}
+	
+	public String SearchInpatient(){
+		return SUCCESS;
+	}
 
 }

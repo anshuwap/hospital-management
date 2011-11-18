@@ -21,5 +21,17 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreateSurgery(){
+		return SUCCESS;
+	}
+	
+	public String EditSurgery(){
+		return SUCCESS;
+	}
+	
+	public String SearchSurgery(){
+		return SUCCESS;
+	}
 
 }

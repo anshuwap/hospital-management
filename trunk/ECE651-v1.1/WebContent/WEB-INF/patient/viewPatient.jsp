@@ -7,13 +7,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  <base href="<%=basePath%>">
    <s:debug></s:debug>
 </head>
   
   <body> 
   <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
   <hr><br>
- <td><s:a href="patient/toMainPage.action">Back</s:a></td>
+   <s:a href="patient/toMainPage.action">Back</s:a>
  
   <s:form action="searchForViewPatient" method="post" namespace="/patient">
                   <s:textfield name="healthCardID" label="HealthCardID"/>
@@ -40,10 +41,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		</table>
 <br>
  Operation Status: <s:property value="operationStatus"/><br>
-<!-- Patient name: <s:property value="retrievePatient.patientName"/><br>-->
-<!-- Patient healthcard: <s:property value="retrievePatient.healthCardId"/><br>-->
  
- 
+ <s:if test='roleName=="Doctor"&&retrievePatient!=null'>
+ <s:a href="visitation/createVisitation.action" >Create New Visitation</s:a>
+ </s:if>
+
  
  
 </body>
