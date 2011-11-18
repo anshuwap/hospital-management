@@ -3,8 +3,12 @@
 
 <hibernate-mapping>
 	<class name="ece651.model.Visitation" table="Visitation" >
-		<id name="visitationId" column="VisitationId" >
+		<id name="visitationId" column="VisitationId" unsaved-value="0">
+			<generator class="native"/>
 		</id>
+		<many-to-one name="appointment" class="ece651.model.Appointment" lazy="false">
+			<column name="AppointmentId"></column>
+		</many-to-one>
 		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
 			<column name="PatientId"></column>
 		</many-to-one>
@@ -17,8 +21,5 @@
 		<property name="diagnosisResult" column="DiagnosisResult"/>
 		<property name="startTime" column="StartTime"/>
 		<property name="endTime" column="EndTime"/>
-		<many-to-one name="appointment" class="ece651.model.Appointment" insert="false" update="false" lazy="false">
-			<column name="VisitationId"></column>
-		</many-to-one>
 	</class>
 </hibernate-mapping>
