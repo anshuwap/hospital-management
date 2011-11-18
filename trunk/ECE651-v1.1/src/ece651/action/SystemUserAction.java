@@ -10,6 +10,10 @@ import com.opensymphony.xwork2.ActionSupport;
 public class SystemUserAction extends ActionSupport implements SessionAware,
 		RequestAware {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<String, Object> session;
 	private Map<String, Object> request;
 
@@ -21,6 +25,14 @@ public class SystemUserAction extends ActionSupport implements SessionAware,
 		this.request = request;	
 	}
 	
+	public Map<String, Object> getSession() {
+		return session;
+	}
+
+	public Map<String, Object> getRequest() {
+		return request;
+	}
+
 	public String CreateSystemUser(){
 		return SUCCESS;
 		
