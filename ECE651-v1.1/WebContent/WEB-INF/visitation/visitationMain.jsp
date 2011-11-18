@@ -35,13 +35,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </s:form>
    	</table>	
     <hr><br> 
-       <s:a href="diagnosistest/createDiagnosisTest.action" >Issue Diagnosis Test</s:a>  
+       <s:a href="diagnosistest/createDiagnosisTest.action" >Issue Diagnosis Test</s:a> 
+       show the hyperlink list of Diagnosis Tests, click each will direct to the diagnosistestMain.jsp<br> 
     <hr><br> 
        <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
+       if there already exist one prescription for the visitation, change the name of hyperlink to  View Prescription and change the action to search.
     <hr><br> 
        <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
+       same to prescription
     <hr><br> 
-       <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a> 
+       <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a>
+       same to prescription 
          		
   </body>
 </html>

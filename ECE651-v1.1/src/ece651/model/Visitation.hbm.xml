@@ -4,7 +4,7 @@
 <hibernate-mapping>
 	<class name="ece651.model.Visitation" table="Visitation" >
 		<id name="visitationId" column="VisitationId" unsaved-value="0">
-			<generator class="native"/>
+		    <generator class="native"/>
 		</id>
 		<many-to-one name="appointment" class="ece651.model.Appointment" lazy="false">
 			<column name="AppointmentId"></column>
