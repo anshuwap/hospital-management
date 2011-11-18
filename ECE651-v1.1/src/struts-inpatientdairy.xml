@@ -14,6 +14,23 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<action name="createInpatientDairy" class="ece651.action.InpatientDairyAction" method="CreateInpatientDairy">
+			<result name="success" type="dispatcher">/WEB-INF/inpatientdairy/inpatientdairyMain.jsp</result>
+			<result name="error" type="dispatcher">WEB-INF/inpatient/inpatientMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="editInpatientDairy" class="ece651.action.InpatientDairyAction" method ="EditInpatientDairy">
+		    <result name="success" type="dispatcher">/WEB-INF/inpatientdairy/inpatientdairyMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/inpatientdairy/inpatientdairyMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchInpatientDairy" class="ece651.action.InpatientDairyAction" method ="SearchInpatientDairy">
+		    <result name="success" type="dispatcher">/WEB-INF/inpatientdairy/inpatientdairyMain.jsp</result>
+		    <result name="error" type="dispatcher">WEB-INF/inpatient/inpatientMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 		
 		</package>

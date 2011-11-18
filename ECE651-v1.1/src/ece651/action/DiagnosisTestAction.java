@@ -21,5 +21,17 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreateDiagnosisTest(){
+		return SUCCESS;
+	}
+	
+	public String EditDiagnosisTest(){
+		return SUCCESS;
+	}
+	
+	public String SearchDiagnosisTest(){
+		return SUCCESS;
+	}
 
 }

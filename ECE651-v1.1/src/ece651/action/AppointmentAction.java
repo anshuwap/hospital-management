@@ -21,5 +21,17 @@ public class AppointmentAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreateAppointment(){
+		return SUCCESS;
+	}
+	
+	public String EditAppointment(){
+		return SUCCESS;
+	}
+	
+	public String SearchAppointment(){
+		return SUCCESS;
+	}
 
 }

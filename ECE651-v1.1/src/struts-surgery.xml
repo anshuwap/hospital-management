@@ -14,6 +14,25 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<action name="createSurgery" class="ece651.action.SurgeryAction" method="CreateSurgery">
+			<result name="success" type="dispatcher">/WEB-INF/surgery/surgeryMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="editSurgery" class="ece651.action.SurgeryAction" method ="EditSurgery">
+		    <result name="success" type="dispatcher">/WEB-INF/surgery/surgeryMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/surgery/surgeryMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchSurgery" class="ece651.action.SurgeryAction" method ="SearchSurgery">
+		    <result name="success" type="dispatcher">/WEB-INF/surgery/surgeryMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		
 		
 		
 		</package>

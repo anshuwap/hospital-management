@@ -21,5 +21,18 @@ public class PrescriptionAction extends ActionSupport implements SessionAware,
 		this.request = request;
 		
 	}
+	
+	public String CreatePrescription(){
+		return SUCCESS;
+		
+	}
+	
+	public String EditPrescription(){
+		return SUCCESS;
+	}
+	
+	public String SearchPrescription(){
+		return SUCCESS;
+	}
 
 }

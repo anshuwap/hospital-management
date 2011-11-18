@@ -16,17 +16,19 @@
 		
 		<action name="createSystemUser" class="ece651.action.SystemUserAction" method="CreateSystemUser">
 		    <result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/patient/createSystemUser.jsp</result>
-			<result name="invalid.token">/WEB-INF/patient/createPatient.jsp</result>
-			<interceptor-ref name="token" />
+			<result name="error" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
 		<action name="editSystemUser" class="ece651.action.SystemUserAction" method="EditSystemUser">
+		    <result name="success" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
 		      <interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="viewSystemUser" class="ece651.action.SystemUserAction" method="ViewSystemUser">
+		<action name="searchSystemUser" class="ece651.action.SystemUserAction" method="SearchSystemUser">
+		    <result name="success" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		

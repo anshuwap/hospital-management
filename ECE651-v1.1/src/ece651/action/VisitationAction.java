@@ -1,6 +1,7 @@
 package ece651.action;
 
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -8,26 +9,117 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import ece651.dao.*;
+import ece651.model.*;
+
 public class VisitationAction extends ActionSupport implements SessionAware, RequestAware{
 
 	private Map<String, Object> session;
 	private Map<String, Object> request;
+	private Visitation visitation;
+	private Patient retrievePatient;
+	private String operationStatus;
+	private SystemUser doctor;
 
 	
 	
+	public Visitation getVisitation() {
+		return visitation;
+	}
+
+
+	public void setVisitation(Visitation visitation) {
+		this.visitation = visitation;
+	}
+
+
+	public Patient getRetrievePatient() {
+		return retrievePatient;
+	}
+
+
+	public void setRetrievePatient(Patient retrievePatient) {
+		this.retrievePatient = retrievePatient;
+	}
+
+
+	public String getOperationStatus() {
+		return operationStatus;
+	}
+
+
+	public void setOperationStatus(String operationStatus) {
+		this.operationStatus = operationStatus;
+	}
+
+
+	public SystemUser getDoctor() {
+		return doctor;
+	}
+
+
+	public void setDoctor(SystemUser doctor) {
+		this.doctor = doctor;
+	}
+
+
 	public void setRequest(Map<String, Object> request) {
-		// TODO Auto-generated method stub
+		this.request = request;
 		
 	}
 
 
 	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
+		this.session = session;	
 		
 	}
 
 	//TODO create a visitation entry
 	public String CreateVisitation(){
+		System.out.println("CreateVisitation is executed");//used for debug
+		VisitationDao visitationDao = new VisitationDaoImpl();
+		Visitation newVisitation = new Visitation();
+		AppointmentDao appointmentDao = new AppointmentDaoImpl();
+		Appointment nullAppointment = new Appointment();
+	/*	
+		try{
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			newVisitation.setVisitationDate(sqlDate);
+			newVisitation.setPatient((Patient)session.get("RetrievePatient"));
+			SystemUser doctor = (SystemUser)session.get("CurrentUser");
+			newVisitation.setDoctor(doctor);
+			newVisitation.setVisitationType("N");
+//			//fake code block
+//			nullAppointment.setDoctor(doctor);//fake code
+//			nullAppointment.setNurse(doctor); //fake code
+//			nullAppointment.setPatient((Patient)session.get("RetrievePatient"));//fake code
+//			nullAppointment.setAppointmentDate(sqlDate);//fake code
+//			nullAppointment.setStartTime("now");
+//			nullAppointment.setEndTime("then");
+//			nullAppointment.setStatus("no appoinment");
+//            appointmentDao.saveAppointment(nullAppointment);//fake code
+//            //fake code block
+			newVisitation.setAppointment(appointmentDao.searchAppointment(1));//test code			
+			visitationDao.saveVisitation(newVisitation);
+			
+		}catch(Exception e){
+			this.setOperationStatus("Create New Visitation Failed! Exception Happened: "+e.getMessage());
+			return ERROR;		
+		}*/
+		
+		//testing block start
+        java.util.Date utilDate = new java.util.Date();
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        newVisitation.setVisitationDate(sqlDate);
+		newVisitation.setPatient((Patient)session.get("RetrievePatient"));
+
+		newVisitation.setDoctor((SystemUser) session.get("CurrentUser"));
+		newVisitation.setVisitationType("N");
+		this.setVisitation(newVisitation);
+		//testing block end
+		
+		this.setOperationStatus("Create New Visitation Succeeded!");
 		return SUCCESS;
 		
 	}
@@ -40,6 +132,9 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	//TODO search visitation by patientID, then return a visitation instance
 	public String ViewVisitation(){
 		return SUCCESS;
-		
+	}
+	
+	public String SearchVisitation(){
+		return SUCCESS;
 	}
 }

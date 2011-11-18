@@ -14,7 +14,23 @@
 			</interceptor-stack>
 		</interceptors>
 		
+	    <action name="createDiagnosisTest" class="ece651.action.DiagnosisTestAction" method="CreateDiagnosisTest">
+			<result name="success" type="dispatcher">/WEB-INF/diagnosistest/diagnosistestMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
+		<action name="editDiagnosisTest" class="ece651.action.DiagnosisTestAction" method ="EditDiagnosisTest">
+		    <result name="success" type="dispatcher">/WEB-INF/diagnosistest/diagnosistestMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/diagnosistest/diagnosistestMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchDiagnosisTest" class="ece651.action.DiagnosisTestAction" method ="SearchDiagnosisTest">
+		    <result name="success" type="dispatcher">/WEB-INF/diagnosistest/diagnosistestMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 		</package>
 </struts>

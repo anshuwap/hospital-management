@@ -16,6 +16,7 @@
 		
 		<action name="createVisitation" class="ece651.action.VisitationAction" method="CreateVisitation">
 			<result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
@@ -28,6 +29,8 @@
 		    <result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
+		
+		<action name="searchVisitation" class="ece651.action.VisitationAction" method="SearchVisitation"></action>
 		
 	</package>
 </struts>

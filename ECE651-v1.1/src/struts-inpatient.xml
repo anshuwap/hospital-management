@@ -14,7 +14,23 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<action name="createInpatient" class="ece651.action.InpatientAction" method="CreateInpatient">
+			<result name="success" type="dispatcher">/WEB-INF/inpatient/inpatientMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
+		<action name="editInpatient" class="ece651.action.InpatientAction" method ="EditInpatient">
+		    <result name="success" type="dispatcher">/WEB-INF/inpatient/inpatientMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/inpatient/inpatientMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchInpatient" class="ece651.action.InpatientAction" method ="SearchInpatient">
+		    <result name="success" type="dispatcher">/WEB-INF/inpatient/inpatientMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 		</package>
 </struts>

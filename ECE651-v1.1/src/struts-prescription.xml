@@ -14,7 +14,23 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<action name="createPrescription" class="ece651.action.PrescriptionAction" method="CreatePrescription">
+			<result name="success" type="dispatcher">/WEB-INF/prescription/prescriptionMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
+		<action name="editPrescription" class="ece651.action.PrescriptionAction" method ="EditPrescription">
+		    <result name="success" type="dispatcher">/WEB-INF/prescription/prescriptionMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/prescription/prescriptionMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+		<action name="searchPrescription" class="ece651.action.PrescriptionAction" method ="SearchPrescription">
+		    <result name="success" type="dispatcher">/WEB-INF/prescription/prescriptionMain.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 		</package>
 </struts>
