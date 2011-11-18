@@ -39,12 +39,15 @@
 				<column name="VisitationId"></column>
 			</key>
 			<one-to-many class="ece651.model.Inpatient"/>
-		</set>		
+		</set>	
+		<!-- 
  		<set name="prescriptionSet" table="Prescription" cascade="save-update" order-by="PrescriptionId" lazy="false">
 			<key>
 				<column name="PrescriptionId"></column>
 			</key>
 			<one-to-many class="ece651.model.Prescription"/>
 		</set>
+		 -->
+		<one-to-one name="prescription" class="ece651.model.Prescription" cascade="save-update"></one-to-one>
 	</class>
 </hibernate-mapping>
