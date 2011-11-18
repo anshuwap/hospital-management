@@ -30,7 +30,11 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="searchVisitation" class="ece651.action.VisitationAction" method="SearchVisitation"></action>
+		<action name="searchVisitation" class="ece651.action.VisitationAction" method="SearchVisitation">
+		<result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+		<result name="error" type="dispatcher">/WEB-INF/patient/viewPatient.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
 		
 	</package>
 </struts>

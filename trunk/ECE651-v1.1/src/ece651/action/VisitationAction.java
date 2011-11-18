@@ -20,6 +20,7 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	private Patient retrievePatient;
 	private String operationStatus;
 	private SystemUser doctor;
+	private int visitationId;
 
 	
 	
@@ -63,6 +64,16 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	}
 
 
+	public int getVisitationId() {
+		return visitationId;
+	}
+
+
+	public void setVisitationId(int visitationId) {
+		this.visitationId = visitationId;
+	}
+
+
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		
@@ -78,47 +89,23 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	public String CreateVisitation(){
 		System.out.println("CreateVisitation is executed");//used for debug
 		VisitationDao visitationDao = new VisitationDaoImpl();
-		Visitation newVisitation = new Visitation();
-		AppointmentDao appointmentDao = new AppointmentDaoImpl();
-		Appointment nullAppointment = new Appointment();
-	/*	
+		Visitation newVisitation = new Visitation();	
 		try{
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			newVisitation.setVisitationDate(sqlDate);
 			newVisitation.setPatient((Patient)session.get("RetrievePatient"));
-			SystemUser doctor = (SystemUser)session.get("CurrentUser");
-			newVisitation.setDoctor(doctor);
-			newVisitation.setVisitationType("N");
-//			//fake code block
-//			nullAppointment.setDoctor(doctor);//fake code
-//			nullAppointment.setNurse(doctor); //fake code
-//			nullAppointment.setPatient((Patient)session.get("RetrievePatient"));//fake code
-//			nullAppointment.setAppointmentDate(sqlDate);//fake code
-//			nullAppointment.setStartTime("now");
-//			nullAppointment.setEndTime("then");
-//			nullAppointment.setStatus("no appoinment");
-//            appointmentDao.saveAppointment(nullAppointment);//fake code
-//            //fake code block
-			newVisitation.setAppointment(appointmentDao.searchAppointment(1));//test code			
+			newVisitation.setDoctor((SystemUser) session.get("CurrentUser"));
+			newVisitation.setVisitationType("N");		
 			visitationDao.saveVisitation(newVisitation);
 			
 		}catch(Exception e){
 			this.setOperationStatus("Create New Visitation Failed! Exception Happened: "+e.getMessage());
 			return ERROR;		
-		}*/
-		
-		//testing block start
-        java.util.Date utilDate = new java.util.Date();
-        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        newVisitation.setVisitationDate(sqlDate);
-		newVisitation.setPatient((Patient)session.get("RetrievePatient"));
-
-		newVisitation.setDoctor((SystemUser) session.get("CurrentUser"));
-		newVisitation.setVisitationType("N");
+		}
+			
 		this.setVisitation(newVisitation);
-		//testing block end
-		
+		this.session.put("CurrentVisitation", visitation);
 		this.setOperationStatus("Create New Visitation Succeeded!");
 		return SUCCESS;
 		
@@ -135,6 +122,18 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	}
 	
 	public String SearchVisitation(){
+		System.out.println("SearchVisitation is executed");
+		VisitationDao visitationDao = new VisitationDaoImpl();
+		Visitation searchVisitation = new Visitation();
+		try{
+			 searchVisitation = visitationDao.searchVisitation(visitationId);
+		}catch(Exception e){
+			this.setOperationStatus("View Visitation Failed! Exception Happened:" +e.getMessage());
+			return ERROR;
+		}
+		
+		this.setVisitation(searchVisitation);
+		this.session.put("CurrentVisitation", visitation);
 		return SUCCESS;
 	}
 }
