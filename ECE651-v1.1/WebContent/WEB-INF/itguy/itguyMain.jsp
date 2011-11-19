@@ -19,8 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h2>IT Guy's Main Page</h2>
 			<tr>
 				<td><h4><s:a href="systemuser/toCreateSystemUserPage.action">Create User</s:a></h4></td>
-				<td><h4><s:a href="systemuser/toEditPatientPage.action">Edit User</s:a></h4></td>
-				<td><h4><s:a href="systemuser/toViewPatientPage.action">View Users</s:a></h4></td>
+				<td><h4><s:a href="systemuser/toViewEditSystemUser.action">View/Edit User</s:a></h4></td>
 			</tr>
 		</center>
   </body>
