@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+
 import junit.framework.TestCase;
 
 import ece651.dao.AppointmentDaoImpl;
@@ -87,20 +89,37 @@ public class TestVisitationDao extends TestCase {
 		assertEquals(visitId, visitation.getVisitationId());
 	}
 	
-	public void  testsearchVisitation() throws DAOException{
+	public void  testsearchVisitation_with_App() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
 		Visitation visitation = visitationdao.searchVisitation(visitId_with_App);
 		assertEquals(visitId_with_App, visitation.getVisitationId());
 	}
 
-	public void  testupdateVisitation() throws DAOException{
+	public void  testsearchVisitation_without_App() throws DAOException{
+		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
+		
+		Visitation visitation = visitationdao.searchVisitation(visitId_without_App);
+		assertEquals(visitId_without_App, visitation.getVisitationId());
+	}
+	
+	public void  testupdateVisitation_with_App() throws DAOException{
 		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
 		
 		Visitation visitation = visitationdao.searchVisitation(visitId_with_App);
 		visitation.setDiagnosisResult("healthy");
 		visitationdao.updateVisitation(visitation);
 		Visitation visitdb = visitationdao.searchVisitation(visitId_with_App);
+		assertEquals("healthy", visitdb.getDiagnosisResult());
+	}
+
+	public void  testupdateVisitation_without_App() throws DAOException{
+		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
+		
+		Visitation visitation = visitationdao.searchVisitation(visitId_without_App);
+		visitation.setDiagnosisResult("healthy");
+		visitationdao.updateVisitation(visitation);
+		Visitation visitdb = visitationdao.searchVisitation(visitId_without_App);
 		assertEquals("healthy", visitdb.getDiagnosisResult());
 	}
 	
