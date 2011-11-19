@@ -13,6 +13,8 @@ import ece651.model.SystemUser;
 
 public class TestDiagnosisTestDao extends TestCase {
 	
+	public static Integer DiaId;
+	
 	public void  testsaveDiagnosisTest() throws DAOException{
 		DiagnosisTestDaoImpl diagnosisTestDao = new DiagnosisTestDaoImpl();
 		PatientDaoImpl patientdao = new PatientDaoImpl();		
@@ -23,7 +25,6 @@ public class TestDiagnosisTestDao extends TestCase {
 		Patient patient = patientdao.searchPatient(1);
 		
 		DiagnosisTest diagnosisTest = new DiagnosisTest();
-		diagnosisTest.setDiagnosisTestId(1);
 		diagnosisTest.setVisitationId(1);
 		diagnosisTest.setPatient(patient);
 		diagnosisTest.setDoctor(doctor);
@@ -37,23 +38,24 @@ public class TestDiagnosisTestDao extends TestCase {
 		System.out.print("New DiagnosisTest is:"+diagnosisTest);
 		diagnosisTestDao.saveDiagnosisTest(diagnosisTest);
 		System.out.print("After save() new DiagnosisTest is:"+diagnosisTest);
+		DiaId = diagnosisTest.getDiagnosisTestId();
 	}
 	
 	public void  testsearchDiagnosisTest() throws DAOException{
 		DiagnosisTestDaoImpl diagnosisTestDao = new DiagnosisTestDaoImpl();
 		
-		DiagnosisTest diagnosisTest = diagnosisTestDao.searchDiagnosisTest(1,1);
+		DiagnosisTest diagnosisTest = diagnosisTestDao.searchDiagnosisTest(DiaId,1);
 		System.out.print("DiagnosisTest is:"+diagnosisTest);
 	}
 
 	public void  testupdateDiagnosisTest() throws DAOException{
 		DiagnosisTestDaoImpl diagnosisTestDao = new DiagnosisTestDaoImpl();
 		
-		DiagnosisTest diagnosisTest = diagnosisTestDao.searchDiagnosisTest(1,1);
+		DiagnosisTest diagnosisTest = diagnosisTestDao.searchDiagnosisTest(DiaId,1);
 		System.out.print("Before update DiagnosisTest is:"+diagnosisTest);
 		diagnosisTest.setTestResultDescription("very good");
 		diagnosisTestDao.updateDiagnosisTest(diagnosisTest);
-		diagnosisTest = diagnosisTestDao.searchDiagnosisTest(1,1);
+		diagnosisTest = diagnosisTestDao.searchDiagnosisTest(DiaId,1);
 		System.out.print("After update DiagnosisTest is:"+diagnosisTest);
 	}
 

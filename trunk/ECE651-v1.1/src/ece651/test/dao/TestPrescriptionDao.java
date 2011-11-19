@@ -25,7 +25,7 @@ public class TestPrescriptionDao extends TestCase {
 		
 		SystemUser doctor = userdao.searchUserBySystemUserId(2);
 		Patient patient = patientdao.searchPatient(1);
-		Visitation visit = visitationDao.searchVisitation(2);
+		Visitation visit = visitationDao.searchVisitation(1);
 		
 		Prescription prescription = new Prescription();
 		prescription.setVisitation(visit);

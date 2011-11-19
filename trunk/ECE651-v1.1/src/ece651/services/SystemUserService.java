@@ -1,6 +1,7 @@
 package ece651.services;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
@@ -18,7 +19,7 @@ public class SystemUserService {
 		this.userCache = SingletonUserCache.getSingletonManager().getCache("userCache");
 	}
 
-	public SystemUser searchUserByUsername(String username) throws DAOException {
+	public SystemUser searchUserByUsername(String username) throws Exception {
 
 		// get from Cache first
 		Element element;
@@ -37,26 +38,47 @@ public class SystemUserService {
 				log.info("Put username: "+user.getUsername()+" in Cache...");
 				userCache.put(new Element(user.getUsername(), user));	
 			}
-		} catch (Exception e) {
+		} catch (DAOException e) {
 			throw new DAOException(e.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
 		}
 
 		return user;
 	}
 	
-	public void saveUser (SystemUser user) throws DAOException {
-		
+	public void saveUser (SystemUser user) throws Exception {
+		try {	
+			SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+			userdao.saveUser(user);
+			userCache.put(new Element(user.getUsername(), user));
+		} catch (DAOException e) {
+			throw new DAOException(e.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 	
-	public void updateUser(SystemUser user) throws DAOException {
-		
+	public void updateUser(SystemUser user) throws Exception {
+		try {	
+			SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+			userdao.updateUser(user);
+			userCache.put(new Element(user.getUsername(), user));
+		} catch (DAOException e) {
+			throw new DAOException(e.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 	public static void main(String[] args) {
 		//for testing 
 		try {
 			SystemUser user= (new SystemUserService()).searchUserByUsername("David");
 			System.out.print("User name: "+user.getUsername());
-		} catch (DAOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

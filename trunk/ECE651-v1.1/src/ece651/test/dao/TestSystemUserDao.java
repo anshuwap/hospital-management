@@ -33,6 +33,13 @@ public class TestSystemUserDao extends TestCase {
 		assertEquals("jzhang", user.getUsername());
 	}
 	
+	public void testSearchUserByRole() throws DAOException{
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		List<SystemUser> userList = new ArrayList<SystemUser>();
+		userList = userdao.SearchUserByRole("D");
+		assertNotSame(0, userList.size());
+	}
+	
 	public void testSearchAllUser() throws DAOException{
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
 		List<SystemUser> userList = new ArrayList<SystemUser>();
@@ -211,8 +218,30 @@ public class TestSystemUserDao extends TestCase {
 			assertEquals("mockTest", e.getMessage());
 		}
 	}
-
-	public void testsearchAllUserFail(){	
+	
+	public void testSearchUserByRoleFail(){	
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		//create mock objects
+		IMocksControl control;
+		control = createNiceControl();
+		Session session = control.createMock(Session.class);
+		//training mock objects
+		session.createQuery((String) notNull());
+		expectLastCall().andThrow(new HibernateException("mockTest"));
+		//replay
+		control.replay();
+		//call Dao method
+		try {			
+			userdao.setSession(session);
+			userdao.SearchUserByRole("D");
+			fail();
+		} catch (DAOException e) {
+			assertNotNull(e.getMessage());
+			assertEquals("mockTest", e.getMessage());
+		}
+	}
+	
+	public void testSearchAllUserFail(){	
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
 		//create mock objects
 		IMocksControl control;
