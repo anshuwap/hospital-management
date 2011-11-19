@@ -19,6 +19,10 @@ import ece651.model.Visitation;
 public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		RequestAware {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<String, Object> session;
 	private Map<String, Object> request;
 	private DiagnosisTest diagnosisTest;
