@@ -1,7 +1,7 @@
 package ece651.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class DiagnosisTest implements Serializable{
 	/**
