@@ -21,9 +21,9 @@ public class Visitation implements Serializable{
 	private String endTime;
 	private Appointment appointment;
 	private Set<DiagnosisTest> diagnosisTestSet;
-	private Set<Surgery> surgerySet;
-	private Set<Inpatient> inpatientSet;
 	private Prescription prescription;
+	private Surgery surgery;
+	private Inpatient inpatient;
 	public Integer getVisitationId() {
 		return visitationId;
 	}
@@ -84,32 +84,32 @@ public class Visitation implements Serializable{
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	public Set<DiagnosisTest> getDiagnosisTestSet() {
 		return diagnosisTestSet;
 	}
 	public void setDiagnosisTestSet(Set<DiagnosisTest> diagnosisTestSet) {
 		this.diagnosisTestSet = diagnosisTestSet;
 	}
-	public Set<Surgery> getSurgerySet() {
-		return surgerySet;
-	}
-	public void setSurgerySet(Set<Surgery> surgerySet) {
-		this.surgerySet = surgerySet;
-	}
-	public Set<Inpatient> getInpatientSet() {
-		return inpatientSet;
-	}
-	public void setInpatientSet(Set<Inpatient> inpatientSet) {
-		this.inpatientSet = inpatientSet;
-	}
 	public Prescription getPrescription() {
 		return prescription;
 	}
 	public void setPrescription(Prescription prescription) {
 		this.prescription = prescription;
+	}
+	public Surgery getSurgery() {
+		return surgery;
+	}
+	public void setSurgery(Surgery surgery) {
+		this.surgery = surgery;
+	}
+	public Inpatient getInpatient() {
+		return inpatient;
+	}
+	public void setInpatient(Inpatient inpatient) {
+		this.inpatient = inpatient;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	@Override
 	public int hashCode() {
@@ -125,14 +125,13 @@ public class Visitation implements Serializable{
 		result = prime * result + ((doctor == null) ? 0 : doctor.hashCode());
 		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
 		result = prime * result
-				+ ((inpatientSet == null) ? 0 : inpatientSet.hashCode());
+				+ ((inpatient == null) ? 0 : inpatient.hashCode());
 		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
 		result = prime * result
 				+ ((prescription == null) ? 0 : prescription.hashCode());
 		result = prime * result
 				+ ((startTime == null) ? 0 : startTime.hashCode());
-		result = prime * result
-				+ ((surgerySet == null) ? 0 : surgerySet.hashCode());
+		result = prime * result + ((surgery == null) ? 0 : surgery.hashCode());
 		result = prime
 				* result
 				+ ((symptomDescription == null) ? 0 : symptomDescription
@@ -179,10 +178,10 @@ public class Visitation implements Serializable{
 				return false;
 		} else if (!endTime.equals(other.endTime))
 			return false;
-		if (inpatientSet == null) {
-			if (other.inpatientSet != null)
+		if (inpatient == null) {
+			if (other.inpatient != null)
 				return false;
-		} else if (!inpatientSet.equals(other.inpatientSet))
+		} else if (!inpatient.equals(other.inpatient))
 			return false;
 		if (patient == null) {
 			if (other.patient != null)
@@ -199,10 +198,10 @@ public class Visitation implements Serializable{
 				return false;
 		} else if (!startTime.equals(other.startTime))
 			return false;
-		if (surgerySet == null) {
-			if (other.surgerySet != null)
+		if (surgery == null) {
+			if (other.surgery != null)
 				return false;
-		} else if (!surgerySet.equals(other.surgerySet))
+		} else if (!surgery.equals(other.surgery))
 			return false;
 		if (symptomDescription == null) {
 			if (other.symptomDescription != null)
@@ -235,7 +234,8 @@ public class Visitation implements Serializable{
 				+ ", diagnosisResult=" + diagnosisResult + ", startTime="
 				+ startTime + ", endTime=" + endTime + ", appointment="
 				+ appointment + ", diagnosisTestSet=" + diagnosisTestSet
-				+ ", surgerySet=" + surgerySet + ", inpatientSet="
-				+ inpatientSet + ", prescription=" + prescription + "]";
+				+ ", prescription=" + prescription + ", surgery=" + surgery
+				+ ", inpatient=" + inpatient + "]";
 	}
+
 }

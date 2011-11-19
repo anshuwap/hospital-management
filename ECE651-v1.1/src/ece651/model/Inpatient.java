@@ -2,6 +2,7 @@ package ece651.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 public class Inpatient implements Serializable {
 	/**
@@ -9,7 +10,6 @@ public class Inpatient implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer inpatientId;
-	private Integer visitationId;
 	private SystemUser issueDoctor;
 	private SystemUser inpatientDoctor;
 	private Patient patient;
@@ -18,17 +18,13 @@ public class Inpatient implements Serializable {
 	private Date dischargetDate;
 	private String arrangementDescription;
 	private String dischargeSummary;
+	private Visitation visitation;
+	private Set<InpatientDairy> inpatientDairySet;
 	public Integer getInpatientId() {
 		return inpatientId;
 	}
 	public void setInpatientId(Integer inpatientId) {
 		this.inpatientId = inpatientId;
-	}
-	public Integer getVisitationId() {
-		return visitationId;
-	}
-	public void setVisitationId(Integer visitationId) {
-		this.visitationId = visitationId;
 	}
 	public SystemUser getIssueDoctor() {
 		return issueDoctor;
@@ -78,6 +74,18 @@ public class Inpatient implements Serializable {
 	public void setDischargeSummary(String dischargeSummary) {
 		this.dischargeSummary = dischargeSummary;
 	}
+	public Visitation getVisitation() {
+		return visitation;
+	}
+	public void setVisitation(Visitation visitation) {
+		this.visitation = visitation;
+	}
+	public Set<InpatientDairy> getInpatientDairySet() {
+		return inpatientDairySet;
+	}
+	public void setInpatientDairySet(Set<InpatientDairy> inpatientDairySet) {
+		this.inpatientDairySet = inpatientDairySet;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -94,6 +102,10 @@ public class Inpatient implements Serializable {
 				+ ((dischargeSummary == null) ? 0 : dischargeSummary.hashCode());
 		result = prime * result
 				+ ((dischargetDate == null) ? 0 : dischargetDate.hashCode());
+		result = prime
+				* result
+				+ ((inpatientDairySet == null) ? 0 : inpatientDairySet
+						.hashCode());
 		result = prime * result
 				+ ((inpatientDate == null) ? 0 : inpatientDate.hashCode());
 		result = prime * result
@@ -104,8 +116,6 @@ public class Inpatient implements Serializable {
 				+ ((issueDoctor == null) ? 0 : issueDoctor.hashCode());
 		result = prime * result + ((nurse == null) ? 0 : nurse.hashCode());
 		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
-		result = prime * result
-				+ ((visitationId == null) ? 0 : visitationId.hashCode());
 		return result;
 	}
 	@Override
@@ -131,6 +141,11 @@ public class Inpatient implements Serializable {
 			if (other.dischargetDate != null)
 				return false;
 		} else if (!dischargetDate.equals(other.dischargetDate))
+			return false;
+		if (inpatientDairySet == null) {
+			if (other.inpatientDairySet != null)
+				return false;
+		} else if (!inpatientDairySet.equals(other.inpatientDairySet))
 			return false;
 		if (inpatientDate == null) {
 			if (other.inpatientDate != null)
@@ -162,22 +177,18 @@ public class Inpatient implements Serializable {
 				return false;
 		} else if (!patient.equals(other.patient))
 			return false;
-		if (visitationId == null) {
-			if (other.visitationId != null)
-				return false;
-		} else if (!visitationId.equals(other.visitationId))
-			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Inpatient [inpatientId=" + inpatientId + ", visitationId="
-				+ visitationId + ", issueDoctor=" + issueDoctor
-				+ ", inpatientDoctor=" + inpatientDoctor + ", patient="
-				+ patient + ", nurse=" + nurse + ", inpatientDate="
-				+ inpatientDate + ", dischargetDate=" + dischargetDate
-				+ ", arrangementDescription=" + arrangementDescription
-				+ ", dischargeSummary=" + dischargeSummary + "]";
+		return "Inpatient [inpatientId=" + inpatientId + ", issueDoctor="
+				+ issueDoctor + ", inpatientDoctor=" + inpatientDoctor
+				+ ", patient=" + patient + ", nurse=" + nurse
+				+ ", inpatientDate=" + inpatientDate + ", dischargetDate="
+				+ dischargetDate + ", arrangementDescription="
+				+ arrangementDescription + ", dischargeSummary="
+				+ dischargeSummary + ", inpatientDairySet=" + inpatientDairySet
+				+ "]";
 	}
 
 }
