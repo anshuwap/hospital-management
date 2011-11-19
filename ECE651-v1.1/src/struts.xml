@@ -12,6 +12,7 @@
 	<include file="struts-surgery.xml"/>
 	<include file="struts-systemuser.xml"/>
 	<include file="struts-visitation.xml"/>
+	<include file="struts-inpatientdairy.xml"/>
 	
 	
 

@@ -1,47 +1,84 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-  </head>
-  
-  <body>
-    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-  <hr><br> 
-     <td><a href="<s:url value='patient/searchForViewPatient.action'>
-      <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-      </s:url>">Back to View Patient Page</a></td>  
-   
-   <h2>Visitation</h2><br>
-    <table border="1">
- 		<s:textfield name="visitation.visitationId" label="PatientID" readonly="true"/>
- 		<s:textfield name="visitation.patient.patientName" label="Patient Name" readonly="true" />
- 		<s:textfield name="visitation.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
- 		<s:textfield name="visitation.doctor.firstName" label="Doctor Firstname" readonly="true" />
-   		<s:textfield name="visitation.visitationDate" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
-      	<s:form action="editVisitation" method="post" namespace="/visitation">
-           <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
-           <s:textarea name="visitation.diagnosisResult" label="Allergy" cols="40" rows="10" readonly="true"/>
-           <s:token name="token"></s:token>
-           <s:if test='true'>
- 		   <s:submit value="Update"/>
- 		   </s:if>
-        </s:form>
-   	</table>	
-    <hr><br> 
-       <s:a href="diagnosistest/createDiagnosisTest.action" >Issue Diagnosis Test</s:a>  
-    <hr><br> 
-       <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
-    <hr><br> 
-       <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
-    <hr><br> 
-       <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a> 
-         		
-  </body>
+	<head>
+		<base href="<%=basePath%>">
+		<s:debug></s:debug>
+	</head>
+
+	<body>
+		<jsp:include page="/WEB-INF/mis/loginHeader.jsp" />
+		<hr>
+		<br>
+		<a
+			href="<s:url value='visitation/searchVisitation.action'>
+                            <s:param name="visitationId" value="#session.CurrentVisitation.visitationId"/>  
+                            </s:url>">Back To Visitation Page</a>
+
+		<h2>
+			Diagnosis Test
+		</h2>
+		<br>
+       <table border="1">
+		<s:textfield name="diagnosisTest.patient.patientName"
+			label="Patient Name" readonly="true" /><tr>
+		<s:textfield name="diagnosisTest.patient.healthCardId"
+			label="Patient HealthCard ID" readonly="true" /><tr>
+		<s:textfield name="diagnosisTest.doctor.firstName"
+			label="Issued Doctor Name" readonly="true" /><tr>
+		<s:textfield name="diagnosisTest.issueDate" label="Issued Date"
+			readonly="true" /><tr>		
+		<s:if test='#session.CurrentUser.roleType=="D"'>
+			<s:form action="editDiagnosisTest" method="post"
+				namespace="/diagnosistest">
+			<s:select label="Select Test Type" name="diagnosisTest.testType"
+						headerKey="1" headerValue="-- Please Select --" value=""
+						list="#{'BUltra':'B UltraSound','BloodTest':'Blood Test','UrineTest':'Urine Test','XRay':'X Ray',
+                                'CTScan':'CT Scan'}" /><tr>
+            <s:textarea name="diagnosisTest.testRequestDescription"
+					label="Test Request Description" cols="40" rows="10" /><tr>
+			<s:token name="token"></s:token>
+			<tr>
+				<s:submit value="Submit" /><td>
+			</tr>
+			</s:form>
+		</s:if>
+		<s:else>
+			<s:textfield name="diagnosisTest.testType" label="Test Type"
+				readonly="true" /><tr>
+			<s:textarea name="diagnosisTest.testRequestDescription"
+				label="Test Request Description" cols="40" rows="10" readonly="true" /><tr>
+		</s:else>
+		</table>	
+		<s:if test='#session.CurrentUser.roleType!="N"'>
+		<table border ="1">
+			<s:textfield name="diagnosisTest.nurse.firstName"
+				label="Test Operation Nurse" readonly="true" /><tr>
+			<s:textarea name="diagnosisTest.testResultDescription"
+				label="Test Result Description" cols="40" rows="10" readonly="true" /><tr>
+		</table>
+		</s:if>
+		<s:else>
+        <table border="1">
+			<s:form action="editDiagnosisTestByNurse" method="post"
+				namespace="/diagnosistest">
+				<s:textarea name="diagnosisTest.testResultDescription"
+					label="Test Result Description" cols="40" rows="10" /><tr>
+				<s:token name="token"></s:token>
+				<tr>
+				<s:submit value="Update" /><td>
+				<tr>
+			</s:form>
+         </table>
+		</s:else>
+
+	</body>
 </html>

@@ -14,34 +14,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
   <hr><br> 
-     <td><a href="<s:url value='patient/searchForViewPatient.action'>
-      <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-      </s:url>">Back to View Patient Page</a></td>  
+  <a href="<s:url value='visitation/searchVisitation.action'>
+                            <s:param name="visitationId" value="#session.CurrentVisitation.visitationId"/>  
+                            </s:url>">Back To Visitation Page</a>
    
-   <h2>Visitation</h2><br>
+   <h2>Surgery</h2><br>
     <table border="1">
- 		<s:textfield name="visitation.visitationId" label="PatientID" readonly="true"/>
- 		<s:textfield name="visitation.patient.patientName" label="Patient Name" readonly="true" />
- 		<s:textfield name="visitation.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
- 		<s:textfield name="visitation.doctor.firstName" label="Doctor Firstname" readonly="true" />
-   		<s:textfield name="visitation.visitationDate" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
-      	<s:form action="editVisitation" method="post" namespace="/visitation">
-           <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
-           <s:textarea name="visitation.diagnosisResult" label="Allergy" cols="40" rows="10" readonly="true"/>
-           <s:token name="token"></s:token>
-           <s:if test='true'>
- 		   <s:submit value="Update"/>
- 		   </s:if>
-        </s:form>
+			<s:textfield name="surgery.patient.patientName" label="Patient Name" readonly="true" />
+			<s:textfield name="surgery.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
+			<s:textfield name="surgery.issueDoctor.firstName" label="Issue Doctor" readonly="true" />
+			
+			<s:if test='#session.CurrentUser.roleType=="N"'>
+				<s:form action="editSurgery" method="post" namespace="/surgery">
+					<s:textfield name="surgery.surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" />
+					<s:textarea name="surgery.arrangementDescription" label="Surgery Arrangement" cols="40" rows="10" />
+					<s:token name="token"></s:token>
+					<s:submit value="Update" />
+				</s:form>
+			</s:if>
+			<s:else>
+				<s:textfield name="surgery.surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" readonly="true" />
+				<s:textarea name="surgery.arrangementDescription" label="Surgery Arrangement" cols="40" rows="10" readonly="true" />
+			</s:else>		
+			
+           <s:if test='#session.CurrentUser.roleType=="D"'>
+           		<s:form action="editSurgery" method="post" namespace="/surgery">
+					<s:textarea name="surgery.surgerySummary" label="Surgery Summary" cols="40" rows="10" />
+					<s:token name="token"></s:token>
+					<s:submit value="Update" />
+				</s:form>
+           </s:if>
+           <s:else>
+				<s:textarea name="surgery.surgerySummary" label="Surgery Summary" cols="40" rows="10" readonly="true"/>
+			</s:else>
    	</table>	
-    <hr><br> 
-       <s:a href="diagnosistest/createDiagnosisTest.action" >Issue Diagnosis Test</s:a>  
-    <hr><br> 
-       <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
-    <hr><br> 
-       <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
-    <hr><br> 
-       <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a> 
+ 
          		
   </body>
 </html>
+

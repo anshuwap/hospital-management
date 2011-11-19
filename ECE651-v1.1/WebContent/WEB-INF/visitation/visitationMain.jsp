@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
+    <s:debug></s:debug>
   </head>
   
   <body>
@@ -27,13 +28,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		<s:textfield name="visitation.visitationDate" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
       	<s:form action="editVisitation" method="post" namespace="/visitation">
            <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
-           <s:textarea name="visitation.diagnosisResult" label="Allergy" cols="40" rows="10" readonly="true"/>
+           <s:textarea name="visitation.diagnosisResult" label="Allergy" cols="40" rows="10" />
            <s:token name="token"></s:token>
            <s:if test='true'>
  		   <s:submit value="Update"/>
  		   </s:if>
         </s:form>
-   	</table>	
+   	</table>
+   	    <br>
+		Operation Status:
+		<s:property value="operationStatus" />
+		<br>	
     <hr><br> 
        <s:a href="diagnosistest/createDiagnosisTest.action" >Issue Diagnosis Test</s:a> 
        show the hyperlink list of Diagnosis Tests, click each will direct to the diagnosistestMain.jsp<br> 
