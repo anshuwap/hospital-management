@@ -13,6 +13,7 @@ import ece651.dao.DiagnosisTestDaoImpl;
 import ece651.dao.VisitationDao;
 import ece651.dao.VisitationDaoImpl;
 import ece651.model.DiagnosisTest;
+import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
 public class DiagnosisTestAction extends ActionSupport implements SessionAware,
@@ -22,6 +23,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> request;
 	private DiagnosisTest diagnosisTest;
 	private String operationStatus;
+	private String testType;
 
 	public DiagnosisTest getDiagnosisTest() {
 		return diagnosisTest;
@@ -33,6 +35,14 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 
 	public void setOperationStatus(String operationStatus) {
 		this.operationStatus = operationStatus;
+	}
+
+	public String getTestType() {
+		return testType;
+	}
+
+	public void setTestType(String testType) {
+		this.testType = testType;
 	}
 
 	public void setDiagnosisTest(DiagnosisTest diagnosisTest) {
@@ -53,7 +63,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		DiagnosisTestDao diagnosistestDao = new DiagnosisTestDaoImpl();
 		DiagnosisTest newDiagnosisTest = new DiagnosisTest();
 		Visitation tempVisitation = new Visitation();
-		/*try{
+		try{
 			tempVisitation =(Visitation)session.get("CurrentVisitation");
 			newDiagnosisTest.setVisitationId(tempVisitation.getVisitationId());
 			newDiagnosisTest.setDoctor(tempVisitation.getDoctor());
@@ -63,23 +73,40 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		}catch(Exception e){
 			this.setOperationStatus("Create DiagnosisTest Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
-		}*/
-		
-		//just for test 
-		tempVisitation =(Visitation)session.get("CurrentVisitation");
-		newDiagnosisTest.setVisitationId(tempVisitation.getVisitationId());
-		newDiagnosisTest.setDoctor(tempVisitation.getDoctor());
-		newDiagnosisTest.setIssueDate(new Date());
-		newDiagnosisTest.setPatient(tempVisitation.getPatient());
-		newDiagnosisTest.setTestRequestDescription("");
-		//just for test
-		
+		}	
+		finally{
+			diagnosistestDao.cleanup();
+		}
 		diagnosisTest = newDiagnosisTest;
 		this.session.put("CurrentDiagnosisTest",diagnosisTest);
 		return SUCCESS;
-		}
+	}
 	
 	public String EditDiagnosisTest(){
+		System.out.println("UpdateDiagnosisTest is executed");
+		DiagnosisTestDao diagnosistestDao = new DiagnosisTestDaoImpl();
+		DiagnosisTest updateDiagnosisTest = new DiagnosisTest();
+		updateDiagnosisTest = (DiagnosisTest)session.get("CurrentDiagnosisTest");
+		SystemUser currentUser = (SystemUser)session.get("CurrentUser");
+		
+		try{
+			updateDiagnosisTest.setTestType(diagnosisTest.getTestType());
+			updateDiagnosisTest.setTestRequestDescription(diagnosisTest.getTestRequestDescription());
+		    if(currentUser.getRoleType()=="N")
+		    {
+		    	updateDiagnosisTest.setNurse(currentUser);
+		    	updateDiagnosisTest.setTestResultDescription(diagnosisTest.getTestResultDescription());
+		    }
+			diagnosistestDao.updateDiagnosisTest(updateDiagnosisTest);
+		}catch(Exception e){
+			this.setOperationStatus("Update DiagnosisTest Failed! Exception Happened:" + e.getMessage());
+		    return ERROR;
+		}
+		finally{
+			diagnosistestDao.cleanup();
+		}
+		this.session.put("CurrentDiagnosisTest",updateDiagnosisTest);
+		diagnosisTest=updateDiagnosisTest;
 		return SUCCESS;
 	}
 	
@@ -87,4 +114,16 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		return SUCCESS;
 	}
 
+	private String TranslateTestType(String inputTestType){
+		String outputTestType;
+		Switch(inputTestType)
+		{
+			case "1" : outputTestType="B UltraSound"; break;
+			case "2" : outputTestType=""; break;
+			
+		}
+		return outputTestType;
+	}
+	
+	
 }

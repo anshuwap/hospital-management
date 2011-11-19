@@ -66,7 +66,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		
 		//just for test 
 		tempVisitation =(Visitation)session.get("CurrentVisitation");
-		newInpatient.setVisitationId(tempVisitation.getVisitationId());
+		newInpatient.setVisitation(tempVisitation);
 		newInpatient.setIssueDoctor(tempVisitation.getDoctor());
 		newInpatient.setPatient(tempVisitation.getPatient());
 		newInpatient.setInpatientId(tempVisitation.getVisitationId());
