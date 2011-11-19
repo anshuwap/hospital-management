@@ -1,6 +1,6 @@
 package ece651.action;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
