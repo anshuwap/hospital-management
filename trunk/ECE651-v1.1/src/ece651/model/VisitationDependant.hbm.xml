@@ -16,7 +16,7 @@
 		</many-to-one>
 		<property name="prescriptionDescription" column="PrescriptionDescription"/>
 		<property name="prescriptionDate" column="PrescriptionDate"/>
-		<one-to-one name="visitation" class="ece651.model.Visitation" constrained="true"></one-to-one>
+		<one-to-one name="visitation" class="ece651.model.Visitation" constrained="true" lazy="false"></one-to-one>
 	</class>
 	
 	<class name="ece651.model.DiagnosisTest" table="DiagnosisTest" >
@@ -40,10 +40,11 @@
 	</class>
 	
 	<class name="ece651.model.Surgery" table="Surgery" >
-		<composite-id class="ece651.model.SurgeryKey" mapped="true">
-			<key-property name="surgeryId" column="SurgeryId" />
-			<key-property name="visitationId" column="VisitationId"/>
-		</composite-id>
+		<id name="surgeryId" column="SurgeryId" >
+			<generator class="foreign">
+				<param name="property">visitation</param>
+			</generator>
+		</id>
 		<property name="surgeryDate" column="SurgeryDate"/>
 		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
 			<column name="PatientId"></column>
@@ -59,13 +60,15 @@
 		</many-to-one>
 		<property name="arrangementDescription" column="ArrangementDescription"/>
 		<property name="surgerySummary" column="SurgerySummary"/>
+		<one-to-one name="visitation" class="ece651.model.Visitation" constrained="true" lazy="false"></one-to-one>
 	</class>
 
 	<class name="ece651.model.Inpatient" table="Inpatient" >
-		<composite-id class="ece651.model.InpatientKey" mapped="true">
-			<key-property name="inpatientId" column="InpatientId" />
-			<key-property name="visitationId" column="VisitationId"/>
-		</composite-id>
+		<id name="inpatientId" column="InpatientId" >
+			<generator class="foreign">
+				<param name="property">visitation</param>
+			</generator>
+		</id>
 		<many-to-one name="patient" class="ece651.model.Patient" lazy="false">
 			<column name="PatientId"></column>
 		</many-to-one>
@@ -82,6 +85,13 @@
 		<property name="dischargetDate" column="DischargetDate"/>
 		<property name="arrangementDescription" column="ArrangementDescription"/>
 		<property name="dischargeSummary" column="DischargeSummary"/>
+ 		<set name="inpatientDairySet" table="InpatientDairy" cascade="save-update" order-by="InpatientDairyId" lazy="false">
+			<key>
+				<column name="InpatientId"></column>
+			</key>
+			<one-to-many class="ece651.model.InpatientDairy"/>
+		</set>
+		<one-to-one name="visitation" class="ece651.model.Visitation" constrained="true" lazy="false"></one-to-one>
 	</class>
 	
     <class name="ece651.model.InpatientDairy" table="InpatientDairy" >
