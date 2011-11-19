@@ -23,6 +23,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private String patientBirthday;
 	private String operationStatus;
 	private ArrayList<Visitation> patientVisitation;
+	
 	private String visitationQuery;
 
 	public Patient getPatient() {
@@ -145,9 +146,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		    healthCardID = null;
 		    return ERROR;
 		}
-		else{
-			
-			
+		else{	
 			retrievePatient = (Patient)searchResult;
 			
 			Object searchVisitation = QueryVisitation(retrievePatient);
