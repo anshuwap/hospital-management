@@ -2,7 +2,6 @@ package ece651.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 public class InpatientDairy implements Serializable {
 	/**
