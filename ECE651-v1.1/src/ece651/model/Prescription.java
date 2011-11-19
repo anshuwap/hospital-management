@@ -44,14 +44,14 @@ public class Prescription implements Serializable {
 	public void setPrescriptionDate(Date prescriptionDate) {
 		PrescriptionDate = prescriptionDate;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	public Visitation getVisitation() {
 		return visitation;
 	}
 	public void setVisitation(Visitation visitation) {
 		this.visitation = visitation;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	@Override
 	public int hashCode() {
@@ -68,8 +68,6 @@ public class Prescription implements Serializable {
 				+ ((PrescriptionId == null) ? 0 : PrescriptionId.hashCode());
 		result = prime * result + ((doctor == null) ? 0 : doctor.hashCode());
 		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
-		result = prime * result
-				+ ((visitation == null) ? 0 : visitation.hashCode());
 		return result;
 	}
 	@Override
@@ -107,11 +105,6 @@ public class Prescription implements Serializable {
 				return false;
 		} else if (!patient.equals(other.patient))
 			return false;
-		if (visitation == null) {
-			if (other.visitation != null)
-				return false;
-		} else if (!visitation.equals(other.visitation))
-			return false;
 		return true;
 	}
 	@Override
@@ -119,6 +112,7 @@ public class Prescription implements Serializable {
 		return "Prescription [PrescriptionId=" + PrescriptionId + ", patient="
 				+ patient + ", doctor=" + doctor + ", PrescriptionDescription="
 				+ PrescriptionDescription + ", PrescriptionDate="
-				+ PrescriptionDate + ", visitation=" + visitation + "]";
+				+ PrescriptionDate + "]";
 	}
+
 }
