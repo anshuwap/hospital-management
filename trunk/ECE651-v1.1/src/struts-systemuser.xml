@@ -13,10 +13,12 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		
-		<action name="createSystemUser" class="ece651.action.SystemUserAction" method="CreateSystemUser">
-		    <result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
+
+		<action name="createSystemUserAction" class="ece651.action.SystemUserAction" method="CreateSystemUser">
+			<result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
+			<result name="invalid.token">/WEB-INF/itguy/createSystemUser.jsp</result>
+			<interceptor-ref name="token" />
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
@@ -29,6 +31,21 @@
 		<action name="searchSystemUser" class="ece651.action.SystemUserAction" method="SearchSystemUser">
 		    <result name="success" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+<!--	Page Navigation Action	-->
+		<action name="toCreateSystemUserPage">
+			<result name="success">/WEB-INF/itguy/createSystemUser.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>		
+		
+		<action name="toMainPage" class="ece651.action.SystemUserAction" method="BackToMainPage" >
+			<result name="success" type="chain">
+            	<param name="actionName">${roleName}</param>
+            	<param name="namespace">/</param>
+            </result>
+			<result name="error">/login.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
