@@ -113,6 +113,19 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	
 	//TODO update a visitation entry
 	public String EditVisitation(){
+		System.out.println("SearchVisitation is executed");
+		VisitationDao visitationDao = new VisitationDaoImpl();
+		Visitation editVisitation = (Visitation)session.get("CurrentVisitation");
+		editVisitation.setSymptomDescription(visitation.getSymptomDescription());
+		editVisitation.setDiagnosisResult(visitation.getDiagnosisResult());
+		try{
+			visitationDao.saveVisitation(editVisitation);
+			
+		}catch(Exception e){
+			this.setOperationStatus("Update Visitation Failed! Exception Happened:" + e.getMessage());
+		    return ERROR;
+		}
+		this.session.put("CurrentVisitation", editVisitation);
 		return SUCCESS;
 	}
 	
