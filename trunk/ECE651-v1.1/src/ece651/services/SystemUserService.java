@@ -1,7 +1,6 @@
 package ece651.services;
 
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
@@ -44,33 +43,44 @@ public class SystemUserService {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
+		finally{
+			userdao.cleanup();
+		}
 
 		return user;
 	}
 	
 	public void saveUser (SystemUser user) throws Exception {
-		try {	
-			SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		try {			
 			userdao.saveUser(user);
+			log.info("Put username: "+user.getUsername()+" in Cache...");
 			userCache.put(new Element(user.getUsername(), user));
 		} catch (DAOException e) {
 			throw new DAOException(e.getMessage());
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
+		}
+		finally{
+			userdao.cleanup();
 		}
 	}
 	
 	public void updateUser(SystemUser user) throws Exception {
-		try {	
-			SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		try {				
 			userdao.updateUser(user);
+			log.info("Put username: "+user.getUsername()+" in Cache...");
 			userCache.put(new Element(user.getUsername(), user));
 		} catch (DAOException e) {
 			throw new DAOException(e.getMessage());
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
+		}
+		finally{
+			userdao.cleanup();
 		}
 	}
 	public static void main(String[] args) {
