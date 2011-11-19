@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Inpatient;
-import ece651.model.InpatientKey;
-import ece651.model.Visitation;
 
 public class InpatientDaoImpl implements InpatientDao {
 	Logger log = Logger.getLogger(getClass().toString());

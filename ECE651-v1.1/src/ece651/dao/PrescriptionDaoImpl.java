@@ -8,7 +8,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Prescription;
-import ece651.model.Visitation;
 
 public class PrescriptionDaoImpl implements PrescriptionDao {
 	Logger log = Logger.getLogger(getClass().toString());
