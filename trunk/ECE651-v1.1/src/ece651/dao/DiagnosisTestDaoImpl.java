@@ -1,5 +1,8 @@
 package ece651.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -35,10 +38,27 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 
 	public void saveDiagnosisTest(DiagnosisTest diagnosisTest)
 			throws DAOException {
+
+		Connection conn = null;
+		int newDiagnosisTestId = 0;
+		try {
+			conn = session.connection();
+			String sql = "select max(Diag.DiagnosisTestId) from DiagnosisTest as Diag where Diag.VisitationId=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, diagnosisTest.getVisitationId());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				newDiagnosisTestId = rs.getInt(1)+1;
+				diagnosisTest.setDiagnosisTestId(newDiagnosisTestId);
+			}
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		}
+		
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();
-			tran.begin();
+			tran.begin();				
 			session.save(diagnosisTest);
 			tran.commit();
 		}catch (HibernateException e) {
