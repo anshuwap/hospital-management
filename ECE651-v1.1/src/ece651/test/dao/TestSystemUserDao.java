@@ -49,7 +49,7 @@ public class TestSystemUserDao extends TestCase {
 	
 	public void testSaveUser() throws DAOException{
 		SystemUser user = new SystemUser();
-		user.setUsername("wZheng");
+		user.setUsername("w1Zheng");
 		user.setFirstName("Weiyi");
 		user.setLastName("Zheng");
 		user.setPassword("1234");
@@ -63,21 +63,21 @@ public class TestSystemUserDao extends TestCase {
 		user.setActive("A");		
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
 		userdao.saveUser(user);
-		SystemUser userdb = userdao.searchUserByUsername("wZheng");
+		SystemUser userdb = userdao.searchUserByUsername("w1Zheng");
 		assertNotNull(userdb);
-		assertEquals("wZheng", userdb.getUsername());		
+		assertEquals("w1Zheng", userdb.getUsername());		
 	}
 	
 	public void testUpdateUser() throws DAOException{	
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
-		SystemUser userdb = userdao.searchUserByUsername("wZheng");
+		SystemUser userdb = userdao.searchUserByUsername("w1Zheng");
 		
 		assertNotNull(userdb);
 		Date birthday = Date.valueOf("1985-02-02");
 		userdb.setBirthday(birthday);
 		userdao.updateUser(userdb);
 		
-		SystemUser userdb2 = userdao.searchUserByUsername("wZheng");
+		SystemUser userdb2 = userdao.searchUserByUsername("w1Zheng");
 		assertNotNull(userdb2);
 		assertEquals(birthday.toString(), userdb2.getBirthday().toString());
 	}
@@ -165,12 +165,12 @@ public class TestSystemUserDao extends TestCase {
 
 	public void testDeleteUser() throws DAOException{	
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
-		SystemUser userdb = userdao.searchUserByUsername("wZheng");
+		SystemUser userdb = userdao.searchUserByUsername("w1Zheng");
 		
 		assertNotNull(userdb);
 		userdao.deleteUser(userdb);
 		
-		SystemUser userdb2 = userdao.searchUserByUsername("wZheng");
+		SystemUser userdb2 = userdao.searchUserByUsername("w1Zheng");
 		assertNull(userdb2);
 	}
 	
