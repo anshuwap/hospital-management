@@ -3,18 +3,17 @@ package ece651.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.DiagnosisTest;
 import ece651.model.DiagnosisTestKey;
-import ece651.model.Visitation;
 
 public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -34,37 +33,6 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 	public DiagnosisTestDaoImpl() {
 		log.info(getClass().toString());
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
-	}
-
-	public void saveDiagnosisTest(DiagnosisTest diagnosisTest)
-			throws DAOException {
-
-		Connection conn = null;
-		int newDiagnosisTestId = 0;
-		try {
-			conn = session.connection();
-			String sql = "select max(Diag.DiagnosisTestId) from DiagnosisTest as Diag where Diag.VisitationId=?";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, diagnosisTest.getVisitationId());
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()){
-				newDiagnosisTestId = rs.getInt(1)+1;
-				diagnosisTest.setDiagnosisTestId(newDiagnosisTestId);
-			}
-		} catch (Exception e) {
-			throw new DAOException(e.getMessage());
-		}
-		
-		Transaction tran = null;
-		try{
-			tran = session.beginTransaction();
-			tran.begin();				
-			session.save(diagnosisTest);
-			tran.commit();
-		}catch (HibernateException e) {
-			tran.rollback();
-			throw new DAOException(e.getMessage());
-		}
 	}
 
 	public DiagnosisTest searchDiagnosisTest(int diagnosisTestId, int visitationId)
@@ -95,10 +63,57 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 		}
 	}
 
-	@Override
-	public ArrayList<DiagnosisTest> searchDiagnosisTest(Visitation visitation)
+	public synchronized void saveDiagnosisTest(DiagnosisTest diagnosisTest)
 			throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		SQLQuery sql = (SQLQuery) session
+			.createSQLQuery("select max(Diag.DiagnosisTestId) as maxId from DiagnosisTest as Diag where Diag.VisitationId=?");
+		sql.setInteger(0, diagnosisTest.getVisitationId());
+		diagnosisTest.setDiagnosisTestId((Integer) sql.list().get(0) + 1);
+
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();				
+			session.save(diagnosisTest);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
 	}
+
+	public synchronized void saveDiagnosisTest_(DiagnosisTest diagnosisTest)
+			throws DAOException {
+
+		Connection conn = null;
+		int newDiagnosisTestId = 0;
+		try {
+			conn = session.connection();
+			String sql = "select max(Diag.DiagnosisTestId) from DiagnosisTest as Diag where Diag.VisitationId=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, diagnosisTest.getVisitationId());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				newDiagnosisTestId = rs.getInt(1)+1;
+				diagnosisTest.setDiagnosisTestId(newDiagnosisTestId);
+			}
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		}
+		
+		Transaction tran = null;
+		try{
+			tran = session.beginTransaction();
+			tran.begin();				
+			session.save(diagnosisTest);
+			tran.commit();
+		}catch (HibernateException e) {
+			tran.rollback();
+			throw new DAOException(e.getMessage());
+		}
+	}
+
+
+	
 }
