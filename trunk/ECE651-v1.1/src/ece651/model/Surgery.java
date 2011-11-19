@@ -9,7 +9,6 @@ public class Surgery implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer surgeryId;
-	private Integer visitationId;
 	private Date    surgeryDate;
 	private SystemUser issueDoctor;
 	private SystemUser surgetyDoctor;
@@ -17,17 +16,12 @@ public class Surgery implements Serializable{
 	private Patient patient;
 	private String arrangementDescription;
 	private String surgerySummary;
+	private Visitation visitation;
 	public Integer getSurgeryId() {
 		return surgeryId;
 	}
 	public void setSurgeryId(Integer surgeryId) {
 		this.surgeryId = surgeryId;
-	}
-	public Integer getVisitationId() {
-		return visitationId;
-	}
-	public void setVisitationId(Integer visitationId) {
-		this.visitationId = visitationId;
 	}
 	public Date getSurgeryDate() {
 		return surgeryDate;
@@ -71,6 +65,12 @@ public class Surgery implements Serializable{
 	public void setSurgerySummary(String surgerySummary) {
 		this.surgerySummary = surgerySummary;
 	}
+	public Visitation getVisitation() {
+		return visitation;
+	}
+	public void setVisitation(Visitation visitation) {
+		this.visitation = visitation;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -94,8 +94,6 @@ public class Surgery implements Serializable{
 				+ ((surgerySummary == null) ? 0 : surgerySummary.hashCode());
 		result = prime * result
 				+ ((surgetyDoctor == null) ? 0 : surgetyDoctor.hashCode());
-		result = prime * result
-				+ ((visitationId == null) ? 0 : visitationId.hashCode());
 		return result;
 	}
 	@Override
@@ -147,21 +145,16 @@ public class Surgery implements Serializable{
 				return false;
 		} else if (!surgetyDoctor.equals(other.surgetyDoctor))
 			return false;
-		if (visitationId == null) {
-			if (other.visitationId != null)
-				return false;
-		} else if (!visitationId.equals(other.visitationId))
-			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "Surgery [surgeryId=" + surgeryId + ", visitationId="
-				+ visitationId + ", surgeryDate=" + surgeryDate
-				+ ", issueDoctor=" + issueDoctor + ", surgetyDoctor="
-				+ surgetyDoctor + ", nurse=" + nurse + ", patient=" + patient
-				+ ", arrangementDescription=" + arrangementDescription
-				+ ", surgerySummary=" + surgerySummary + "]";
+		return "Surgery [surgeryId=" + surgeryId + ", surgeryDate="
+				+ surgeryDate + ", issueDoctor=" + issueDoctor
+				+ ", surgetyDoctor=" + surgetyDoctor + ", nurse=" + nurse
+				+ ", patient=" + patient + ", arrangementDescription="
+				+ arrangementDescription + ", surgerySummary=" + surgerySummary
+				+ "]";
 	}
 
 }
