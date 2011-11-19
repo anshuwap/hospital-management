@@ -44,14 +44,11 @@ public class InpatientDaoImpl implements InpatientDao {
 		}
 	}
 
-	public Inpatient searchInpatient(int inpatientId, int visitationId)
+	public Inpatient searchInpatient(int inpatientId)
 			throws DAOException {
 		Inpatient inpatient;
-		InpatientKey inpatientKey = new InpatientKey();
-		inpatientKey.setVisitationId(visitationId);
-		inpatientKey.setInpatientId(inpatientId);
 		try{
-			inpatient = (Inpatient)session.get(Inpatient.class, inpatientKey);
+			inpatient = (Inpatient)session.get(Inpatient.class, inpatientId);
 		}catch (HibernateException e) {
 			throw new DAOException(e.getMessage());
 		}
@@ -69,12 +66,6 @@ public class InpatientDaoImpl implements InpatientDao {
 			tran.rollback();
 			throw new DAOException(e.getMessage());
 		}
-	}
-
-	@Override
-	public Inpatient searchInpatient(Visitation visitation) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

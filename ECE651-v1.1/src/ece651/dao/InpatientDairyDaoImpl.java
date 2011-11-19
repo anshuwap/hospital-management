@@ -1,5 +1,8 @@
 package ece651.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -35,6 +38,23 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 
 	public void saveInpatientDairy(InpatientDairy inpatientDairy)
 			throws DAOException {
+		
+		Connection conn = null;
+		int newInpatientDairyId = 0;
+		try {
+			conn = session.connection();
+			String sql = "select max(Inp.InpatientDairyId) from InpatientDairy as Inp where Inp.InpatientId=?";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, inpatientDairy.getInpatientId());
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				newInpatientDairyId = rs.getInt(1)+1;
+				inpatientDairy.setInpatientDairyId(newInpatientDairyId);
+			}
+		} catch (Exception e) {
+			throw new DAOException(e.getMessage());
+		}
+		
 		Transaction tran = null;
 		try{
 			tran = session.beginTransaction();

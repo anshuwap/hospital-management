@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
 import ece651.model.Surgery;
-import ece651.model.SurgeryKey;
-import ece651.model.Visitation;
 
 public class SurgeryDaoImpl implements SurgeryDao {
 	Logger log = Logger.getLogger(getClass().toString());
@@ -44,13 +42,10 @@ public class SurgeryDaoImpl implements SurgeryDao {
 		}
 	}
 
-	public Surgery searchSurgery(int surgeryId, int visitationId) throws DAOException {
+	public Surgery searchSurgery(int surgeryId) throws DAOException {
 		Surgery surgery;
-		SurgeryKey surgeryKey = new SurgeryKey();
-		surgeryKey.setVisitationId(visitationId);
-		surgeryKey.setSurgeryId(surgeryId);
 		try{
-			surgery = (Surgery)session.get(Surgery.class, surgeryKey);
+			surgery = (Surgery)session.get(Surgery.class, surgeryId);
 		}catch (HibernateException e) {
 			throw new DAOException(e.getMessage());
 		}
@@ -70,9 +65,4 @@ public class SurgeryDaoImpl implements SurgeryDao {
 		}
 	}
 
-	@Override
-	public Surgery searchSurgery(Visitation visitation) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

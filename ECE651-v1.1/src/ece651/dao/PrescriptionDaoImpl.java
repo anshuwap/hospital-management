@@ -68,10 +68,4 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 		}
 	}
 
-	@Override
-	public Prescription searchPrescription(Visitation visitation)
-			throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
