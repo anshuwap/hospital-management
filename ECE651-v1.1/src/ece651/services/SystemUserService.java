@@ -6,6 +6,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 
 import ece651.dao.DAOException;
+import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
 import ece651.model.SystemUser;
 
@@ -30,7 +31,7 @@ public class SystemUserService {
 		
 		// if not in Cache, get from database
 		SystemUser user = null;
-		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		SystemUserDao userdao = new SystemUserDaoImpl();
 		log.info("Search username: "+ username +" from Database...");
 		try {			
 			if ((user = userdao.searchUserByUsername(username)) != null) {
@@ -51,7 +52,7 @@ public class SystemUserService {
 	}
 	
 	public void saveUser (SystemUser user) throws Exception {
-		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		SystemUserDao userdao = new SystemUserDaoImpl();
 		try {			
 			userdao.saveUser(user);
 			log.info("Put username: "+user.getUsername()+" in Cache...");
@@ -68,7 +69,7 @@ public class SystemUserService {
 	}
 	
 	public void updateUser(SystemUser user) throws Exception {
-		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+		SystemUserDao userdao = new SystemUserDaoImpl();
 		try {				
 			userdao.updateUser(user);
 			log.info("Put username: "+user.getUsername()+" in Cache...");
