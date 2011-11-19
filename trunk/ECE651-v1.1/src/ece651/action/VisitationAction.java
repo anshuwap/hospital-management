@@ -103,6 +103,9 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 			this.setOperationStatus("Create New Visitation Failed! Exception Happened: "+e.getMessage());
 			return ERROR;		
 		}
+		finally{
+			visitationDao.cleanup();
+		}
 			
 		this.setVisitation(newVisitation);
 		this.session.put("CurrentVisitation", visitation);
@@ -116,16 +119,21 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		System.out.println("SearchVisitation is executed");
 		VisitationDao visitationDao = new VisitationDaoImpl();
 		Visitation editVisitation = (Visitation)session.get("CurrentVisitation");
-		editVisitation.setSymptomDescription(visitation.getSymptomDescription());
-		editVisitation.setDiagnosisResult(visitation.getDiagnosisResult());
+		
 		try{
-			visitationDao.saveVisitation(editVisitation);
-			
+			editVisitation = visitationDao.searchVisitation(editVisitation.getVisitationId());
+			editVisitation.setSymptomDescription(visitation.getSymptomDescription());
+			editVisitation.setDiagnosisResult(visitation.getDiagnosisResult());
+			visitationDao.updateVisitation(editVisitation);		
 		}catch(Exception e){
 			this.setOperationStatus("Update Visitation Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
 		}
+		finally{
+			visitationDao.cleanup();
+		}
 		this.session.put("CurrentVisitation", editVisitation);
+		visitation = editVisitation;
 		return SUCCESS;
 	}
 	
@@ -133,6 +141,7 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	public String ViewVisitation(){
 		return SUCCESS;
 	}
+	
 	
 	public String SearchVisitation(){
 		System.out.println("SearchVisitation is executed");
@@ -143,6 +152,9 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		}catch(Exception e){
 			this.setOperationStatus("View Visitation Failed! Exception Happened:" +e.getMessage());
 			return ERROR;
+		}
+		finally{
+			visitationDao.cleanup();
 		}
 		
 		this.setVisitation(searchVisitation);

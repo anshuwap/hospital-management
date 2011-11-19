@@ -36,13 +36,12 @@
 			label="Issued Doctor Name" readonly="true" /><tr>
 		<s:textfield name="diagnosisTest.issueDate" label="Issued Date"
 			readonly="true" /><tr>		
-		<s:if test='#session.CurrentUser.roleType=="D"'>
-			<s:form action="editDiagnosisTest" method="post"
-				namespace="/diagnosistest">
+		<s:if test='#session.CurrentUser.roleType=="D"&&diagnosisTest.testType==""&&diagnosisTest.testRequestDescription==""'>
+			<s:form action="editDiagnosisTest" method="post" namespace="/diagnosistest">
 			<s:select label="Select Test Type" name="diagnosisTest.testType"
 						headerKey="1" headerValue="-- Please Select --" value=""
-						list="#{'BUltra':'B UltraSound','BloodTest':'Blood Test','UrineTest':'Urine Test','XRay':'X Ray',
-                                'CTScan':'CT Scan'}" /><tr>
+						list="#{'1':'B UltraSound','2':'Blood Test','3':'Urine Test','4':'X Ray',
+                                '4':'CT Scan'}" /><tr>
             <s:textarea name="diagnosisTest.testRequestDescription"
 					label="Test Request Description" cols="40" rows="10" /><tr>
 			<s:token name="token"></s:token>
@@ -51,6 +50,13 @@
 			</tr>
 			</s:form>
 		</s:if>
+		<s:else>
+			
+		</s:else>
+		
+		
+		
+		
 		<s:else>
 			<s:textfield name="diagnosisTest.testType" label="Test Type"
 				readonly="true" /><tr>

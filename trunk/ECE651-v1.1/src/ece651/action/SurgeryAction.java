@@ -67,7 +67,7 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		
 		//just for test 
 		tempVisitation =(Visitation)session.get("CurrentVisitation");
-		newSurgery.setVisitationId(tempVisitation.getVisitationId());
+		newSurgery.setVisitation(tempVisitation);
 		newSurgery.setIssueDoctor(tempVisitation.getDoctor());
 		newSurgery.setPatient(tempVisitation.getPatient());		
 		//just for test

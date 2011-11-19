@@ -66,9 +66,14 @@
 		<s:property value="operationStatus" />
 		<br>
 
-		<s:if test='roleName=="Doctor"&&retrievePatient!=null'>
+		<s:if test='#session.CurrentUser.roleType=="D"&&retrievePatient!=null'>
 			<s:a href="visitation/createVisitation.action">Create New Visitation</s:a>
 		</s:if>
+		
+		<s:if test='#session.CurrentUser.roleType=="N"&&retrievePatient!=null'>
+			<s:a href="appointment/createAppointment.action">Create New Appointment</s:a>
+		</s:if>
+		
 		<br>
 		<s:if test="patientVisitation!=null">
 			<table border="1">
