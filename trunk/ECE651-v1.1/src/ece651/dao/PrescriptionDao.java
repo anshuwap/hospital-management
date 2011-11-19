@@ -3,7 +3,6 @@ package ece651.dao;
 import org.hibernate.Session;
 
 import ece651.model.Prescription;
-import ece651.model.Visitation;
 
 public interface PrescriptionDao {
 	public Session getSession();

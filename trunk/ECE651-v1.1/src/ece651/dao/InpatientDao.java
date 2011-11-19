@@ -3,7 +3,6 @@ package ece651.dao;
 import org.hibernate.Session;
 
 import ece651.model.Inpatient;
-import ece651.model.Visitation;
 
 public interface InpatientDao {
 	public Session getSession();

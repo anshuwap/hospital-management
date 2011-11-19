@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
-import ece651.model.Patient;
 import ece651.model.Visitation;
 
 public class VisitationDaoImpl implements VisitationDao {
