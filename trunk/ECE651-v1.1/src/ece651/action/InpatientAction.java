@@ -9,10 +9,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import ece651.dao.InpatientDao;
 import ece651.dao.InpatientDaoImpl;
-import ece651.dao.SurgeryDao;
-import ece651.dao.SurgeryDaoImpl;
+import ece651.dao.SystemUserDao;
+import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Inpatient;
-import ece651.model.Surgery;
+import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
 public class InpatientAction extends ActionSupport implements SessionAware,
@@ -50,39 +50,83 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 	
 	public String CreateInpatient(){
 		System.out.println("CreateInpatient is executed");
+		String result;
 		InpatientDao inpatientDao = new InpatientDaoImpl();
-		Inpatient newInpatient = new Inpatient();
-		Visitation tempVisitation = new Visitation();
-/*		try{
-			tempVisitation =(Visitation)session.get("CurrentVisitation");
-			newInpatient.setVisitationId(tempVisitation.getVisitationId());
-			newInpatient.setIssueDoctor(tempVisitation.getDoctor());
-			newInpatient.setPatient(tempVisitation.getPatient());			
-			inpatientDao.saveInpatient(newInpatient);		
+		
+		Visitation visitation =(Visitation)session.get("CurrentVisitation");
+		inpatient.setVisitation(visitation);
+		inpatient.setIssueDoctor(visitation.getDoctor());
+		inpatient.setPatient(visitation.getPatient());
+		
+		try{
+			inpatientDao.saveInpatient(inpatient);	
+			this.session.put("CurrentInpatient",inpatient);
+			result = SUCCESS;
 		}catch(Exception e){
 			this.setOperationStatus("Create Inpatient Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
-		}*/
+			result = ERROR;
+		}finally{
+			inpatientDao.cleanup();
+		}
 		
-		//just for test 
-		tempVisitation =(Visitation)session.get("CurrentVisitation");
-		newInpatient.setVisitation(tempVisitation);
-		newInpatient.setIssueDoctor(tempVisitation.getDoctor());
-		newInpatient.setPatient(tempVisitation.getPatient());
-		newInpatient.setInpatientId(tempVisitation.getVisitationId());
-		//just for test
-		
-		inpatient = newInpatient;
-		this.session.put("CurrentInpatient",inpatient);
-		return SUCCESS;
+		return result;
 	}
 	
 	public String EditInpatient(){
-		return SUCCESS;
+		System.out.println("EditInpatient is executed");
+		String result;
+		InpatientDao inpatientDao = new InpatientDaoImpl();
+		SystemUserDao userdao = new SystemUserDaoImpl();
+		
+		try{
+			Inpatient inpInSession =(Inpatient)session.get("CurrentInpatient");
+			
+			SystemUser inpDoctor = userdao.searchUserBySystemUserId(inpatient.getInpatientDoctor().getSystemUserId());
+			SystemUser inpNurse = userdao.searchUserBySystemUserId(inpatient.getNurse().getSystemUserId());
+			
+			inpInSession.setInpatientDate(inpatient.getInpatientDate());	
+			inpInSession.setDischargetDate(inpatient.getDischargetDate());
+			inpInSession.setArrangementDescription(inpatient.getArrangementDescription());
+			inpInSession.setDischargeSummary(inpatient.getDischargeSummary());
+			inpInSession.setInpatientDoctor(inpDoctor);
+			inpInSession.setNurse(inpNurse);
+					
+			inpatientDao.updateInpatient(inpInSession);
+			this.session.put("CurrentInpatient",inpInSession);
+			result = SUCCESS;
+		}catch(Exception e){
+			this.setOperationStatus("Edit Inpatient Failed! Exception Happened:" + e.getMessage());
+			result = ERROR;
+		}finally{
+			inpatientDao.cleanup();
+		}
+				
+		return result;
 	}
 	
 	public String SearchInpatient(){
-		return SUCCESS;
+		System.out.println("SearchInpatient is executed");
+		String result;
+		InpatientDao inpatientDao = new InpatientDaoImpl();
+		
+		Visitation visitation =(Visitation)session.get("CurrentVisitation");
+		if((inpatient = visitation.getInpatient())!=null){
+			this.session.put("CurrentInpatient",inpatient);
+			return SUCCESS;
+		}
+		//if it is null, try to get from database
+		try{
+			inpatientDao.searchInpatient(inpatient.getInpatientId());	
+			this.session.put("CurrentInpatient",inpatient);
+			result = SUCCESS;
+		}catch(Exception e){
+			this.setOperationStatus("Create Inpatient Failed! Exception Happened:" + e.getMessage());
+			result = ERROR;
+		}finally{
+			inpatientDao.cleanup();
+		}
+		
+		return result;
 	}
 
 }
