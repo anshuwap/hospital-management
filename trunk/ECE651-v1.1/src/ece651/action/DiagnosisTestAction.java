@@ -1,6 +1,7 @@
 package ece651.action;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -28,6 +29,8 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 	private DiagnosisTest diagnosisTest;
 	private String operationStatus;
 	private String testType;
+	private int diagnosisTestId;
+	private int visitationId;
 
 	public DiagnosisTest getDiagnosisTest() {
 		return diagnosisTest;
@@ -47,6 +50,22 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 
 	public void setTestType(String testType) {
 		this.testType = testType;
+	}
+
+	public int getDiagnosisTestId() {
+		return diagnosisTestId;
+	}
+
+	public void setDiagnosisTestId(int diagnosisTestId) {
+		this.diagnosisTestId = diagnosisTestId;
+	}
+
+	public int getVisitationId() {
+		return visitationId;
+	}
+
+	public void setVisitationId(int visitationId) {
+		this.visitationId = visitationId;
 	}
 
 	public void setDiagnosisTest(DiagnosisTest diagnosisTest) {
@@ -71,8 +90,11 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			tempVisitation =(Visitation)session.get("CurrentVisitation");
 			newDiagnosisTest.setVisitationId(tempVisitation.getVisitationId());
 			newDiagnosisTest.setDoctor(tempVisitation.getDoctor());
-			newDiagnosisTest.setIssueDate(new Date());
-			newDiagnosisTest.setPatient(tempVisitation.getPatient());			
+			java.util.Date date = new java.util.Date();
+			java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+			newDiagnosisTest.setIssueDate(sqlDate);
+			newDiagnosisTest.setPatient(tempVisitation.getPatient());
+			newDiagnosisTest.setTestType(diagnosisTest.getTestType());
 			diagnosistestDao.saveDiagnosisTest(newDiagnosisTest);			
 		}catch(Exception e){
 			this.setOperationStatus("Create DiagnosisTest Failed! Exception Happened:" + e.getMessage());
@@ -83,6 +105,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		}
 		diagnosisTest = newDiagnosisTest;
 		this.session.put("CurrentDiagnosisTest",diagnosisTest);
+		testType = TranslateTestType(newDiagnosisTest.getTestType());
 		return SUCCESS;
 	}
 	
@@ -93,15 +116,11 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		updateDiagnosisTest = (DiagnosisTest)session.get("CurrentDiagnosisTest");
 		SystemUser currentUser = (SystemUser)session.get("CurrentUser");
 		
-		try{
-			updateDiagnosisTest.setTestType(diagnosisTest.getTestType());
-			updateDiagnosisTest.setTestRequestDescription(diagnosisTest.getTestRequestDescription());
-		    if(currentUser.getRoleType()=="N")
-		    {
-		    	updateDiagnosisTest.setNurse(currentUser);
-		    	updateDiagnosisTest.setTestResultDescription(diagnosisTest.getTestResultDescription());
-		    }
+		try{	    
+		    updateDiagnosisTest.setNurse(currentUser);
+		    updateDiagnosisTest.setTestResultDescription(diagnosisTest.getTestResultDescription());
 			diagnosistestDao.updateDiagnosisTest(updateDiagnosisTest);
+			this.session.put("CurrentDiagnosisTest",updateDiagnosisTest);
 		}catch(Exception e){
 			this.setOperationStatus("Update DiagnosisTest Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
@@ -109,24 +128,48 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		finally{
 			diagnosistestDao.cleanup();
 		}
-		this.session.put("CurrentDiagnosisTest",updateDiagnosisTest);
 		diagnosisTest=updateDiagnosisTest;
+		this.setTestType(TranslateTestType(updateDiagnosisTest.getTestType()));
 		return SUCCESS;
 	}
 	
 	public String SearchDiagnosisTest(){
-		return SUCCESS;
-	}
+		
+			System.out.println("SearchDiagnosisTest is executed");
+			DiagnosisTestDao diagnosisTestDao = new DiagnosisTestDaoImpl();
+			try{
+				diagnosisTest = diagnosisTestDao.searchDiagnosisTest(diagnosisTestId, visitationId);
+				this.session.put("CurrentDiagnosisTest", diagnosisTest);
+			}catch(Exception e){
+				this.setOperationStatus("View DiagnosisTest Failed! Exception Happened:" +e.getMessage());
+				return ERROR;
+			}
+			finally{
+				diagnosisTestDao.cleanup();
+			}	
+			String tempString;
+			tempString =TranslateTestType(diagnosisTest.getTestType()); 
+			this.setTestType(tempString);
 
-	private String TranslateTestType(String inputTestType){
-		String outputTestType;
-		Switch(inputTestType)
-		{
-			case "1" : outputTestType="B UltraSound"; break;
-			case "2" : outputTestType=""; break;
-			
-		}
-		return outputTestType;
+			return SUCCESS;
+
+	}
+	
+	
+
+	public String TranslateTestType(String inputTestType){
+        if (inputTestType.equalsIgnoreCase("1"))
+        	return "B UltraSound";
+        else if (inputTestType.equalsIgnoreCase("2"))
+        	return "Blood Test";
+        else if (inputTestType.equalsIgnoreCase("3"))
+        	return "Urine Test";
+        else if (inputTestType.equalsIgnoreCase("4"))
+        	return "X Ray";
+        else if (inputTestType.equalsIgnoreCase("5"))
+        	return "CT Scan";
+        else 
+        	return "Not Defined";		
 	}
 	
 	

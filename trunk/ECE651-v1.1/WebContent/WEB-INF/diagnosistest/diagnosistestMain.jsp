@@ -36,33 +36,8 @@
 			label="Issued Doctor Name" readonly="true" /><tr>
 		<s:textfield name="diagnosisTest.issueDate" label="Issued Date"
 			readonly="true" /><tr>		
-		<s:if test='#session.CurrentUser.roleType=="D"&&diagnosisTest.testType==""&&diagnosisTest.testRequestDescription==""'>
-			<s:form action="editDiagnosisTest" method="post" namespace="/diagnosistest">
-			<s:select label="Select Test Type" name="diagnosisTest.testType"
-						headerKey="1" headerValue="-- Please Select --" value=""
-						list="#{'1':'B UltraSound','2':'Blood Test','3':'Urine Test','4':'X Ray',
-                                '4':'CT Scan'}" /><tr>
-            <s:textarea name="diagnosisTest.testRequestDescription"
-					label="Test Request Description" cols="40" rows="10" /><tr>
-			<s:token name="token"></s:token>
-			<tr>
-				<s:submit value="Submit" /><td>
-			</tr>
-			</s:form>
-		</s:if>
-		<s:else>
-			
-		</s:else>
-		
-		
-		
-		
-		<s:else>
-			<s:textfield name="diagnosisTest.testType" label="Test Type"
-				readonly="true" /><tr>
-			<s:textarea name="diagnosisTest.testRequestDescription"
-				label="Test Request Description" cols="40" rows="10" readonly="true" /><tr>
-		</s:else>
+	    <s:textfield name="testType" label="Test Type" readonly="true" readonly="true"/><tr>
+
 		</table>	
 		<s:if test='#session.CurrentUser.roleType!="N"'>
 		<table border ="1">
@@ -74,7 +49,7 @@
 		</s:if>
 		<s:else>
         <table border="1">
-			<s:form action="editDiagnosisTestByNurse" method="post"
+			<s:form action="editDiagnosisTest" method="post"
 				namespace="/diagnosistest">
 				<s:textarea name="diagnosisTest.testResultDescription"
 					label="Test Result Description" cols="40" rows="10" /><tr>

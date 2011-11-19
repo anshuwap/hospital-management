@@ -21,6 +21,8 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	private String operationStatus;
 	private SystemUser doctor;
 	private int visitationId;
+	private Set<DiagnosisTest> diagnosisTestList;
+	private String queryDiagnosisTestList;
 
 	
 	
@@ -71,6 +73,28 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 
 	public void setVisitationId(int visitationId) {
 		this.visitationId = visitationId;
+	}
+
+
+
+
+	public Set<DiagnosisTest> getDiagnosisTestList() {
+		return diagnosisTestList;
+	}
+
+
+	public void setDiagnosisTestList(Set<DiagnosisTest> diagnosisTestList) {
+		this.diagnosisTestList = diagnosisTestList;
+	}
+
+
+	public String getQueryDiagnosisTestList() {
+		return queryDiagnosisTestList;
+	}
+
+
+	public void setQueryDiagnosisTestList(String queryDiagnosisTestList) {
+		this.queryDiagnosisTestList = queryDiagnosisTestList;
 	}
 
 
@@ -155,10 +179,37 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		}
 		finally{
 			visitationDao.cleanup();
-		}
+		}	
 		
+		//Object searchDiagnosisTestList = QueryDiagnosisTest(searchVisitation);
+//		if(searchDiagnosisTestList instanceof String){
+//			this.setQueryDiagnosisTestList("Visitation Not Found, Reason: "+(String)searchDiagnosisTestList);
+//		}
+//		else {
+//			this.setDiagnosisTestList((ArrayList<Visitation>)searchDiagnosisTestList);
+//			this.session.put("DiagnosisTestList", diagnosisTestList);
+//		}	
+		this.setDiagnosisTestList(searchVisitation.getDiagnosisTestSet());
 		this.setVisitation(searchVisitation);
 		this.session.put("CurrentVisitation", visitation);
 		return SUCCESS;
 	}
+	
+	
+	/*private Object QueryDiagnosisTest(Visitation currentVisitation){
+		ArrayList<DiagnosisTest> resultDiagnosisTestList;
+		try{
+			DiagnosisTestDao diagnosisTestDao = new DiagnosisTestDaoImpl();
+			resultDiagnosisTestList = (ArrayList<DiagnosisTest>) diagnosisTestDao.searchDiagnosisTest(currentVisitation);
+			if (resultDiagnosisTestList.isEmpty()){
+				return "DiagnosisTest Not Found";
+			}
+		} catch(Exception e){
+			return "Exception Happened"+e.getMessage();		
+		}		
+		return resultDiagnosisTestList;
+	}*/
+	
+	
+	
 }
