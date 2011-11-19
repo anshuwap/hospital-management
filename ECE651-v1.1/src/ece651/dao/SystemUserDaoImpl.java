@@ -64,6 +64,18 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 		return user;
 	}
+
+	public List<SystemUser> SearchUserByRole(String roleType) throws DAOException {
+		List<SystemUser> userList = new ArrayList<SystemUser>();
+		try{
+			Query q = session.createQuery("select user from SystemUser as user where user.roleType=?");
+			q.setString(0, roleType);
+			userList = q.list();
+		}catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return userList;
+	}
 	
 	public List<SystemUser> searchAllUser() throws DAOException {
 		List<SystemUser> userList = new ArrayList<SystemUser>();
