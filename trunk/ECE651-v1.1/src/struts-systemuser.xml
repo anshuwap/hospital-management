@@ -17,20 +17,18 @@
 		<action name="createSystemUserAction" class="ece651.action.SystemUserAction" method="CreateSystemUser">
 			<result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
-			<result name="invalid.token">/WEB-INF/itguy/createSystemUser.jsp</result>
-			<interceptor-ref name="token" />
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="editSystemUser" class="ece651.action.SystemUserAction" method="EditSystemUser">
-		    <result name="success" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
-		      <interceptor-ref name="authStack"></interceptor-ref>
+		<action name="editSystemUserAction" class="ece651.action.SystemUserAction" method="EditSystemUser">
+		    <result name="success" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
+		    <interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="searchSystemUser" class="ece651.action.SystemUserAction" method="SearchSystemUser">
-		    <result name="success" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/itguy/editSystemUser.jsp</result>
+		<action name="searchSystemUserAction" class="ece651.action.SystemUserAction" method="SearchSystemUser">
+		    <result name="success" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
@@ -38,7 +36,12 @@
 		<action name="toCreateSystemUserPage">
 			<result name="success">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>		
+		</action>
+		
+		<action name="toViewEditSystemUser">
+			<result name="success">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>			
 		
 		<action name="toMainPage" class="ece651.action.SystemUserAction" method="BackToMainPage" >
 			<result name="success" type="chain">

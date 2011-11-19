@@ -23,11 +23,13 @@ function ClearForm(){
  		<s:textfield name="systemUser.username" label="User Name" required="true" />
  		<s:textfield name="systemUser.firstName" label="First Name" required="true" />
  		<s:textfield name="systemUser.lastName" label="Last Name" required="true" />
- 		<s:textfield name="systemUser.password" label="Password" required="true" />
- 		<s:radio list="#{'M':'male' ,'F': 'female'}" name="systemUser.gender" value="M" label="Gender"/>
+ 		<s:password name="systemUser.password" label="Password" required="true" />
+ 		<s:radio list="#{'M':'male' ,'F': 'female'}" name="systemUser.gender" value="M" label="Gender" required="true" />
  		<s:select label="Role Type" name="systemUser.roleType" list="#{'D':'Doctor', 'N':'Nurse', 'L':'Lawyer', 'I':'IT adminstrator'}" value="D" required="true" />
    		<s:textfield name="systemUserBirthday" label="User Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/>
-        <s:token name="token"></s:token>
+   		<s:textfield name="systemUser.email" label="Email" />
+ 		<s:textfield name="systemUser.phone" label="Phone" />
+ 		<s:select name="systemUser.active" list="#{'A':'Active', 'D':'De-Active'}" label="Status" required="true" />
         <tr>
           <td><s:reset value="Reset" /></td>
  		  <td><s:submit value="Create"/></td>

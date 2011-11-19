@@ -1,6 +1,8 @@
 package ece651.action;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -21,7 +23,34 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 	private String roleName;
 	private String operationStatus;
 	private String systemUserBirthday;
+	private List<SystemUser> retrieveSystemUsers;
+	
+	// search SystemUser Attributes Helper
+	private String searchContent;
+	private String searchType;
+	private boolean isSearchAll;
 
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
+	
+	public String getSearchContent() {
+		return searchContent;
+	}
+	
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	
+	public String getSearchType() {
+		return searchType;
+	}
+	
+	public void setSearchAll(String searchAll)
+	{
+		isSearchAll = searchAll.compareTo("View all users") == 0 ? true : false;
+	}
+	
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -40,6 +69,14 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 	
 	public SystemUser getSystemUser() {
 		return systemUser;
+	}
+	
+	public void setRetrieveSystemUsers(List<SystemUser> systemUserList) {
+		this.retrieveSystemUsers = systemUserList;
+	}
+	
+	public List<SystemUser> getRetrieveSystemUsers() {
+		return retrieveSystemUsers;
 	}
 
 	public void setSystemUser(SystemUser systemUser) {
@@ -74,55 +111,156 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 	
 	public String CreateSystemUser()
 	{
+		boolean isOperationSucceed = true;
 		System.out.println("CreateSystemUser is executed");//used for debug
 		SystemUserDao systemUserDao = new SystemUserDaoImpl(); //initiate SystemUserDao instance
 		request.put("Operation", "Create New System User:"+systemUser.getUsername());
 		
-		//if failed return String "fail"
-		if((!systemUser.getUsername().trim().isEmpty()) && 
-			(!systemUser.getPassword().trim().isEmpty()) &&
-		    (!systemUser.getFirstName().trim().isEmpty()) &&
-			(!systemUser.getLastName().trim().isEmpty()))
+		try
 		{
-		  try
-		  {
-			  if (!systemUserBirthday.isEmpty())
-			  {
-				  Date birthday =Date.valueOf(systemUserBirthday);
-				  systemUser.setBirthday(birthday);		
-			  }
-			  systemUser.setGender(systemUser.getGender());
-			  systemUser.setRoleType(systemUser.getRoleType());
-			  systemUser.setPassword(systemUser.getPassword());
-			  systemUser.setActive("A");
-			  systemUserDao.saveUser(systemUser);
-		  }
-		  catch (Exception e)
-		  {
-			//String errorInfo =  + e.getCause().toString();
-		    this.setOperationStatus("Create New System User Failed: Exception Happened: "+e.getMessage());
-			return ERROR;
-		  }
+			//if failed return String "fail"
+			if((!systemUser.getUsername().trim().isEmpty()) && 
+				(!systemUser.getPassword().trim().isEmpty()) &&
+			    (!systemUser.getFirstName().trim().isEmpty()) &&
+				(!systemUser.getLastName().trim().isEmpty()) && 
+				(!systemUser.getGender().trim().isEmpty()) && 
+				(!systemUser.getActive().trim().isEmpty()))
+			{
+				if (!systemUserBirthday.isEmpty())
+				{
+					Date birthday =Date.valueOf(systemUserBirthday);
+					systemUser.setBirthday(birthday);		
+				}
+				systemUser.setActive("A");
+				systemUserDao.saveUser(systemUser);
+			}
+			else
+			{
+				isOperationSucceed = false;
+				this.setOperationStatus("Create New System User Failed: Please fill in the required fields indicated by '*'");
+			}
 		}
-		else
+		catch (Exception e)
 		{
-			this.setOperationStatus("Create New System User Failed: Please fill in the required fields indicated by '*'");
-			return ERROR;
+			isOperationSucceed = false;
+		    this.setOperationStatus("Create New System User Failed: Exception Happened: "+e.getMessage());
+		}
+		finally
+		{
+			systemUserDao.cleanup();
 		}
 		
-		//if success return String "success"
-		this.setOperationStatus("Create New System User Succeeded!");
-		return SUCCESS;
+		if (isOperationSucceed)
+		  this.setOperationStatus("Create New System User Succeeded!");
+		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 	
 	public String EditSystemUser(){
-		return SUCCESS;
+		boolean isOperationSucceed = true;
+		System.out.println("EditSystemUser is executed");//used for debug
+		SystemUserDao systemUserDao = new SystemUserDaoImpl(); //initiate SystemUserDao instance
+		request.put("Operation", "Edit New System User:"+systemUser.getUsername());
 		
+		try
+		{
+			//if failed return String "fail"
+			if((!systemUser.getUsername().trim().isEmpty()) && 
+				(!systemUser.getPassword().trim().isEmpty()) &&
+			    (!systemUser.getFirstName().trim().isEmpty()) &&
+				(!systemUser.getLastName().trim().isEmpty()) && 
+				(!systemUser.getGender().trim().isEmpty()) && 
+				(!systemUser.getActive().trim().isEmpty()))
+			{
+				if (!systemUserBirthday.isEmpty())
+				{
+					Date birthday =Date.valueOf(systemUserBirthday);
+					systemUser.setBirthday(birthday);		
+				}
+				systemUserDao.updateUser(systemUser);
+			}
+			else
+			{
+				isOperationSucceed = false;
+				this.setOperationStatus("Update System User Failed: Please fill in the required fields indicated by '*'");
+			}
+		}
+		catch (Exception e)
+		{
+			isOperationSucceed = false;
+		    this.setOperationStatus("Update System User Failed: Exception Happened: "+e.getMessage());
+		}
+		finally
+		{
+			restoreSystemUser(systemUser);
+			systemUserDao.cleanup();
+		}
+		
+		//if success return String "success"
+		if (isOperationSucceed)
+			this.setOperationStatus("Update System User Succeeded!");
+		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 	
-	public String SearchystemUser(){
-		return SUCCESS;
+	private void restoreSystemUser(SystemUser systemUser)
+	{
+		retrieveSystemUsers = new ArrayList<SystemUser>();
+		retrieveSystemUsers.add(systemUser);
+	}
+	
+	public String SearchSystemUser(){
+		retrieveSystemUsers = null;
+		SystemUserDao systemUserDao = new SystemUserDaoImpl(); //initiate SystemUserDao instance
 		
+		try
+		{
+			if (isSearchAll)
+				retrieveSystemUsers = systemUserDao.searchAllUser();
+			else if (!searchContent.isEmpty())
+			{
+				SystemUser tempSysUser = null;
+				
+				if (searchType.compareTo("userName") == 0) //search by user name
+					tempSysUser =  systemUserDao.searchUserByUsername(searchContent);
+				else if (searchType.compareTo("userId") == 0) //search by user id
+				{
+					int userId = Integer.parseInt(searchContent);
+					tempSysUser = systemUserDao.searchUserBySystemUserId(userId);
+				}
+				else
+				{
+					this.setOperationStatus("Software Error.");
+					systemUserDao.cleanup();
+					return ERROR;
+				}
+				
+				if (tempSysUser != null)
+				{
+					retrieveSystemUsers = new ArrayList<SystemUser>();
+					retrieveSystemUsers.add(tempSysUser);
+				}
+			}
+			else
+			{
+				this.setOperationStatus("Invalid input.");
+				systemUserDao.cleanup();
+				return ERROR;
+			}
+			
+			if (retrieveSystemUsers == null)
+				this.setOperationStatus("No system users found!");
+			else
+				this.setOperationStatus("Success");
+			
+		}
+		catch (Exception e)
+		{
+		    this.setOperationStatus("Create New System User Failed: Exception Happened: "+e.getMessage());
+		    systemUserDao.cleanup();
+			return ERROR;
+		}
+
+		systemUserDao.cleanup();
+		return SUCCESS;
 	}
 	
 	public String BackToMainPage()
