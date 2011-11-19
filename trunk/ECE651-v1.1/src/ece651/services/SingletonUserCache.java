@@ -9,6 +9,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
 import ece651.model.SystemUser;
 //
@@ -26,7 +27,7 @@ public class SingletonUserCache {
 			singletonManager.addCache(memoryOnlyCache);
 			Cache userCache = singletonManager.getCache("userCache");
 
-			SystemUserDaoImpl userdao = new SystemUserDaoImpl();
+			SystemUserDao userdao = new SystemUserDaoImpl();
 			List<SystemUser> userList = new ArrayList<SystemUser>();
 			userList = userdao.searchAllUser();
 
