@@ -28,7 +28,6 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> request;
 	private DiagnosisTest diagnosisTest;
 	private String operationStatus;
-	private String testType;
 	private int diagnosisTestId;
 	private int visitationId;
 
@@ -44,13 +43,6 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		this.operationStatus = operationStatus;
 	}
 
-	public String getTestType() {
-		return testType;
-	}
-
-	public void setTestType(String testType) {
-		this.testType = testType;
-	}
 
 	public int getDiagnosisTestId() {
 		return diagnosisTestId;
@@ -95,7 +87,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			newDiagnosisTest.setIssueDate(sqlDate);
 			newDiagnosisTest.setPatient(tempVisitation.getPatient());
 			newDiagnosisTest.setTestType(diagnosisTest.getTestType());
-			diagnosistestDao.saveDiagnosisTest(newDiagnosisTest);			
+			diagnosistestDao.saveDiagnosisTest_(newDiagnosisTest);			
 		}catch(Exception e){
 			this.setOperationStatus("Create DiagnosisTest Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
@@ -105,7 +97,6 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		}
 		diagnosisTest = newDiagnosisTest;
 		this.session.put("CurrentDiagnosisTest",diagnosisTest);
-		testType = TranslateTestType(newDiagnosisTest.getTestType());
 		return SUCCESS;
 	}
 	
@@ -129,7 +120,6 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			diagnosistestDao.cleanup();
 		}
 		diagnosisTest=updateDiagnosisTest;
-		this.setTestType(TranslateTestType(updateDiagnosisTest.getTestType()));
 		return SUCCESS;
 	}
 	
@@ -147,9 +137,6 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			finally{
 				diagnosisTestDao.cleanup();
 			}	
-			String tempString;
-			tempString =TranslateTestType(diagnosisTest.getTestType()); 
-			this.setTestType(tempString);
 
 			return SUCCESS;
 
@@ -157,7 +144,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 	
 	
 
-	public String TranslateTestType(String inputTestType){
+/*	public String TranslateTestType(String inputTestType){
         if (inputTestType.equalsIgnoreCase("1"))
         	return "B UltraSound";
         else if (inputTestType.equalsIgnoreCase("2"))
@@ -170,7 +157,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
         	return "CT Scan";
         else 
         	return "Not Defined";		
-	}
+	}*/
 	
 	
 }

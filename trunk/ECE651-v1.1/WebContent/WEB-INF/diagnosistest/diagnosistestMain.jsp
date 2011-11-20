@@ -36,7 +36,7 @@
 			label="Issued Doctor Name" readonly="true" /><tr>
 		<s:textfield name="diagnosisTest.issueDate" label="Issued Date"
 			readonly="true" /><tr>		
-	    <s:textfield name="testType" label="Test Type" readonly="true" readonly="true"/><tr>
+	    <s:textfield name="diagnosisTest.testType" label="Test Type" readonly="true" readonly="true"/><tr>
 
 		</table>	
 		<s:if test='#session.CurrentUser.roleType!="N"'>
