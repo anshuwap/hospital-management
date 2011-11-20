@@ -7,7 +7,6 @@
   <jsp:include page="/WEB-INF/mis/ITGuyMenuHeader.jsp"/>
   
   <body> 
-    <hr><br>
   	<s:form name="createSystemUserForm" action="createSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
   	    <p>Create New System User</p>
   	    <table border="1">
