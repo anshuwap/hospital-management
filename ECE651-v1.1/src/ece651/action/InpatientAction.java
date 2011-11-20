@@ -50,7 +50,6 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 	
 	public String CreateInpatient(){
 		System.out.println("CreateInpatient is executed");
-		String result;
 		InpatientDao inpatientDao = new InpatientDaoImpl();
 		
 		Visitation visitation =(Visitation)session.get("CurrentVisitation");
@@ -61,20 +60,18 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		try{
 			inpatientDao.saveInpatient(inpatient);	
 			this.session.put("CurrentInpatient",inpatient);
-			result = SUCCESS;
 		}catch(Exception e){
 			this.setOperationStatus("Create Inpatient Failed! Exception Happened:" + e.getMessage());
-			result = ERROR;
+			return ERROR;
 		}finally{
 			inpatientDao.cleanup();
 		}
 		
-		return result;
+		return SUCCESS;
 	}
 	
 	public String EditInpatient(){
 		System.out.println("EditInpatient is executed");
-		String result;
 		InpatientDao inpatientDao = new InpatientDaoImpl();
 		SystemUserDao userdao = new SystemUserDaoImpl();
 		
@@ -93,21 +90,18 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 					
 			inpatientDao.updateInpatient(inpInSession);
 			this.session.put("CurrentInpatient",inpInSession);
-			result = SUCCESS;
 		}catch(Exception e){
 			this.setOperationStatus("Edit Inpatient Failed! Exception Happened:" + e.getMessage());
-			result = ERROR;
+			return ERROR;
 		}finally{
 			inpatientDao.cleanup();
 		}
 				
-		return result;
+		return SUCCESS;
 	}
 	
 	public String SearchInpatient(){
 		System.out.println("SearchInpatient is executed");
-		String result;
-		InpatientDao inpatientDao = new InpatientDaoImpl();
 		
 		Visitation visitation =(Visitation)session.get("CurrentVisitation");
 		if((inpatient = visitation.getInpatient())!=null){
@@ -115,18 +109,18 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 			return SUCCESS;
 		}
 		//if it is null, try to get from database
+		InpatientDao inpatientDao = new InpatientDaoImpl();
 		try{
 			inpatientDao.searchInpatient(inpatient.getInpatientId());	
 			this.session.put("CurrentInpatient",inpatient);
-			result = SUCCESS;
 		}catch(Exception e){
 			this.setOperationStatus("Create Inpatient Failed! Exception Happened:" + e.getMessage());
-			result = ERROR;
+			return ERROR;
 		}finally{
 			inpatientDao.cleanup();
 		}
 		
-		return result;
+		return SUCCESS;
 	}
 
 }
