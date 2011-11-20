@@ -1,21 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-   <s:debug></s:debug>
-</head>
+  <s:if test='#session.CurrentUser.roleType=="N"'>
+    <jsp:include page="/WEB-INF/mis/NurseMenuHeader.jsp"/>
+  </s:if>
   
   <body> 
-    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-    <hr><br> 
- <td><s:a href="patient/toMainPage.action">Back</s:a></td>
- 
   <s:form action="searchForEditPatient" method="post" namespace="/patient">
                   <s:textfield name="healthCardID" label="HealthCardID"/>
                   <s:token name="token"></s:token>
