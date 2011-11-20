@@ -6,7 +6,10 @@
 	<s:if test='#session.CurrentUser.roleType=="N"'>
       <jsp:include page="/WEB-INF/mis/NurseMenuHeader.jsp"/>
     </s:if>
-
+    <s:else>
+      <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
+    </s:else>
+    
 	<body>
 		<s:form action="searchForViewPatient" method="post"
 			namespace="/patient">
@@ -60,7 +63,7 @@
 		</s:if>
 		
 		<s:if test='#session.CurrentUser.roleType=="N"&&retrievePatient!=null'>
-			<s:a href="appointment/createAppointment.action">Create New Appointment</s:a>
+			<s:a href="appointment/toCreateAppointmentPage.action">Create New Appointment</s:a>
 		</s:if>
 		
 		<br>

@@ -20,15 +20,21 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="editAppointment" class="ece651.action.AppointmentAction" method="editAppointment">
+<!-- 	<action name="editAppointment" class="ece651.action.AppointmentAction" method="editAppointment">
 			<result name="success" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="searchAppointment" class="ece651.action.AppointmentAction" method ="SearchAppointment">
+    	<action name="searchAppointment" class="ece651.action.AppointmentAction" method ="SearchAppointment">
 		    <result name="success" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
 		    <result name="error" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>-->
+		
+<!--	Page Navigation Action	-->
+		<action name="toCreateAppointmentPage"  class="ece651.action.AppointmentAction" method ="Init">
+			<result name="success">/WEB-INF/appointment/createAppointment.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		

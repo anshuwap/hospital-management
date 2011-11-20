@@ -126,9 +126,9 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 				(!systemUser.getGender().trim().isEmpty()) && 
 				(!systemUser.getActive().trim().isEmpty()))
 			{
-				if (!systemUserBirthday.isEmpty())
+				if (!systemUserBirthday.trim().isEmpty())
 				{
-					Date birthday =Date.valueOf(systemUserBirthday);
+					Date birthday =Date.valueOf(systemUserBirthday.trim());
 					systemUser.setBirthday(birthday);		
 				}
 				systemUser.setActive("A");
