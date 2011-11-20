@@ -38,10 +38,14 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 	public synchronized void saveInpatientDairy(InpatientDairy inpatientDairy)
 			throws DAOException {
 		
+		int maxInpdId = 0;
 		SQLQuery sql = (SQLQuery) session
 			.createSQLQuery("select max(Inp.InpatientDairyId) from InpatientDairy as Inp where Inp.InpatientId=?");
 		sql.setInteger(0, inpatientDairy.getInpatientId());
-		inpatientDairy.setInpatientDairyId((Integer) sql.list().get(0) + 1);
+		if(null!=sql.list()&&null!=sql.list().get(0)){
+			maxInpdId = (Integer) sql.list().get(0);
+		}
+		inpatientDairy.setInpatientDairyId(maxInpdId + 1);
 		
 		Transaction tran = null;
 		try{

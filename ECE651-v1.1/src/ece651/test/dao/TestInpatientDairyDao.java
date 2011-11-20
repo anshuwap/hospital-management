@@ -28,8 +28,8 @@ public class TestInpatientDairyDao extends TestCase {
 		inpatientDairy.setPatient(patient);
 		inpatientDairy.setNurse(nurse);
 		
-		Date rDate = Date.valueOf("2011-08-10");
-		inpatientDairy.setRecordDate(rDate);
+		//Date rDate = Date.valueOf("2011-08-10");
+		inpatientDairy.setRecordDate(new Date(System.currentTimeMillis()));
 		inpatientDairy.setDairyDescription("60% recovery");
 		
 		System.out.print("New InpatientDairy is:"+inpatientDairy);

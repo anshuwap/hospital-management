@@ -2,9 +2,12 @@ package ece651.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import ece651.model.Appointment;
 
 public interface AppointmentDao {
+	public Session getSession();
 	public void cleanup();
 	public List<Appointment> searchApptListBydId(int doctorId) throws DAOException;
 	public List<Appointment> searchApptListBypId(int patiendId)throws DAOException;

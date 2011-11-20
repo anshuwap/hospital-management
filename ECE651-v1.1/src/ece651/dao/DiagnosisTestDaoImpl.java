@@ -66,10 +66,14 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 	public synchronized void saveDiagnosisTest(DiagnosisTest diagnosisTest)
 			throws DAOException {
 		
+		int maxDiagId = 0;
 		SQLQuery sql = (SQLQuery) session
 			.createSQLQuery("select max(Diag.DiagnosisTestId) as maxId from DiagnosisTest as Diag where Diag.VisitationId=?");
 		sql.setInteger(0, diagnosisTest.getVisitationId());
-		diagnosisTest.setDiagnosisTestId((Integer) sql.list().get(0) + 1);
+		if(null!=sql.list()&&null!=sql.list().get(0)){
+			maxDiagId = (Integer) sql.list().get(0);
+		}
+		diagnosisTest.setDiagnosisTestId(maxDiagId + 1);
 
 		Transaction tran = null;
 		try{
