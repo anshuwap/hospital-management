@@ -57,6 +57,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		<s:if test='#session.CurrentUser.roleType=="N"'>
 			<s:a href="inpatientdairy/createInpatientDairy.action">Create New Inpatient Dairy</s:a>
 		</s:if>
+        
+        <s:if test="currentInpatientDairySet!=null">
+			<table border="1">
+				<tr>
+					<td>
+						Record Nurse
+					</td>
+					<td>
+					    Record Date
+					</td>
+					<td>
+					    View
+					</td>
+				</tr>
+				<s:iterator value="currentInpatientDairySet">
+					<tr>
+						<td>
+							<s:property value="nurse.firstName" />
+						</td>
+						<td>
+						    <s:property value="recordDate"/>
+						</td>
+						<td>
+						    <a href="<s:url value='inpatientdairy/searchInpatientDairy.action'>
+						    <s:param name="inpatientDairyId" value="inpatientDairyId"/>
+                            <s:param name="inpatientId" value="inpatientId"/>  
+                            </s:url>">View</a>
+						</td>
+					</tr>
+				</s:iterator>
+			</table>
+		</s:if>
+        
          		
   </body>
 </html>

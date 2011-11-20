@@ -31,6 +31,8 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> request;
 	private InpatientDairy inpatientDairy;
 	private String operationStatus;
+	private int inpatientDairyId;
+	private int inpatientId; 
 	
 
 	public InpatientDairy getInpatientDairy() {
@@ -49,6 +51,22 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		this.operationStatus = operationStatus;
 	}
 
+	public int getInpatientDairyId() {
+		return inpatientDairyId;
+	}
+
+	public void setInpatientDairyId(int inpatientDairyId) {
+		this.inpatientDairyId = inpatientDairyId;
+	}
+
+	public int getInpatientId() {
+		return inpatientId;
+	}
+
+	public void setInpatientId(int inpatientId) {
+		this.inpatientId = inpatientId;
+	}
+
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -62,6 +80,7 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		System.out.println("CreateInpatientDairy is executed");
 		InpatientDairyDao inpatientDairyDao = new InpatientDairyDaoImpl();
 		
+		inpatientDairy = new InpatientDairy();
 		Inpatient inpatient =(Inpatient)session.get("CurrentInpatient");
 		inpatientDairy.setInpatientId(inpatient.getInpatientId());
 		inpatientDairy.setPatient(inpatient.getPatient());
@@ -99,14 +118,14 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		}finally{
 			inpatientDairyDao.cleanup();
 		}
-				
+		inpatientDairy = inpdInSession;	
 		return SUCCESS;
 	}
 	
 	public String SearchInpatientDairy(){
 		System.out.println("SearchInpatientDairy is executed");
 		
-		Visitation visitation =(Visitation)session.get("CurrentVisitation");
+/*		Visitation visitation =(Visitation)session.get("CurrentVisitation");
 		Set<InpatientDairy> inpatientDairySet;
 		if((inpatientDairySet= visitation.getInpatient().getInpatientDairySet())!=null){
 			for(InpatientDairy inpd :inpatientDairySet){
@@ -128,8 +147,21 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		    return ERROR;
 		}finally{
 			inpatientDairyDao.cleanup();
-		}
+		}*/
 		
+		System.out.println("SearchInpatientDairy is executed");
+		InpatientDairyDao inpatientDairyDao = new InpatientDairyDaoImpl();
+		try{		
+			inpatientDairy = inpatientDairyDao.searchInpatientDairy(inpatientDairyId, inpatientId);
+			this.session.put("CurrentInpatientDairy", inpatientDairy);
+		}catch(Exception e){
+			this.setOperationStatus("View Prescription Failed! Exception Happened:" +e.getMessage());
+			inpatientDairyDao.cleanup();
+			return ERROR;
+		}
+		finally{
+			inpatientDairyDao.cleanup();
+		}	
 		return SUCCESS;
 	}
 

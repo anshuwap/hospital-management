@@ -2,6 +2,7 @@ package ece651.action;
 
 import java.sql.Date;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -13,6 +14,7 @@ import ece651.dao.InpatientDaoImpl;
 import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Inpatient;
+import ece651.model.InpatientDairy;
 import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
@@ -25,6 +27,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 	private String operationStatus;
 	private String inpatientDay;
 	private String dischargeDay;
+	private Set<InpatientDairy> currentInpatientDairySet;
 
 	public String getInpatientDay() {
 		return inpatientDay;
@@ -56,6 +59,15 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 
 	public void setOperationStatus(String operationStatus) {
 		this.operationStatus = operationStatus;
+	}
+
+	public Set<InpatientDairy> getCurrentInpatientDairySet() {
+		return currentInpatientDairySet;
+	}
+
+	public void setCurrentInpatientDairySet(
+			Set<InpatientDairy> currentInpatientDairySet) {
+		this.currentInpatientDairySet = currentInpatientDairySet;
 	}
 
 	public void setSession(Map<String, Object> session) {
@@ -166,7 +178,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
 		if(inpatient.getDischargetDate()!=null)
 		this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
-		
+		this.setCurrentInpatientDairySet(inpatient.getInpatientDairySet());	
 		return SUCCESS;
 	}
 
