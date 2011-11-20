@@ -1,5 +1,6 @@
 package ece651.action;
 
+import java.sql.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -22,6 +23,24 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> request;
 	private Inpatient inpatient;
 	private String operationStatus;
+	private String inpatientDay;
+	private String dischargeDay;
+
+	public String getInpatientDay() {
+		return inpatientDay;
+	}
+
+	public void setInpatientDay(String inpatientDay) {
+		this.inpatientDay = inpatientDay;
+	}
+
+	public String getDischargeDay() {
+		return dischargeDay;
+	}
+
+	public void setDischargeDay(String dischargeDay) {
+		this.dischargeDay = dischargeDay;
+	}
 
 	public Inpatient getInpatient() {
 		return inpatient;
@@ -51,7 +70,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 	public String CreateInpatient(){
 		System.out.println("CreateInpatient is executed");
 		InpatientDao inpatientDao = new InpatientDaoImpl();
-		
+		inpatient = new Inpatient();
 		Visitation visitation =(Visitation)session.get("CurrentVisitation");
 		inpatient.setVisitation(visitation);
 		inpatient.setIssueDoctor(visitation.getDoctor());
@@ -74,28 +93,33 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		System.out.println("EditInpatient is executed");
 		InpatientDao inpatientDao = new InpatientDaoImpl();
 		SystemUserDao userdao = new SystemUserDaoImpl();
-		
 		try{
 			Inpatient inpInSession =(Inpatient)session.get("CurrentInpatient");
-			
-			SystemUser inpDoctor = userdao.searchUserBySystemUserId(inpatient.getInpatientDoctor().getSystemUserId());
-			SystemUser inpNurse = userdao.searchUserBySystemUserId(inpatient.getNurse().getSystemUserId());
-			
-			inpInSession.setInpatientDate(inpatient.getInpatientDate());	
-			inpInSession.setDischargetDate(inpatient.getDischargetDate());
-			inpInSession.setArrangementDescription(inpatient.getArrangementDescription());
-			inpInSession.setDischargeSummary(inpatient.getDischargeSummary());
-			inpInSession.setInpatientDoctor(inpDoctor);
-			inpInSession.setNurse(inpNurse);
-					
+			if(((SystemUser)session.get("CurrentUser")).getRoleType().equalsIgnoreCase("D")){
+			inpInSession.setInpatientDoctor((SystemUser)session.get("CurrentUser"));
+			inpInSession.setDischargeSummary(inpatient.getDischargeSummary());	
+			}
+		else if (((SystemUser)session.get("CurrentUser")).getRoleType().equalsIgnoreCase("N")){
+				inpInSession.setNurse((SystemUser)session.get("CurrentUser"));
+				Date tempInpatientDay = Date.valueOf(inpatientDay);
+				Date tempDischargeDay = Date.valueOf(dischargeDay);
+				inpInSession.setInpatientDate(tempInpatientDay);	
+				inpInSession.setDischargetDate(tempDischargeDay);
+				inpInSession.setArrangementDescription(inpatient.getArrangementDescription());
+			}			
 			inpatientDao.updateInpatient(inpInSession);
 			this.session.put("CurrentInpatient",inpInSession);
+			inpatient = inpInSession;
 		}catch(Exception e){
 			this.setOperationStatus("Edit Inpatient Failed! Exception Happened:" + e.getMessage());
 			return ERROR;
 		}finally{
 			inpatientDao.cleanup();
 		}
+		if(inpatient.getInpatientDate()!=null)
+		   this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
+		if(inpatient.getDischargetDate()!=null)
+		   this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
 				
 		return SUCCESS;
 	}
@@ -106,12 +130,11 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		Visitation visitation =(Visitation)session.get("CurrentVisitation");
 		if((inpatient = visitation.getInpatient())!=null){
 			this.session.put("CurrentInpatient",inpatient);
-			return SUCCESS;
 		}
 		//if it is null, try to get from database
 		InpatientDao inpatientDao = new InpatientDaoImpl();
 		try{
-			inpatientDao.searchInpatient(inpatient.getInpatientId());	
+			inpatient = inpatientDao.searchInpatient(inpatient.getInpatientId());	
 			this.session.put("CurrentInpatient",inpatient);
 		}catch(Exception e){
 			this.setOperationStatus("Create Inpatient Failed! Exception Happened:" + e.getMessage());
@@ -119,6 +142,10 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		}finally{
 			inpatientDao.cleanup();
 		}
+		if(inpatient.getInpatientDate()!=null)
+		this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
+		if(inpatient.getDischargetDate()!=null)
+		this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
 		
 		return SUCCESS;
 	}
