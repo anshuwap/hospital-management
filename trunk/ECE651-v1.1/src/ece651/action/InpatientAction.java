@@ -101,10 +101,24 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 			}
 		else if (((SystemUser)session.get("CurrentUser")).getRoleType().equalsIgnoreCase("N")){
 				inpInSession.setNurse((SystemUser)session.get("CurrentUser"));
-				Date tempInpatientDay = Date.valueOf(inpatientDay);
-				Date tempDischargeDay = Date.valueOf(dischargeDay);
-				inpInSession.setInpatientDate(tempInpatientDay);	
-				inpInSession.setDischargetDate(tempDischargeDay);
+				if(!inpatientDay.trim().isEmpty())
+				{
+				 Date tempInpatientDay = Date.valueOf(inpatientDay);
+				 inpInSession.setInpatientDate(tempInpatientDay);
+				}
+				else
+				{
+					inpInSession.setInpatientDate(null);
+				}
+				if(!dischargeDay.trim().isEmpty())
+				{
+				 Date tempDischargeDay = Date.valueOf(dischargeDay);	
+				 inpInSession.setDischargetDate(tempDischargeDay);
+				}
+				else
+				{
+					inpInSession.setDischargetDate(null);
+				}
 				inpInSession.setArrangementDescription(inpatient.getArrangementDescription());
 			}			
 			inpatientDao.updateInpatient(inpInSession);
@@ -118,8 +132,14 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		}
 		if(inpatient.getInpatientDate()!=null)
 		   this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
+		else {
+			this.setInpatientDay("");
+		}
 		if(inpatient.getDischargetDate()!=null)
 		   this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
+		else{
+			this.setDischargeDay("");
+		}
 				
 		return SUCCESS;
 	}
