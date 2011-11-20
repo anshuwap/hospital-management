@@ -54,25 +54,23 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 	public String CreateSurgery(){
 		System.out.println("CreateSurgery is executed");
 		SurgeryDao surgeryDao = new SurgeryDaoImpl();
-		Surgery newSurgery;
 		try{
 			Visitation tempVisitation =(Visitation)session.get("CurrentVisitation");
-			newSurgery = surgeryDao.searchSurgery(tempVisitation.getVisitationId());
-			if(newSurgery != null){ //surgery already exist
-				surgery = newSurgery;
-				this.session.put("CurrentSurgery",newSurgery);
+			Surgery tempSurgery = surgeryDao.searchSurgery(tempVisitation.getVisitationId());
+			if(tempSurgery != null){ //surgery already exist
+				surgery = tempSurgery;
+				this.session.put("CurrentSurgery",tempSurgery);
 				return SUCCESS;
 			}
 			else{ //surgery not exist
-				newSurgery = new Surgery();
+				Surgery newSurgery = new Surgery();
 				newSurgery.setVisitation(tempVisitation);
-				java.util.Date date = new java.util.Date();
-				java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-				newSurgery.setSurgeryDate(sqlDate);
 				newSurgery.setIssueDoctor(tempVisitation.getDoctor());
 				newSurgery.setPatient(tempVisitation.getPatient());				
 				surgeryDao.saveSurgery(newSurgery);	
+				surgery = newSurgery;
 				this.session.put("CurrentSurgery",newSurgery);
+				return SUCCESS;
 			}
 		}catch(Exception e){
 			this.setOperationStatus("Create Surgery Failed! Exception Happened:" + e.getMessage());
@@ -81,8 +79,6 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		finally{
 			surgeryDao.cleanup();
 		}
-		surgery = newSurgery;
-		return SUCCESS;
 	}
 	
 	public String EditSurgery(){
@@ -90,22 +86,25 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		SurgeryDao surgeryDao = new SurgeryDaoImpl();
 		Surgery updateSurgery = new Surgery();
 		updateSurgery = (Surgery)session.get("CurrentSurgery");
+		
 		try{	    
 			SystemUser role = new SystemUser();
 			role = (SystemUser)session.get("CurrentUser");
-			if(role.getRoleType() == "N"){
+			if(role.getRoleType().equals("N")){
 				updateSurgery.setNurse(role);
-				updateSurgery.setArrangementDescription(updateSurgery.getArrangementDescription());
+				updateSurgery.setSurgetyDoctor(surgery.getSurgetyDoctor());
+				updateSurgery.setArrangementDescription(surgery.getArrangementDescription());
+				updateSurgery.setSurgeryDate(surgery.getSurgeryDate());
 			}
 			
-			if(role.getRoleType() == "D"){
-				updateSurgery.setSurgetyDoctor(updateSurgery.getSurgetyDoctor());
-				updateSurgery.setSurgerySummary(updateSurgery.getSurgerySummary());
+			if(role.getRoleType().equals("D")){
+				updateSurgery.setSurgerySummary(surgery.getSurgerySummary());
 			}
 			
 			surgeryDao.updateSurgery(updateSurgery);
+			surgery = updateSurgery;
 			this.session.put("CurrentSurgery",updateSurgery);
-			
+			return SUCCESS;
 		}catch(Exception e){
 			this.setOperationStatus("Update Surgery Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
@@ -113,9 +112,6 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		finally{
 			surgeryDao.cleanup();
 		}
-		surgery = updateSurgery;
-	
-		return SUCCESS;
 	}
 	
 	public String SearchSurgery(){
