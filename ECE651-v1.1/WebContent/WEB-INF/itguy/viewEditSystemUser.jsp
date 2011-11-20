@@ -55,7 +55,7 @@
 			<td><s:property value="firstName" /></td>
 			<td><s:property value="lastName" /></td>
 			<td><s:property value="roleType" /></td>
-			<td><a href="<s:url value='systemuser/searchSystemUserAction.action'>
+			<td><a href="<s:url value='/systemuser/searchSystemUserAction.action'>
 								<s:param name="searchType">userId</s:param> 
 								<s:param name="searchAll">false</s:param> 
 	                            <s:param name="searchContent" value="systemUserId" />

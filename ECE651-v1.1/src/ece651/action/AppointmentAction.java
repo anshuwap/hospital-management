@@ -3,6 +3,7 @@ package ece651.action;
 
 import java.util.Map;
 import java.sql.Date;
+import java.sql.Time;
 
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -13,130 +14,152 @@ import ece651.dao.AppointmentDao;
 import ece651.dao.AppointmentDaoImpl;
 import ece651.dao.PatientDao;
 import ece651.dao.PatientDaoImpl;
-import ece651.dao.PrescriptionDao;
-import ece651.dao.PrescriptionDaoImpl;
 import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Appointment;
 import ece651.model.Patient;
-import ece651.model.Prescription;
 import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
-public class AppointmentAction extends ActionSupport implements SessionAware,
-		RequestAware {
+public class AppointmentAction extends ActionSupport implements SessionAware, RequestAware {
 
 	private Map<String, Object> session;
 	private Map<String, Object> request;
 	private Appointment appointment;
-	private SystemUser doctor;
-	private SystemUser nurse;
+	private String doctorID;
+	private String nurseID;
+	private String patientID;
 	private String appointmentDate;
-	private int doctorId;
+	private String startTime;
+	private String endTime;
 	private String operationStatus;
 	
-
-	public Appointment getAppointment() {
-		return appointment;
+	public void setSession(Map<String, Object> session) {
+		this.session = session;	
 	}
-
+	
+	public Map<String, Object> getSession() {
+		return session;	
+	}
+	
+	public void setRequest(Map<String, Object> request) {
+		this.request = request;
+	}
+	
+	public Map<String, Object> getRequest() {
+		return request;
+	}
+	
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
 	}
-
-	public SystemUser getDoctor() {
-		return doctor;
+	
+	public Appointment getAppointment() {
+		return appointment;
 	}
-
-	public void setDoctor(SystemUser doctor) {
-		this.doctor = doctor;
+	
+	public void setDoctorID (String doctorID) {
+		this.doctorID = doctorID;
 	}
-
-	public SystemUser getNurse() {
-		return nurse;
+	
+	public String getDoctorID () {
+		return doctorID;
 	}
-
-	public void setNurse(SystemUser nurse) {
-		this.nurse = nurse;
+	
+	public void setNurseID (String nurseID) {
+		this.nurseID = nurseID;
 	}
-
+	
+	public String getNurseID () {
+		return nurseID;
+	}
+	
+	public void setPatientID (String patientID) {
+		this.patientID = patientID;
+	}
+	
+	public String getPatientID () {
+		return patientID;
+	}
+	
+	public void setAppointmentDate(String appointmentDate) {
+		this.appointmentDate = appointmentDate;
+	}
+	
 	public String getAppointmentDate() {
 		return appointmentDate;
 	}
 
-	public void setAppointmentDate(String appointmentDate) {
-		this.appointmentDate = appointmentDate;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
-
-	public int getDoctorId() {
-		return doctorId;
+	
+	public String getStartTime() {
+		return startTime;
 	}
-
-	public void setDoctorId(int doctorId) {
-		this.doctorId = doctorId;
+	
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
-
-	public String getOperationStatus() {
-		return operationStatus;
+	
+	public String getEndTime() {
+		return endTime;
 	}
 
 	public void setOperationStatus(String operationStatus) {
 		this.operationStatus = operationStatus;
 	}
-
-	public void setSession(Map<String, Object> session) {
-		this.session = session;	
+	
+	public String getOperationStatus() {
+		return operationStatus;
 	}
 	
-	public void setRequest(Map<String, Object> request) {
-		this.request = request;
-		
+	public String Init()
+	{
+		return SUCCESS;
 	}
 	
 	public String CreateAppointment(){
-		System.out.println("Create Appointment is executed");
-		Appointment newAppointment = new Appointment();
-		AppointmentDao appointmentDao = new AppointmentDaoImpl();
-		SystemUser tempSystemUser = new SystemUser();	
-		try{
-		newAppointment.setPatient((Patient)session.get("RetrievePatient"));
-		newAppointment.setNurse((SystemUser)session.get("CurrentUser"));
-		Object queryDoctor = QueryDoctor(doctorId);
-		if(queryDoctor instanceof SystemUser ){
-			newAppointment.setDoctor((SystemUser)queryDoctor);
-		}
-		else {
-			throw new Exception();
-		}
-		newAppointment.setAppointmentDate(Date.valueOf(appointmentDate));
-		newAppointment.setEndTime(appointment.getEndTime());
-		newAppointment.setStartTime(appointment.getStartTime());
-		newAppointment.setStatus(appointment.getStatus());			
-	    appointmentDao.saveAppointment(newAppointment);	
-		}catch(Exception e){
-			this.setOperationStatus("Create Appointment Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
-		}	
-		//just for test 
-/*        
-		newAppointment.setPatient((Patient)session.get("RetrievePatient"));
-		newAppointment.setNurse((SystemUser)session.get("CurrentUser"));
-		Object queryDoctor = QueryDoctor(doctorId);
-		if(queryDoctor instanceof SystemUser ){
-			newAppointment.setDoctor((SystemUser)queryDoctor);
-		}
-		else {
-			throw new Exception();
-		}		
-		newAppointment.setAppointmentDate(Date.valueOf(appointmentDate));
-		newAppointment.setEndTime(appointment.getEndTime());
-		newAppointment.setStartTime(appointment.getStartTime());
-		newAppointment.setStatus(appointment.getStatus());*/	
-		//just for test
+		boolean isOperationSucceed = true;
+		System.out.println("CreateAppointment is executed");//used for debug
+		AppointmentDao appointmentDao = new AppointmentDaoImpl(); //initiate AppointmentDao instance
+		request.put("Operation", "Create New Apointment: (Doctor ID: " + appointment.getDoctor().getSystemUserId() + " Nurse ID: " + appointment.getNurse().getSystemUserId() + " Patient ID: " + appointment.getPatient().getPatientId() + ")");
 		
-		this.session.put("CurrentAppointment",newAppointment);
-		appointment = null;
-		return SUCCESS;
+		try
+		{
+			//if failed return String "fail"
+			if((!doctorID.trim().isEmpty()) && 
+				(!nurseID.trim().isEmpty()) &&
+				(!patientID.trim().isEmpty()) && 
+				(!appointmentDate.trim().isEmpty()) && 
+				(!startTime.trim().isEmpty()) && 
+				(!endTime.trim().isEmpty()))
+			{
+				Date date = Date.valueOf(appointmentDate.trim());
+				appointment.setAppointmentDate(date);
+				
+				appointment.setStatus("A");
+				appointmentDao.saveAppointment(appointment);
+			}
+			else
+			{
+				isOperationSucceed = false;
+				this.setOperationStatus("Create New Appointment Failed: Please fill in the required fields indicated by '*'");
+			}
+		}
+		catch (Exception e)
+		{
+			isOperationSucceed = false;
+		    this.setOperationStatus("Create New Appointment Failed: Exception Happened: "+e.getMessage());
+		}
+		finally
+		{
+			appointmentDao.cleanup();
+		}
+		
+		if (isOperationSucceed)
+		  this.setOperationStatus("Create New Appointment Succeeded!");
+		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 	
 	public String EditAppointment(){
@@ -163,6 +186,4 @@ public class AppointmentAction extends ActionSupport implements SessionAware,
 		
 		return resultDoctor;
 	}
-	
-	
 }
