@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
+    <s:debug></s:debug>
   </head>
   
   <body>
@@ -26,16 +27,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<s:if test='#session.CurrentUser.roleType=="N"'>
 				<s:form action="editInpatient" method="post" namespace="/inpatient">
-					<s:textfield name="inpatient.inpatientDate" label="Inpatient Date" displayFormat="yyyy-MM-dd" />
-					<s:textfield name="inpatient.dischargetDate" label="Discharge Date" displayFormat="yyyy-MM-dd" />
+					<s:textfield name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" />
+					<s:textfield name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" />
 					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" />
 					<s:token name="token"></s:token>
 					<s:submit value="Update" />
 				</s:form>
 			</s:if>
 			<s:else>
-				<s:textfield name="inpatient.inpatientDate" label="Inpatient Date" displayFormat="yyyy-MM-dd" readonly="true"/>
-					<s:textfield name="inpatient.dischargetDate" label="Discharge Date" displayFormat="yyyy-MM-dd" readonly="true"/>
+				<s:textfield name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" readonly="true"/>
+					<s:textfield name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" readonly="true"/>
 					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" readonly="true"/>
 			</s:else>		
 			
@@ -49,7 +50,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            <s:else>
 				<s:textarea name="inpatient.dischargeSummary" label="Discharge Summary" cols="40" rows="10" readonly="true"/>
 			</s:else>
-   	</table>	
+   	</table>
+   <s:property value="operationStatus" />
+   		
  <hr><br>
  		<s:if test='#session.CurrentUser.roleType=="N"'>
 			<s:a href="inpatientdairy/createInpatientDairy.action">Create New Inpatient Dairy</s:a>

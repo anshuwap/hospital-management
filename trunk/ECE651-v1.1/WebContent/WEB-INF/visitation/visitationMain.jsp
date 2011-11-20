@@ -26,14 +26,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  		<s:textfield name="visitation.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
  		<s:textfield name="visitation.doctor.firstName" label="Doctor Firstname" readonly="true" />
    		<s:textfield name="visitation.visitationDate" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
+      	<s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
       	<s:form action="editVisitation" method="post" namespace="/visitation">
            <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
            <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" />
            <s:token name="token"></s:token>
-           <s:if test='true'>
  		   <s:submit value="Update"/>
- 		   </s:if>
-        </s:form>
+ 		   </s:form>
+ 		</s:if>
+        <s:else>
+        <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
+        <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
+        </s:else>
    	</table>
    	    <br>
 		Operation Status:
@@ -41,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<br>	
     <hr><br> 
     
-    <s:if test='#session.CurrentUser.roleType=="D"'>
+    <s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
        	<s:form action="createDiagnosisTest" method="post" namespace="/diagnosistest">
 			<s:select label="Select Test Type" name="diagnosisTest.testType"
 						headerKey="1" headerValue="-- Please Select --" value=""
@@ -94,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
     <hr><br> 
-    <s:if test='visitation.prescription==null&&#session.CurrentUser.roleType=="D"'>
+    <s:if test='visitation.prescription==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
        <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
     </s:if>
     <s:else>
@@ -103,14 +107,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </s:url>">View Prescription</a>
     </s:else>
     <hr><br> 
-    <s:if test='visitation.surgery==null&&#session.CurrentUser.roleType=="D"'>
+    <s:if test='visitation.surgery==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
        <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
     </s:if>
     <s:else>
       <s:a href="surgery/searchSurgery.action" >View Surgery</s:a> 
     </s:else>
     <hr><br> 
-     <s:if test='visitation.surgery==null&&#session.CurrentUser.roleType=="D"'>
+     <s:if test='visitation.inpatient==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
        <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a>
      </s:if>
      <s:else>

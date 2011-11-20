@@ -87,7 +87,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			newDiagnosisTest.setIssueDate(sqlDate);
 			newDiagnosisTest.setPatient(tempVisitation.getPatient());
 			newDiagnosisTest.setTestType(diagnosisTest.getTestType());
-			diagnosistestDao.saveDiagnosisTest_(newDiagnosisTest);			
+			diagnosistestDao.saveDiagnosisTest(newDiagnosisTest);			
 		}catch(Exception e){
 			this.setOperationStatus("Create DiagnosisTest Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
