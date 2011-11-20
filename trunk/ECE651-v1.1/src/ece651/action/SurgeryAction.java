@@ -86,10 +86,52 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 	}
 	
 	public String EditSurgery(){
+		System.out.println("EditSurgery is executed");
+		SurgeryDao surgeryDao = new SurgeryDaoImpl();
+		Surgery updateSurgery = new Surgery();
+		updateSurgery = (Surgery)session.get("CurrentSurgery");
+		try{	    
+			SystemUser role = new SystemUser();
+			role = (SystemUser)session.get("CurrentUser");
+			if(role.getRoleType() == "N"){
+				updateSurgery.setNurse(role);
+				updateSurgery.setArrangementDescription(updateSurgery.getArrangementDescription());
+			}
+			
+			if(role.getRoleType() == "D"){
+				updateSurgery.setSurgetyDoctor(updateSurgery.getSurgetyDoctor());
+				updateSurgery.setSurgerySummary(updateSurgery.getSurgerySummary());
+			}
+			
+			surgeryDao.updateSurgery(updateSurgery);
+			this.session.put("CurrentSurgery",updateSurgery);
+			
+		}catch(Exception e){
+			this.setOperationStatus("Update Surgery Failed! Exception Happened:" + e.getMessage());
+		    return ERROR;
+		}
+		finally{
+			surgeryDao.cleanup();
+		}
+		surgery = updateSurgery;
+	
 		return SUCCESS;
 	}
 	
 	public String SearchSurgery(){
+		System.out.println("SearchSurgery is executed");
+		SurgeryDao surgeryDao = new SurgeryDaoImpl();
+		try{		
+			Visitation tempVisitation =(Visitation)session.get("CurrentVisitation");
+			surgery = surgeryDao.searchSurgery(tempVisitation.getVisitationId());
+			this.session.put("CurrentSurgery", surgery);
+		}catch(Exception e){
+			this.setOperationStatus("View Surgery Failed! Exception Happened:" +e.getMessage());
+			return ERROR;
+		}
+		finally{
+			surgeryDao.cleanup();
+		}	
 		return SUCCESS;
 	}
 
