@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -85,7 +86,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 			throws DAOException {
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
 		try {
-			Query hql = session.createQuery("from Appointment as app where app.doctor.doctorId=?");
+			Query hql = session.createQuery("from Appointment as app where app.doctor.systemUserId=?");
 			hql.setInteger(0, doctorId);
 			appointmentList = hql.list();
 		} catch (HibernateException e) {
@@ -93,4 +94,32 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 		return appointmentList;
 	}
+
+	public List<Appointment> searchAppListbyDidAndDate(int doctorId,
+			String AppDate) throws DAOException {
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		try {
+			SQLQuery sql = session.createSQLQuery("select * from Appointment where DoctorId=? and AppointmentDate=? and ( Status='A' or Status='V' ) order by AppointmentId desc").addEntity(Appointment.class);
+			sql.setInteger(0, doctorId);
+			sql.setString(1, AppDate);
+			appointmentList = sql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return appointmentList;
+	}
+
+	public List<Appointment> searchAppListbyDidandInOrder(int doctorId)
+			throws DAOException {
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		try {
+			SQLQuery sql = session.createSQLQuery("select * from Appointment where DoctorId=? order by AppointmentId desc").addEntity(Appointment.class);
+			sql.setInteger(0, doctorId);
+			appointmentList = sql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return appointmentList;
+	}
+
 }
