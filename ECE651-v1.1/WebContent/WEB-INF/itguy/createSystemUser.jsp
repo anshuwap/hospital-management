@@ -4,22 +4,13 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-   <s:debug></s:debug>
-   <script type="text/javascript" language="javascript">
-function ClearForm(){
-    document.createSystemUserForm.reset();
-}
-</script>
-</head>
+  <jsp:include page="/WEB-INF/mis/ITGuyMenuHeader.jsp"/>
   
-  <body onload="ClearForm()"> 
-    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
+  <body> 
     <hr><br>
-    <td><s:a href="systemuser/toMainPage.action">Back</s:a></td>
   	<s:form name="createSystemUserForm" action="createSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
-  	<h2>Create New System User</h2>
- 		<table border="1">
+  	    <p>Create New System User</p>
+  	    <table border="1">
  		<s:textfield name="systemUser.username" label="User Name" required="true" />
  		<s:textfield name="systemUser.firstName" label="First Name" required="true" />
  		<s:textfield name="systemUser.lastName" label="Last Name" required="true" />
@@ -30,13 +21,10 @@ function ClearForm(){
    		<s:textfield name="systemUser.email" label="Email" />
  		<s:textfield name="systemUser.phone" label="Phone" />
  		<s:select name="systemUser.active" list="#{'A':'Active', 'D':'De-Active'}" label="Status" required="true" />
-        <tr>
-          <td><s:reset value="Reset" /></td>
- 		  <td><s:submit value="Create"/></td>
- 		</tr>
- 		</table> 		
+        <s:reset value="Reset" />
+        <s:submit value="Create" />	
+        </table>
 	 </s:form>
 	<s:property value="%{#request.OperationStatus}"/> <br/>
- 
 </body>
 </html>

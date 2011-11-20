@@ -4,11 +4,9 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
- <body> 
-    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-    <hr><br> 
- <td><s:a href="systemuser/toMainPage.action">Back</s:a></td>
- 
+<jsp:include page="/WEB-INF/mis/ITGuyMenuHeader.jsp"/>
+
+<body> 
 <s:form name="searchSystemUserForm" action="searchSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
   <s:token name="token"></s:token>
   <table>
