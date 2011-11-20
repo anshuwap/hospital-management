@@ -66,7 +66,33 @@ public class TestAppointmentDao extends TestCase {
 		
 		appointmentList = appointmentdao.searchApptListBypId(1);
 		Appointment appointment = appointmentList.get(0);
-		//assertEquals("13:00", appointment.getStartTime());
 		assertEquals("Bill Gates", appointment.getPatient().getPatientName());
+	}
+	
+	public void  testsearchApptListBydId() throws DAOException{
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		
+		appointmentList = appointmentdao.searchApptListBydId(2);
+		Appointment appointment = appointmentList.get(0);
+		assertEquals("wzheng", appointment.getDoctor().getUsername());
+	}
+	
+	public void  testsearchAppListbyDidAndDate() throws DAOException{
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		
+		appointmentList = appointmentdao.searchAppListbyDidAndDate(2, "2011-08-10");
+		Appointment appointment = appointmentList.get(0);
+		assertEquals("wzheng", appointment.getDoctor().getUsername());
+	}
+	
+	public void  testsearchAppListbyDidandInOrder() throws DAOException{
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		
+		appointmentList = appointmentdao.searchAppListbyDidandInOrder(2);
+		Appointment appointment = appointmentList.get(0);
+		assertEquals("wzheng", appointment.getDoctor().getUsername());
 	}
 }
