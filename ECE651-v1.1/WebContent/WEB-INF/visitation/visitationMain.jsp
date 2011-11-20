@@ -41,16 +41,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<br>	
     <hr><br> 
     
+    <s:if test='#session.CurrentUser.roleType=="D"'>
        	<s:form action="createDiagnosisTest" method="post" namespace="/diagnosistest">
 			<s:select label="Select Test Type" name="diagnosisTest.testType"
 						headerKey="1" headerValue="-- Please Select --" value=""
-						list="#{'1':'B UltraSound','2':'Blood Test','3':'Urine Test','4':'X Ray',
-                                '4':'CT Scan'}" /><tr>
+						list="#{'B UltraSound':'B UltraSound','Blood Test':'Blood Test','Urine Test':'Urine Test','X Ray':'X Ray',
+                                'CT Scan':'CT Scan'}" /><tr>
 			<s:token name="token"></s:token>
 			<tr>
 				<s:submit value="Create New DiagnosisTest" /><td>
 			</tr>
 		</s:form>
+	</s:if>
 		
 		<s:if test="visitation.diagnosisTestSet!=null">
 			<table border="1">
@@ -60,6 +62,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</td>
 					<td>
 						Issue Doctor
+					</td>
+					<td>
+					    Issue Date
 					</td>
 					<td>
 					    View
@@ -74,6 +79,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<s:property value="doctor.firstName" />
 						</td>
 						<td>
+						    <s:property value="issueDate"/>
+						</td>
+						<td>
 						    <a href="<s:url value='diagnosistest/searchDiagnosisTest.action'>
 						    <s:param name="diagnosisTestId" value="diagnosisTestId"/>
                             <s:param name="visitationId" value="visitationId"/>  
@@ -85,17 +93,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</s:if>
 		
 		
-       
-       show the hyperlink list of Diagnosis Tests, click each will direct to the diagnosistestMain.jsp<br> 
     <hr><br> 
+    <s:if test='visitation.prescription==null&&#session.CurrentUser.roleType=="D"'>
        <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
-       if there already exist one prescription for the visitation, change the name of hyperlink to  View Prescription and change the action to search.
+    </s:if>
+    <s:else>
+        <a href="<s:url value='prescription/searchPrescription.action'>
+						    <s:param name="prescriptionId" value="#session.CurrentVisitation.prescription.prescriptionId"/>  
+                            </s:url>">View Prescription</a>
+    </s:else>
     <hr><br> 
+    <s:if test='visitation.surgery==null&&#session.CurrentUser.roleType=="D"'>
        <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
-       same to prescription
+    </s:if>
+    <s:else>
+      <s:a href="surgery/searchSurgery.action" >View Surgery</s:a> 
+    </s:else>
     <hr><br> 
+     <s:if test='visitation.surgery==null&&#session.CurrentUser.roleType=="D"'>
        <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a>
-       same to prescription 
-         		
+     </s:if>
+     <s:else>
+       <s:a href="inpatient/searchInpatient.action" >View Inpatient</s:a>
+     </s:else>    		
   </body>
 </html>

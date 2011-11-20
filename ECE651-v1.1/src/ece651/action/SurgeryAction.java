@@ -59,10 +59,14 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 			newSurgery.setVisitation(tempVisitation);
 			newSurgery.setIssueDoctor(tempVisitation.getDoctor());
 			newSurgery.setPatient(tempVisitation.getPatient());				
-			surgeryDao.saveSurgery(newSurgery);		
+			surgeryDao.saveSurgery(newSurgery);	
+			this.session.put("CurrentSurgery",newSurgery);
 		}catch(Exception e){
 			this.setOperationStatus("Create Surgery Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
+		}
+		finally{
+			surgeryDao.cleanup();
 		}
 		
 //		//just for test 
@@ -73,7 +77,7 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 //		//just for test
 		
 		surgery = newSurgery;
-		this.session.put("CurrentSurgery",surgery);
+
 		return SUCCESS;
 	}
 	
