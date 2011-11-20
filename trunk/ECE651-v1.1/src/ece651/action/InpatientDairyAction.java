@@ -1,6 +1,7 @@
 package ece651.action;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -54,12 +55,19 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 	
 	public String CreateInpatientDairy(){
 		System.out.println("CreateInpatientDairy is executed");
+		Inpatient inpatient =(Inpatient)session.get("CurrentInpatient");
+		
 		InpatientDairyDao inpatientDairyDao = new InpatientDairyDaoImpl();
-		InpatientDairy newInpatientDairy = new InpatientDairy();
-		Inpatient tempInpatient = new Inpatient();
-/*		try{
-			tempInpatient =(Inpatient)session.get("CurrentInpatient");
-		    newInpatientDairy.setInpatientId(tempInpatient.getInpatientId());
+		
+		inpatientDairy.setInpatientId(inpatient.getInpatientId());
+		
+		inpatientDairy.setPatient(inpatient.getPatient());
+		inpatientDairy.setNurse((SystemUser) session.get("CurrentUser"));
+		inpatientDairy.setRecordDate(new Date(System.currentTimeMillis()));
+		
+		try{
+	
+		   
 		    newInpatientDairy.setPatient(tempInpatient.getPatient());
 		    newInpatientDairy.setNurse((SystemUser) session.get("CurrentUser"));
 		    newInpatientDairy.setRecordDate(new Date());		
@@ -67,7 +75,7 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		}catch(Exception e){
 			this.setOperationStatus("Create InpatientDairy Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
-		}*/
+		}
 		
 		//just for test 
 		tempInpatient =(Inpatient)session.get("CurrentInpatient");
@@ -75,6 +83,10 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 	    newInpatientDairy.setPatient(tempInpatient.getPatient());
 	    newInpatientDairy.setNurse((SystemUser) session.get("CurrentUser"));
 	    newInpatientDairy.setRecordDate(new Date());
+	    Date date = new Date();
+	    Calendar cal = Calendar.getInstance();
+	    
+	    cal.getTime().getDate();
 		//just for test
 		
 		inpatientDairy = newInpatientDairy;

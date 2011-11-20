@@ -30,8 +30,8 @@ public class TestDiagnosisTestDao extends TestCase {
 		diagnosisTest.setDoctor(doctor);
 		diagnosisTest.setNurse(nurse);
 		diagnosisTest.setTestType("A");
-		Date iDate = Date.valueOf("2011-08-10");
-		diagnosisTest.setIssueDate(iDate);
+		//Date iDate = Date.valueOf("2011-08-10");
+		diagnosisTest.setIssueDate(new Date(System.currentTimeMillis()));
 		diagnosisTest.setTestRequestDescription("X ray");
 		diagnosisTest.setTestResultDescription("good");
 		
