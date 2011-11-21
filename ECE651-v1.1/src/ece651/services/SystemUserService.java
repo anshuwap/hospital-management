@@ -1,5 +1,8 @@
 package ece651.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import net.sf.ehcache.Cache;
@@ -84,6 +87,61 @@ public class SystemUserService {
 			userdao.cleanup();
 		}
 	}
+
+	public SystemUser searchUserBySystemUserId(int systemUserId) throws Exception {
+
+		// get from Cache first
+		log.info("Search systemUserId: " +systemUserId +" from Cache...");
+		List<String> keyList = new ArrayList<String>();
+		keyList = userCache.getKeys();
+		for (String meKey: keyList) {
+			Element element;
+			if ((element = userCache.get(meKey)) != null && 
+				((SystemUser)element.getValue()).getSystemUserId()==systemUserId) {
+				return (SystemUser)element.getValue();
+			}
+		}
+		
+		// if not in Cache, get from database
+		log.info("Can't get systemUserId: " +systemUserId +" from Cache");
+		SystemUser user = null;
+		SystemUserDao userdao = new SystemUserDaoImpl();
+		log.info("Search systemUserId: "+ systemUserId +" from Database...");
+		try {			
+			if ((user = userdao.searchUserBySystemUserId(systemUserId)) != null) {
+				log.info("Put username: "+user.getUsername()+" in Cache...");
+				userCache.put(new Element(user.getUsername(), user));	
+			}
+		} catch (DAOException e) {
+			throw new DAOException(e.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+		finally{
+			userdao.cleanup();
+		}
+
+		return user;
+	}
+	
+	public List<SystemUser> searchAllUser() throws Exception {
+		
+		// get from Cache 
+		log.info("Search all users from Cache...");
+		List<SystemUser> userList = new ArrayList<SystemUser>();
+		List<String> keyList = new ArrayList<String>();
+		keyList = userCache.getKeys();
+		
+		for (String meKey: keyList) {
+			Element element;
+			if ((element = userCache.get(meKey)) != null) {
+				userList.add((SystemUser)element.getValue());
+			}
+		}	
+		return userList;
+	}
+	
 	public static void main(String[] args) {
 		//for testing 
 		try {
