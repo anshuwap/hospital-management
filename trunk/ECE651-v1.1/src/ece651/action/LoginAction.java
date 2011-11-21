@@ -19,7 +19,6 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	private SystemUser user;
 	private String nextActionName;
 	private String errorMessage;
-	private String result;
 	
 	public SystemUser getUser() {
 		return user;
@@ -60,14 +59,6 @@ public class LoginAction extends ActionSupport implements SessionAware{
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
 	}
 
 	public String login(){
