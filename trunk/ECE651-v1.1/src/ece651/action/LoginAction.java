@@ -76,53 +76,53 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		SystemUserDao userdao = new SystemUserDaoImpl();
 		SystemUser userdb;
 		String Role="";
+		//get user from Cache or database
 		try {
 			userdb = userdao.searchUserByUsername(user.getUsername());
-			if(userdb==null){
-				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
-				return ERROR;
-			}
-			log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
-			if (user.getPassword().equals(userdb.getPassword())){
-				if (userdb.getRoleType().equals("D")){
-					this.nextActionName = "DOCTOR";
-					Role = "Doctor";
-				}	
-				if (userdb.getRoleType().equals("N")){
-					this.nextActionName = "NURSE";
-					Role = "Nurse";
-				}
-				if (userdb.getRoleType().equals("L")){
-					this.nextActionName = "LAWYER";
-					Role = "Lawyer";
-				}
-				if (userdb.getRoleType().equals("I")){
-					this.nextActionName = "ITGUY";
-					Role = "ITGuy";
-				}
-				result = SUCCESS;
-				session.put("CurrentUser",userdb);
-				session.put("Username",userdb.getUsername());
-				session.put("Firstname", userdb.getFirstName());
-				session.put("Lastname", userdb.getLastName());
-				session.put("Role",Role);
-			}
-			else {
-				result = ERROR;
-				errorMessage = "User name or password is not correct";				
-			}
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = ERROR;
-			errorMessage = "Database access error";			
+			errorMessage = "Database access error";		
+			return ERROR;
 		}
 		catch(Exception ex){
-			ex.printStackTrace();
-			result = ERROR;
 			errorMessage = "System error";
+			return ERROR;
 		}
-		return result;
+		//if not found
+		if(userdb==null){
+			errorMessage = "Username: " + user.getUsername() + " doesn't exist";
+			return ERROR;
+		}
+		//if found
+		log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
+		//password error
+		if (!user.getPassword().equals(userdb.getPassword())){
+			errorMessage = "User name or password is not correct";	
+			return ERROR;
+		}
+		//password is correct, check role
+		if (userdb.getRoleType().equals("D")){
+			this.nextActionName = "DOCTOR";
+			Role = "Doctor";
+		}else if (userdb.getRoleType().equals("N")){
+			this.nextActionName = "NURSE";
+			Role = "Nurse";
+		}else if (userdb.getRoleType().equals("L")){
+			this.nextActionName = "LAWYER";
+			Role = "Lawyer";
+		}else if (userdb.getRoleType().equals("I")){
+			this.nextActionName = "ITGUY";
+			Role = "ITGuy";
+		}else{
+			errorMessage = "User name role type is not correct";	
+			return ERROR;
+		}
+		session.put("CurrentUser",userdb);
+		session.put("Username",userdb.getUsername());
+		session.put("Firstname", userdb.getFirstName());
+		session.put("Lastname", userdb.getLastName());
+		session.put("Role",Role);
+		return SUCCESS;
+		
 	}
 
 	public String loginByCache(){
@@ -131,53 +131,52 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		SystemUserService userService = new SystemUserService();
 		SystemUser userdb;
 		String Role="";
+		//get user from Cache or database
 		try {
 			userdb = userService.searchUserByUsername(user.getUsername());
-			if(userdb==null){
-				errorMessage = "Username: " + user.getUsername() + " doesn't exist";
-				return ERROR;
-			}
-			log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
-			if (user.getPassword().equals(userdb.getPassword())){
-				if (userdb.getRoleType().equals("D")){
-					this.nextActionName = "DOCTOR";
-					Role = "Doctor";
-				}	
-				if (userdb.getRoleType().equals("N")){
-					this.nextActionName = "NURSE";
-					Role = "Nurse";
-				}
-				if (userdb.getRoleType().equals("L")){
-					this.nextActionName = "LAWYER";
-					Role = "Lawyer";
-				}
-				if (userdb.getRoleType().equals("I")){
-					this.nextActionName = "ITGUY";
-					Role = "ITGuy";
-				}
-				result = SUCCESS;
-				session.put("CurrentUser",userdb);
-				session.put("Username",userdb.getUsername());
-				session.put("Firstname", userdb.getFirstName());
-				session.put("Lastname", userdb.getLastName());
-				session.put("Role",Role);
-			}
-			else {
-				result = ERROR;
-				errorMessage = "User name or password is not correct";				
-			}
 		} catch (DAOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			result = ERROR;
-			errorMessage = "Database access error";			
+			errorMessage = "Database access error";		
+			return ERROR;
 		}
 		catch(Exception ex){
-			ex.printStackTrace();
-			result = ERROR;
 			errorMessage = "System error";
+			return ERROR;
 		}
-		return result;
+		//if not found
+		if(userdb==null){
+			errorMessage = "Username: " + user.getUsername() + " doesn't exist";
+			return ERROR;
+		}
+		//if found
+		log.info(userdb.getUsername() + " password in database:"+userdb.getPassword());
+		//password error
+		if (!user.getPassword().equals(userdb.getPassword())){
+			errorMessage = "User name or password is not correct";	
+			return ERROR;
+		}
+		//password is correct, check role
+		if (userdb.getRoleType().equals("D")){
+			this.nextActionName = "DOCTOR";
+			Role = "Doctor";
+		}else if (userdb.getRoleType().equals("N")){
+			this.nextActionName = "NURSE";
+			Role = "Nurse";
+		}else if (userdb.getRoleType().equals("L")){
+			this.nextActionName = "LAWYER";
+			Role = "Lawyer";
+		}else if (userdb.getRoleType().equals("I")){
+			this.nextActionName = "ITGUY";
+			Role = "ITGuy";
+		}else{
+			errorMessage = "User name role type is not correct";	
+			return ERROR;
+		}
+		session.put("CurrentUser",userdb);
+		session.put("Username",userdb.getUsername());
+		session.put("Firstname", userdb.getFirstName());
+		session.put("Lastname", userdb.getLastName());
+		session.put("Role",Role);
+		return SUCCESS;
 	}	
 	
 	public String logout() throws Exception {
