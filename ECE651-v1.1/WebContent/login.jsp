@@ -21,11 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	 		<s:submit value="Login"/>
  		</table> 		
 	 </s:form>
-	 <s:if test="returnCode=='error'">
-	 	<hr><s:property value="errorMessage" /><br/>
-	 </s:if>
-	 <s:elseif test="returnCode=='input'">
-	 	<hr><s:property value="errorMessage" /><br/>
-	 </s:elseif>
+	 <hr><s:property value="errorMessage" /><br/>
   </body>
 </html>
