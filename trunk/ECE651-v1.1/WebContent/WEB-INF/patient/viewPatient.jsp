@@ -89,7 +89,7 @@
 							<s:property value="doctor.firstName" />
 						</td>
 						<td>
-						    <a href="<s:url value='visitation/searchVisitation.action'>
+						    <a href="<s:url value='/visitation/searchVisitation.action'>
                             <s:param name="visitationId" value="visitationId"/>  
                             </s:url>">View</a>
 						</td>

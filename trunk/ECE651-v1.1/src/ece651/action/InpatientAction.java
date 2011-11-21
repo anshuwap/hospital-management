@@ -115,7 +115,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 				inpInSession.setNurse((SystemUser)session.get("CurrentUser"));
 				if(!inpatientDay.trim().isEmpty())
 				{
-				 Date tempInpatientDay = Date.valueOf(inpatientDay);
+				 Date tempInpatientDay = Date.valueOf(inpatientDay.substring(0, 10));
 				 inpInSession.setInpatientDate(tempInpatientDay);
 				}
 				else
@@ -124,7 +124,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 				}
 				if(!dischargeDay.trim().isEmpty())
 				{
-				 Date tempDischargeDay = Date.valueOf(dischargeDay);	
+				 Date tempDischargeDay = Date.valueOf(dischargeDay.substring(0, 10));	
 				 inpInSession.setDischargetDate(tempDischargeDay);
 				}
 				else
@@ -152,7 +152,7 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		else{
 			this.setDischargeDay("");
 		}
-				
+		this.setCurrentInpatientDairySet(inpatient.getInpatientDairySet());	
 		return SUCCESS;
 	}
 	
@@ -175,9 +175,15 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 			inpatientDao.cleanup();
 		}
 		if(inpatient.getInpatientDate()!=null)
-		this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
-		if(inpatient.getDischargetDate()!=null)
-		this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
+			   this.setInpatientDay(inpatient.getInpatientDate().toString().substring(0, 10));
+			else {
+				this.setInpatientDay("");
+			}
+			if(inpatient.getDischargetDate()!=null)
+			   this.setDischargeDay(inpatient.getDischargetDate().toString().substring(0, 10));
+			else{
+				this.setDischargeDay("");
+			}
 		this.setCurrentInpatientDairySet(inpatient.getInpatientDairySet());	
 		return SUCCESS;
 	}

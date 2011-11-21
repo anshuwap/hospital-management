@@ -25,6 +25,7 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> request;
 	private Surgery surgery;
 	private String operationStatus;
+	private String surgeryDate;
 
 	public Surgery getSurgery() {
 		return surgery;
@@ -40,6 +41,14 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 
 	public void setOperationStatus(String operationStatus) {
 		this.operationStatus = operationStatus;
+	}
+
+	public String getSurgeryDate() {
+		return surgeryDate;
+	}
+
+	public void setSurgeryDate(String surgeryDate) {
+		this.surgeryDate = surgeryDate;
 	}
 
 	public void setSession(Map<String, Object> session) {
@@ -88,23 +97,27 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		updateSurgery = (Surgery)session.get("CurrentSurgery");
 		
 		try{	    
-			SystemUser role = new SystemUser();
-			role = (SystemUser)session.get("CurrentUser");
-			if(role.getRoleType().equals("N")){
-				updateSurgery.setNurse(role);
-				updateSurgery.setSurgetyDoctor(surgery.getSurgetyDoctor());
+			if(((SystemUser)session.get("CurrentUser")).getRoleType().equalsIgnoreCase("N")){
+				updateSurgery.setNurse((SystemUser)session.get("CurrentUser"));
 				updateSurgery.setArrangementDescription(surgery.getArrangementDescription());
-				updateSurgery.setSurgeryDate(surgery.getSurgeryDate());
-			}
-			
-			if(role.getRoleType().equals("D")){
+				if(!surgeryDate.trim().isEmpty())
+				{
+				 Date tempSurgeryDay = Date.valueOf(surgeryDate.substring(0, 10));
+				 updateSurgery.setSurgeryDate(tempSurgeryDay);
+				}
+				else
+				{
+					updateSurgery.setSurgeryDate(null);
+				}
+			}			
+			if(((SystemUser)session.get("CurrentUser")).getRoleType().equalsIgnoreCase("D")){
+				updateSurgery.setSurgetyDoctor((SystemUser)session.get("CurrentUser"));
 				updateSurgery.setSurgerySummary(surgery.getSurgerySummary());
-			}
-			
+			}	
 			surgeryDao.updateSurgery(updateSurgery);
 			surgery = updateSurgery;
 			this.session.put("CurrentSurgery",updateSurgery);
-			return SUCCESS;
+
 		}catch(Exception e){
 			this.setOperationStatus("Update Surgery Failed! Exception Happened:" + e.getMessage());
 		    return ERROR;
@@ -112,6 +125,13 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		finally{
 			surgeryDao.cleanup();
 		}
+		
+		if(surgery.getSurgeryDate()!=null)
+			   this.setSurgeryDate(surgery.getSurgeryDate().toString().substring(0, 10));
+			else {
+				this.setSurgeryDate("");
+			}
+		return SUCCESS;
 	}
 	
 	public String SearchSurgery(){
@@ -119,7 +139,7 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		SurgeryDao surgeryDao = new SurgeryDaoImpl();
 		try{		
 			Visitation tempVisitation =(Visitation)session.get("CurrentVisitation");
-			surgery = surgeryDao.searchSurgery(tempVisitation.getVisitationId());
+			surgery = surgeryDao.searchSurgery(tempVisitation.getSurgery().getSurgeryId());
 			this.session.put("CurrentSurgery", surgery);
 		}catch(Exception e){
 			this.setOperationStatus("View Surgery Failed! Exception Happened:" +e.getMessage());
@@ -128,6 +148,13 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		finally{
 			surgeryDao.cleanup();
 		}	
+		
+		if(surgery.getSurgeryDate()!=null)
+			   this.setSurgeryDate(surgery.getSurgeryDate().toString().substring(0, 10));
+			else {
+				this.setSurgeryDate("");
+			}
+		
 		return SUCCESS;
 	}
 

@@ -15,9 +15,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
     <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
   <hr><br> 
-     <td><a href="<s:url value='patient/searchForViewPatient.action'>
+     <a href="<s:url value='patient/searchForViewPatient.action'>
       <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-      </s:url>">Back to View Patient Page</a></td>  
+      </s:url>">Back to View Patient Page</a>  
    
    <h2>Visitation</h2><br>
     <table border="1">
@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    View
 					</td>
 				</tr>
-				<s:iterator value="visitation.diagnosisTestSet">
+				<s:iterator value="diagnosisTestList">
 					<tr>
 						<td>
 							<s:property value="testType" />

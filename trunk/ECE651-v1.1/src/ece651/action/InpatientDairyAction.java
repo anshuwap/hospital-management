@@ -122,33 +122,7 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		return SUCCESS;
 	}
 	
-	public String SearchInpatientDairy(){
-		System.out.println("SearchInpatientDairy is executed");
-		
-/*		Visitation visitation =(Visitation)session.get("CurrentVisitation");
-		Set<InpatientDairy> inpatientDairySet;
-		if((inpatientDairySet= visitation.getInpatient().getInpatientDairySet())!=null){
-			for(InpatientDairy inpd :inpatientDairySet){
-				if(inpd.getInpatientDairyId()==inpatientDairy.getInpatientDairyId()&&
-				   inpd.getInpatientId()==inpatientDairy.getInpatientId())
-					inpatientDairy=inpd;
-					break;
-			}
-			this.session.put("CurrentInpatientDairy",inpatientDairy);
-			return SUCCESS;
-		}
-		//if it is null, try to get from database
-		InpatientDairyDao inpatientDairyDao = new InpatientDairyDaoImpl();
-		try{
-			inpatientDairy = inpatientDairyDao.searchInpatientDairy(inpatientDairy.getInpatientDairyId(), inpatientDairy.getInpatientId());	
-			this.session.put("CurrentInpatientDairy",inpatientDairy);
-		}catch(Exception e){
-			this.setOperationStatus("Search InpatientDairy Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
-		}finally{
-			inpatientDairyDao.cleanup();
-		}*/
-		
+	public String SearchInpatientDairy(){		
 		System.out.println("SearchInpatientDairy is executed");
 		InpatientDairyDao inpatientDairyDao = new InpatientDairyDaoImpl();
 		try{		

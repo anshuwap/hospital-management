@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="/struts-dojo-tags" prefix="sx"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
+    <sx:head/>
     <s:debug></s:debug>
   </head>
   
@@ -27,8 +29,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<s:if test='#session.CurrentUser.roleType=="N"'>
 				<s:form action="editInpatient" method="post" namespace="/inpatient">
-					<s:textfield name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" />
-					<s:textfield name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" />
+					<sx:datetimepicker name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" />
+					<sx:datetimepicker name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" />
 					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" />
 					<s:token name="token"></s:token>
 					<s:submit value="Update" />

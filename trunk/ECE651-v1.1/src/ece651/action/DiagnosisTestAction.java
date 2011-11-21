@@ -78,6 +78,12 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		DiagnosisTestDao diagnosistestDao = new DiagnosisTestDaoImpl();
 		DiagnosisTest newDiagnosisTest = new DiagnosisTest();
 		Visitation tempVisitation = new Visitation();
+		boolean operationStatus = false;
+		if(diagnosisTest.getTestType().trim().equalsIgnoreCase("1")){
+			diagnosistestDao.cleanup();
+			this.setOperationStatus("Create DiagnosisTest Faile: No Test Type Selected");
+		}
+		else{
 		try{
 			tempVisitation =(Visitation)session.get("CurrentVisitation");
 			newDiagnosisTest.setVisitationId(tempVisitation.getVisitationId());
@@ -87,17 +93,24 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			newDiagnosisTest.setIssueDate(sqlDate);
 			newDiagnosisTest.setPatient(tempVisitation.getPatient());
 			newDiagnosisTest.setTestType(diagnosisTest.getTestType());
-			diagnosistestDao.saveDiagnosisTest(newDiagnosisTest);			
+			diagnosistestDao.saveDiagnosisTest(newDiagnosisTest);	
+			operationStatus = true;
 		}catch(Exception e){
-			this.setOperationStatus("Create DiagnosisTest Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
+			this.setOperationStatus("Create DiagnosisTest Failed: Exception:"+e.getMessage());
 		}	
 		finally{
 			diagnosistestDao.cleanup();
+		 }
 		}
+		if(operationStatus==true){
 		diagnosisTest = newDiagnosisTest;
 		this.session.put("CurrentDiagnosisTest",diagnosisTest);
 		return SUCCESS;
+		}
+		else{
+			this.setVisitationId(((Visitation)session.get("CurrentVisitation")).getVisitationId());
+			return ERROR;			
+		}
 	}
 	
 	public String EditDiagnosisTest(){
@@ -114,7 +127,8 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			this.session.put("CurrentDiagnosisTest",updateDiagnosisTest);
 		}catch(Exception e){
 			this.setOperationStatus("Update DiagnosisTest Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
+			diagnosistestDao.cleanup();
+			return ERROR;
 		}
 		finally{
 			diagnosistestDao.cleanup();
@@ -132,6 +146,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 				this.session.put("CurrentDiagnosisTest", diagnosisTest);
 			}catch(Exception e){
 				this.setOperationStatus("View DiagnosisTest Failed! Exception Happened:" +e.getMessage());
+				diagnosisTestDao.cleanup();
 				return ERROR;
 			}
 			finally{

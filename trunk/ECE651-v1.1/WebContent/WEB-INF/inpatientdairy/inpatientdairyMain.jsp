@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <hr><br> 
   <a href="<s:url value='inpatient/searchInpatient.action'>
                             <s:param name="inpatientId" value="#session.CurrentInpatient.inpatientId"/>  
-                            </s:url>">Back To Visitation Page</a>
+                            </s:url>">Back To Inpatient Page</a>
    
    <h2>Inpatient Dairy</h2><br>
     <table border="1">
