@@ -107,7 +107,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		//if failed return String "fail"
 		if((!patient.getPatientName().trim().isEmpty())&&(!patient.getHealthCardId().trim().isEmpty())){
 		  try{
-			  Date birthday =Date.valueOf(patientBirthday);
+			  Date birthday =Date.valueOf(patientBirthday.substring(0, 10));
 				patient.setBirthday(birthday);
 				if(patient.getGender().equalsIgnoreCase("0"))
 					patient.setGender("F");

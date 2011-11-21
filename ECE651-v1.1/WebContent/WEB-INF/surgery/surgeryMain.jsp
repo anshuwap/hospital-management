@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+<%@ taglib uri="/struts-dojo-tags" prefix="sx"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
+    <sx:head/>
   </head>
   
   <body>
@@ -26,14 +28,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<s:if test='#session.CurrentUser.roleType=="N"'>
 				<s:form action="editSurgery" method="post" namespace="/surgery">
-					<s:textfield name="surgery.surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" />
+					<sx:datetimepicker name="surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" />
 					<s:textarea name="surgery.arrangementDescription" label="Surgery Arrangement" cols="40" rows="10" />
 					<s:token name="token"></s:token>
 					<s:submit value="Update" />
 				</s:form>
 			</s:if>
 			<s:else>
-				<s:textfield name="surgery.surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" readonly="true" />
+				<s:textfield name="surgeryDate" label="Surgery Date" displayFormat="yyyy-MM-dd" readonly="true" />
 				<s:textarea name="surgery.arrangementDescription" label="Surgery Arrangement" cols="40" rows="10" readonly="true" />
 			</s:else>		
 			

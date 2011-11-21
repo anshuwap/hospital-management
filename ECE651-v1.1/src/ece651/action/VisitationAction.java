@@ -125,6 +125,7 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 			
 		}catch(Exception e){
 			this.setOperationStatus("Create New Visitation Failed! Exception Happened: "+e.getMessage());
+			visitationDao.cleanup();
 			return ERROR;		
 		}
 		finally{
@@ -151,13 +152,15 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 			visitationDao.updateVisitation(editVisitation);		
 		}catch(Exception e){
 			this.setOperationStatus("Update Visitation Failed! Exception Happened:" + e.getMessage());
-		    return ERROR;
+			visitationDao.cleanup();
+			return ERROR;
 		}
 		finally{
 			visitationDao.cleanup();
 		}
 		this.session.put("CurrentVisitation", editVisitation);
 		visitation = editVisitation;
+		this.setDiagnosisTestList(visitation.getDiagnosisTestSet());
 		return SUCCESS;
 	}
 	
@@ -173,43 +176,25 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		Visitation searchVisitation = new Visitation();
 		try{
 			 searchVisitation = visitationDao.searchVisitation(visitationId);
+			 if (searchVisitation == null)
+			 {
+				int tempId =((Visitation)session.get("CurrentVisitation")).getVisitationId();
+				 searchVisitation = visitationDao.searchVisitation(tempId);
+			 }
 		}catch(Exception e){
 			this.setOperationStatus("View Visitation Failed! Exception Happened:" +e.getMessage());
+			visitationDao.cleanup();
+			this.setOperationStatus("View Visitation Failed! Exception:"+e.getMessage());
 			return ERROR;
 		}
 		finally{
 			visitationDao.cleanup();
 		}	
 		
-		//Object searchDiagnosisTestList = QueryDiagnosisTest(searchVisitation);
-//		if(searchDiagnosisTestList instanceof String){
-//			this.setQueryDiagnosisTestList("Visitation Not Found, Reason: "+(String)searchDiagnosisTestList);
-//		}
-//		else {
-//			this.setDiagnosisTestList((ArrayList<Visitation>)searchDiagnosisTestList);
-//			this.session.put("DiagnosisTestList", diagnosisTestList);
-//		}	
 		this.setDiagnosisTestList(searchVisitation.getDiagnosisTestSet());
 		this.setVisitation(searchVisitation);
 		this.session.put("CurrentVisitation", visitation);
+		this.setOperationStatus("Visitation Found!");
 		return SUCCESS;
 	}
-	
-	
-	/*private Object QueryDiagnosisTest(Visitation currentVisitation){
-		ArrayList<DiagnosisTest> resultDiagnosisTestList;
-		try{
-			DiagnosisTestDao diagnosisTestDao = new DiagnosisTestDaoImpl();
-			resultDiagnosisTestList = (ArrayList<DiagnosisTest>) diagnosisTestDao.searchDiagnosisTest(currentVisitation);
-			if (resultDiagnosisTestList.isEmpty()){
-				return "DiagnosisTest Not Found";
-			}
-		} catch(Exception e){
-			return "Exception Happened"+e.getMessage();		
-		}		
-		return resultDiagnosisTestList;
-	}*/
-	
-	
-	
 }

@@ -16,7 +16,10 @@
 		
 	    <action name="createDiagnosisTest" class="ece651.action.DiagnosisTestAction" method="CreateDiagnosisTest">
 			<result name="success" type="dispatcher">/WEB-INF/diagnosistest/diagnosistestMain.jsp</result>
-			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+            <result name="error" type="chain">
+            <param name="actionName">searchVisitation</param>
+            <param name="namespace">/visitation</param>
+            </result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
