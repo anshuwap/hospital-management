@@ -6,10 +6,13 @@
   <div class="menu">
 	<ul>
 	  <li><s:a href="patient/toMainPage.action">Back to Main</s:a></li>
-	  <li><s:a href="patient/toCreatePatientPage.action">Create Patient</s:a></li>
 	  <li><s:a href="patient/toEditPatientPage.action">Edit Patient</s:a></li>
 	  <li><s:a href="patient/toViewPatientPage.action">View Patient</s:a></li>
-	  <li><s:a href="appointment/toViewEditAppointmentPage.action">View Appointments</s:a></li>
+	  <li><a href="<s:url value='appointment/searchAppointment.action'>
+								<s:param name="searchType">docID</s:param> 
+								<s:param name="searchAll">false</s:param> 
+	                            <s:param name="searchContent" value="#session.CurrentUser.systemUserId" />
+	                            </s:url>">View Appointments</a></li>
 	</ul>
   </div>
 </div>

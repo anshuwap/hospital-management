@@ -1,20 +1,13 @@
 <%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <base href="<%=basePath%>">
-    <s:debug></s:debug>
-  </head>
-  
+ 
+   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
+   
   <body>
-    <jsp:include page="/WEB-INF/mis/loginHeader.jsp"/>
-  <hr><br> 
+  <br> 
      <a href="<s:url value='patient/searchForViewPatient.action'>
       <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
       </s:url>">Back to View Patient Page</a>  
