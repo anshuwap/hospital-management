@@ -2,6 +2,7 @@ package ece651.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 import org.apache.log4j.Logger;
 
@@ -133,12 +134,14 @@ public class SystemUserService {
 		List<String> keyList = new ArrayList<String>();
 		keyList = userCache.getKeys();
 		
-		for (String meKey: keyList) {
+		for (String eKey: keyList) {
 			Element element;
-			if ((element = userCache.get(meKey)) != null) {
+			if ((element = userCache.get(eKey)) != null) {
 				userList.add((SystemUser)element.getValue());
 			}
 		}	
+		UserComparator comparator=new UserComparator();
+		Collections.sort(userList, comparator);
 		return userList;
 	}
 	
