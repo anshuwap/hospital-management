@@ -131,6 +131,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		}
 		//if success return String "success"
 		this.setOperationStatus("Create New Patient Succeeded!");
+		session.put("CurrentPatient", patient);
 		patient = null;
 		patientBirthday = null;
 		return SUCCESS;		
@@ -166,7 +167,7 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			this.setOperationStatus("Search Patient: Found.");
 			roleName = (String) session.get("Role");
 			healthCardID = null;
-			
+			session.put("CurrentPatient", retrievePatient); 
 			return SUCCESS;
 		}
 			
@@ -195,9 +196,11 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			patientBirthday = null;
 			return ERROR;
 		}
+		session.put("CurrentPatient", retrievePatient); 
 		retrievePatient = null;
 		patientBirthday = null;
 		this.setOperationStatus("Edit Patient Info Succeeded!");
+		
 		return SUCCESS;
 	}
 	

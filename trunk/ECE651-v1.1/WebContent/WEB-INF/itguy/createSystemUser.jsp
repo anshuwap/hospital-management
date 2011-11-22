@@ -14,16 +14,18 @@
  		<s:textfield name="systemUser.firstName" label="First Name" required="true" />
  		<s:textfield name="systemUser.lastName" label="Last Name" required="true" />
  		<s:password name="systemUser.password" label="Password" required="true" />
- 		<s:radio list="#{'M':'male' ,'F': 'female'}" name="systemUser.gender" value="M" label="Gender" required="true" />
+ 		<s:radio name="systemUser.gender" value="M" list="#{'M':'male', 'F': 'female'}" label="Gender" required="true" />
  		<s:select label="Role Type" name="systemUser.roleType" list="#{'D':'Doctor', 'N':'Nurse', 'L':'Lawyer', 'I':'IT adminstrator'}" value="D" required="true" />
-   		<s:textfield name="systemUserBirthday" label="User Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/>
+ 		<s:textfield name="systemUserBirthday" label="User Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/>
    		<s:textfield name="systemUser.email" label="Email" />
  		<s:textfield name="systemUser.phone" label="Phone" />
+ 		<s:textfield name="systemUser.sin" label="SIN" />
  		<s:select name="systemUser.active" list="#{'A':'Active', 'D':'De-Active'}" label="Status" required="true" />
         <s:reset value="Reset" />
         <s:submit value="Create" />	
         </table>
 	 </s:form>
-	<s:property value="%{#request.OperationStatus}"/> <br/>
+
+Operation Status: <s:property value="operationStatus"/><br>
 </body>
 </html>
