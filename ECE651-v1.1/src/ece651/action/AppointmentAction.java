@@ -1,6 +1,7 @@
 package ece651.action;
 
 
+import java.util.List;
 import java.util.Map;
 import java.sql.Date;
 import java.sql.Time;
@@ -26,13 +27,18 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 	private Map<String, Object> session;
 	private Map<String, Object> request;
 	private Appointment appointment;
-	private String doctorID;
-	private String nurseID;
-	private String patientID;
+	private String currentDoctorID;
+	private String currentNurseID;
+	private String currentPatientID;
+	private String currentPatientHC;
+//	private SystemUser currentDoctor;
+//	private SystemUser currentNurse;
+//	private Patient currentPatient;
 	private String appointmentDate;
 	private String startTime;
 	private String endTime;
 	private String operationStatus;
+	private List<SystemUser> retrieveDoctors;
 	
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
@@ -58,37 +64,69 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return appointment;
 	}
 	
-	public void setDoctorID (String doctorID) {
-		this.doctorID = doctorID;
-	}
-	
-	public String getDoctorID () {
-		return doctorID;
-	}
-	
-	public void setNurseID (String nurseID) {
-		this.nurseID = nurseID;
-	}
-	
-	public String getNurseID () {
-		return nurseID;
-	}
-	
-	public void setPatientID (String patientID) {
-		this.patientID = patientID;
-	}
-	
-	public String getPatientID () {
-		return patientID;
-	}
-	
 	public void setAppointmentDate(String appointmentDate) {
-		this.appointmentDate = appointmentDate;
+		this.appointmentDate = appointmentDate.trim().substring(0,10);
 	}
 	
 	public String getAppointmentDate() {
 		return appointmentDate;
 	}
+	
+	public void setCurrentDoctorID (String doctorID) {
+		this.currentDoctorID = doctorID;
+	}
+	
+	public String getCurrentDoctorID () {
+		return currentDoctorID;
+	}
+	
+	public void setCurrentNurseID (String nurseID) {
+		this.currentNurseID = nurseID;
+	}
+	
+	public String getCurrentNurseID () {
+		return currentNurseID;
+	}
+	
+	public void setCurrentPatientID (String patientID) {
+		this.currentPatientID = patientID;
+	}
+	
+	public String getCurrentPatientID () {
+		return currentPatientID;
+	}
+	
+	public void setCurrentPatientHC (String PatientHC) {
+		this.currentPatientHC = PatientHC;
+	}
+	
+	public String getCurrentPatientHC () {
+		return currentPatientHC;
+	}
+	
+/*	public void setCurrentDoctor (SystemUser doctor) {
+		this.currentDoctor = doctor;
+	}
+	
+	public SystemUser getCurrentDoctor() {
+		return currentDoctor;
+	}
+	
+	public void setCurrentNurse (SystemUser nurse) {
+		this.currentNurse = nurse;
+	}
+	
+	public SystemUser getCurrentNurse() {
+		return currentNurse;
+	}
+	
+	public void setCurrentPatient (Patient patient) {
+		this.currentPatient = patient;
+	}
+	
+	public Patient getCurrentPatient() {
+		return currentPatient;
+	}*/
 
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
@@ -105,6 +143,14 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 	public String getEndTime() {
 		return endTime;
 	}
+	
+	public void setRetrieveDoctors(List<SystemUser> retrieveDoctors) {
+		this.retrieveDoctors = retrieveDoctors;
+	}
+	
+	public List<SystemUser> getRetrieveDoctors() {
+		return retrieveDoctors;
+	}
 
 	public void setOperationStatus(String operationStatus) {
 		this.operationStatus = operationStatus;
@@ -114,8 +160,25 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return operationStatus;
 	}
 	
-	public String Init()
+	public String InitAction()
 	{
+		SystemUser currentNurse = (SystemUser)(session.get("CurrentUser"));
+		
+		if (currentNurse == null)
+			return "BacktoLogin";
+		else
+			currentNurseID = currentNurse.getSystemUserId().toString();
+		
+		Patient currentPatient = (Patient)(session.get("CurrentPatient"));
+
+		if (currentPatient == null)
+			return "BacktoNurseMain";
+		else
+		{
+			currentPatientID = currentPatient.getPatientId().toString();
+			currentPatientHC = currentPatient.getHealthCardId();
+		}
+		
 		return SUCCESS;
 	}
 	
@@ -123,22 +186,36 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		boolean isOperationSucceed = true;
 		System.out.println("CreateAppointment is executed");//used for debug
 		AppointmentDao appointmentDao = new AppointmentDaoImpl(); //initiate AppointmentDao instance
-		request.put("Operation", "Create New Apointment: (Doctor ID: " + appointment.getDoctor().getSystemUserId() + " Nurse ID: " + appointment.getNurse().getSystemUserId() + " Patient ID: " + appointment.getPatient().getPatientId() + ")");
+		SystemUserDao systemUserDao = new SystemUserDaoImpl();
+		PatientDao patientDao = new PatientDaoImpl();
+		request.put("Operation", "Create New Apointment: (Doctor ID: " + currentDoctorID + " Nurse ID: " + currentNurseID + " Patient ID: " + currentPatientID + ")");
 		
 		try
 		{
 			//if failed return String "fail"
-			if((!doctorID.trim().isEmpty()) && 
-				(!nurseID.trim().isEmpty()) &&
-				(!patientID.trim().isEmpty()) && 
-				(!appointmentDate.trim().isEmpty()) && 
-				(!startTime.trim().isEmpty()) && 
-				(!endTime.trim().isEmpty()))
+			if((!appointmentDate.trim().isEmpty()) && 
+				(!appointment.getStartTime().trim().isEmpty()) && 
+				(!appointment.getEndTime().trim().isEmpty()) &&
+				(!appointment.getStatus().trim().isEmpty()))
 			{
 				Date date = Date.valueOf(appointmentDate.trim());
 				appointment.setAppointmentDate(date);
 				
-				appointment.setStatus("A");
+			    SystemUser currentDoctor = systemUserDao.searchUserBySystemUserId(Integer.parseInt(currentDoctorID));
+			    if (currentDoctor == null)
+			    	throw new Exception("Doctor is not found!");
+			    
+			    SystemUser currentNurse = systemUserDao.searchUserBySystemUserId(Integer.parseInt(currentNurseID));
+			    if (currentNurse == null)
+			    	throw new Exception("Nurse is not found!");
+			    
+			    Patient currentPatient = patientDao.searchPatient(Integer.parseInt(currentPatientID));
+			    if (currentPatient == null)
+			    	throw new Exception("Patient is not found!");
+			    
+				appointment.setDoctor(currentDoctor);
+				appointment.setNurse(currentNurse);
+				appointment.setPatient(currentPatient);
 				appointmentDao.saveAppointment(appointment);
 			}
 			else
@@ -170,20 +247,26 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return SUCCESS;
 	}
 
-	private Object QueryDoctor(int doctorId){
-		SystemUser resultDoctor = null;	
-		try{
-			SystemUserDao systemUserDao = new SystemUserDaoImpl();
-			resultDoctor = systemUserDao.searchUserBySystemUserId(doctorId);
-			 if (resultDoctor == null){
-				 //request.put("OperationStatus","Search Patient: Patient Not Exist");
-				 return "Doctor Not Found";
-			  }//end of if
-			} catch (Exception e){
-				//request.put("OperationStatus","Search Patient: Exception Happened" +e.getMessage());
-				return "Exception Happened"+e.getMessage();
-			}//end of catch
-		
-		return resultDoctor;
+	public String GetDoctors()
+	{
+		boolean isOperationSucceed = true;
+		SystemUserDao doctorDao = new SystemUserDaoImpl(); //initiate SystemUserDao instance
+		try
+		{
+			retrieveDoctors = doctorDao.SearchUserByRole("D");
+
+			if (retrieveDoctors == null)
+				this.setOperationStatus("No doctor found!");
+			else
+				this.setOperationStatus("Get doctor Success");
+		} 
+		catch (Exception e) 
+		{
+			isOperationSucceed = false;
+		    this.setOperationStatus("Get doctors Failed: Exception Happened: "+e.getMessage());
+		}
+
+		doctorDao.cleanup();
+		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 }

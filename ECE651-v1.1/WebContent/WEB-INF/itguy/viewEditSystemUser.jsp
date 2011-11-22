@@ -33,6 +33,7 @@
  		   <s:textfield name="systemUserBirthday" value="%{retrieveSystemUsers[0].birthday.toString().substring(0,10)}" label="Birthday" />
  		   <s:textfield name="systemUser.email" value="%{retrieveSystemUsers[0].email}" label="Email" />
  		   <s:textfield name="systemUser.phone" value="%{retrieveSystemUsers[0].phone}" label="Phone" />
+ 		   <s:textfield name="systemUser.sin" value="%{retrieveSystemUsers[0].sin}" label="SIN" />
  		   <s:select name="systemUser.active" value="%{retrieveSystemUsers[0].active}" list="#{'A':'Active', 'D':'De-Active'}" label="Status" required="true" />
  		   <s:submit value="Update"/>
  		</table> 		

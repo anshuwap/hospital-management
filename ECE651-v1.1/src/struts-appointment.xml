@@ -20,21 +20,37 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-<!-- 	<action name="editAppointment" class="ece651.action.AppointmentAction" method="editAppointment">
+		<action name="editAppointment" class="ece651.action.AppointmentAction" method="EditAppointment">
 			<result name="success" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/appointment/editAppointment.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-    	<action name="searchAppointment" class="ece651.action.AppointmentAction" method ="SearchAppointment">
+		<action name="getDoctors" class="ece651.action.AppointmentAction" method="GetDoctors">
+			<result name="success" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
+<!--    <action name="searchAppointment" class="ece651.action.AppointmentAction" method ="SearchAppointment">
 		    <result name="success" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
 		    <result name="error" type="dispatcher">/WEB-INF/appointment/viewAppointment.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>-->
 		
 <!--	Page Navigation Action	-->
-		<action name="toCreateAppointmentPage"  class="ece651.action.AppointmentAction" method ="Init">
+		<action name="toCreateAppointmentPageWithoutInit" class="ece651.action.AppointmentAction">
 			<result name="success">/WEB-INF/appointment/createAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+
+		<action name="toCreateAppointmentPage"  class="ece651.action.AppointmentAction" method ="InitAction">
+			<result name="success">/WEB-INF/appointment/createAppointment.jsp</result>
+			<result name="BacktoNurseMain" type="chain">
+            	<param name="actionName">NURSE</param>
+            	<param name="namespace">/</param>
+			</result>
+            <result name="BacktoLogin">/login.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
