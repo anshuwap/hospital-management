@@ -5,17 +5,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
-  <s:if test='#session.CurrentUser.roleType=="N"'>
-    <jsp:include page="/WEB-INF/mis/NurseMenuHeader.jsp"/>
-  </s:if>
-
-   <script type="text/javascript" language="javascript">
-      function ClearForm(){
-         document.createPatientForm.reset();
-      }
-  </script>
+  <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
-  <body onload="ClearForm()"> 
+  <body> 
   	<s:form name="createPatientForm" action="createPatient" method="post" namespace="/patient" onsubmit="">
   	<h2>Create New Patient</h2>
  		<table border="1">

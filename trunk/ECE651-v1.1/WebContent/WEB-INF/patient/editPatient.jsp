@@ -3,9 +3,8 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <s:if test='#session.CurrentUser.roleType=="N"'>
-    <jsp:include page="/WEB-INF/mis/NurseMenuHeader.jsp"/>
-  </s:if>
+
+  <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body> 
   <s:form action="searchForEditPatient" method="post" namespace="/patient">

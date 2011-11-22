@@ -191,13 +191,13 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 		}
 		finally
 		{
-			restoreSystemUser(systemUser);
 			systemUserDao.cleanup();
 		}
 		
 		//if success return String "success"
 		if (isOperationSucceed)
 			this.setOperationStatus("Update System User Succeeded!");
+		restoreSystemUser(systemUser);
 		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 	
