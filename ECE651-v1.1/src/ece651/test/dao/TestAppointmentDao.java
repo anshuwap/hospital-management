@@ -6,6 +6,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import ece651.dao.AppointmentDao;
 import ece651.dao.DAOException;
 import ece651.dao.AppointmentDaoImpl;
 import ece651.dao.PatientDaoImpl;
@@ -19,7 +20,7 @@ public class TestAppointmentDao extends TestCase {
 	public static Integer appId;
 	
 	public void  testsaveAppointment() throws DAOException{
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		PatientDaoImpl patientdao = new PatientDaoImpl();		
 		SystemUserDaoImpl userdao = new SystemUserDaoImpl();
 		
@@ -43,7 +44,7 @@ public class TestAppointmentDao extends TestCase {
 	}
 	
 	public void  testsearchAppointment() throws DAOException{
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		Appointment appointment = appointmentdao.searchAppointment(appId);
 		//assertEquals("13:00", appointment.getStartTime());
@@ -51,7 +52,7 @@ public class TestAppointmentDao extends TestCase {
 	}
 
 	public void  testupdateAppointment() throws DAOException{
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();	
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();	
 		
 		Appointment appointment = appointmentdao.searchAppointment(appId);
 		appointment.setStatus("V");
@@ -62,7 +63,7 @@ public class TestAppointmentDao extends TestCase {
 	
 	public void  testsearchApptListBypId() throws DAOException{
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		appointmentList = appointmentdao.searchApptListBypId(1);
 		Appointment appointment = appointmentList.get(0);
@@ -71,7 +72,7 @@ public class TestAppointmentDao extends TestCase {
 	
 	public void  testsearchApptListBydId() throws DAOException{
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		appointmentList = appointmentdao.searchApptListBydId(2);
 		Appointment appointment = appointmentList.get(0);
@@ -80,7 +81,7 @@ public class TestAppointmentDao extends TestCase {
 	
 	public void  testsearchAppListbyDidAndDate() throws DAOException{
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		appointmentList = appointmentdao.searchAppListbyDidAndDate(2, "2011-08-10");
 		Appointment appointment = appointmentList.get(0);
@@ -89,10 +90,20 @@ public class TestAppointmentDao extends TestCase {
 	
 	public void  testsearchAppListbyDidandInOrder() throws DAOException{
 		List<Appointment> appointmentList = new ArrayList<Appointment>();
-		AppointmentDaoImpl appointmentdao = new AppointmentDaoImpl();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		appointmentList = appointmentdao.searchAppListbyDidandInOrder(2);
 		Appointment appointment = appointmentList.get(0);
 		assertEquals("wzheng", appointment.getDoctor().getUsername());
 	}
+	
+	public void  testsearchApptList() throws DAOException{
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		AppointmentDao appointmentdao = new AppointmentDaoImpl();
+		
+		appointmentList = appointmentdao.searchApptList();
+		Appointment appointment = appointmentList.get(0);
+		assertEquals("Bill Gates", appointment.getPatient().getPatientName());
+	}
+	
 }
