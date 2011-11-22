@@ -16,4 +16,5 @@ public interface AppointmentDao {
 	public void updateAppointment( Appointment appointment) throws DAOException;
 	public List<Appointment> searchAppListbyDidandInOrder (int doctorId) throws DAOException;
 	public List<Appointment> searchAppListbyDidAndDate (int doctorId, String AppDate) throws DAOException;
+	public List<Appointment> searchApptList()throws DAOException;
 }

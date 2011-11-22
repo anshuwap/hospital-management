@@ -122,4 +122,15 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		return appointmentList;
 	}
 
+	public List<Appointment> searchApptList()throws DAOException {
+		List<Appointment> appointmentList = new ArrayList<Appointment>();
+		try {
+			Query hql = session.createQuery("from Appointment");
+			appointmentList = hql.list();
+		} catch (HibernateException e) {
+			throw new DAOException(e.getMessage());
+		}
+		return appointmentList;
+	}
+	
 }
