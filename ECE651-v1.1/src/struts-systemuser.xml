@@ -14,19 +14,19 @@
 			</interceptor-stack>
 		</interceptors>
 
-		<action name="createSystemUserAction" class="ece651.action.SystemUserAction" method="CreateSystemUser">
+		<action name="createSystemUserAction" class="ece651.action.CachedSystemUserAction" method="CreateSystemUser">
 			<result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="editSystemUserAction" class="ece651.action.SystemUserAction" method="EditSystemUser">
+		<action name="editSystemUserAction" class="ece651.action.CachedSystemUserAction" method="EditSystemUser">
 		    <result name="success" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 		    <interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="searchSystemUserAction" class="ece651.action.SystemUserAction" method="SearchSystemUser">
+		<action name="searchSystemUserAction" class="ece651.action.CachedSystemUserAction" method="SearchSystemUser">
 		    <result name="success" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
@@ -43,7 +43,7 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>			
 		
-		<action name="toMainPage" class="ece651.action.SystemUserAction" method="BackToMainPage" >
+		<action name="toMainPage" class="ece651.action.CachedSystemUserAction" method="BackToMainPage" >
 			<result name="success" type="chain">
             	<param name="actionName">${roleName}</param>
             	<param name="namespace">/</param>
