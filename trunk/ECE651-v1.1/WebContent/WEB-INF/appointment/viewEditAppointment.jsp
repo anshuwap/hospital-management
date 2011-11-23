@@ -53,8 +53,8 @@
  		<table border="1">
  		   <s:textfield name="currentAppID" value="%{retrieveAppointments[0].appointmentId}" label="Appointment ID" readonly="true"/>
    		   <sx:datetimepicker name="appointmentDate" value="%{retrieveAppointments[0].appointmentDate.toString()}" label="Date" displayFormat="yyyy-MM-dd" required="true" />
-   		   <s:textfield name="appointment.startTime" value="%{retrieveAppointments[0].startTime}" label="Start Time" required="true" />
- 		   <s:textfield name="appointment.endTime" value="%{retrieveAppointments[0].endTime}" label="End Time" required="true" />
+   		   <s:select name="appointment.startTime" value="%{retrieveAppointments[0].startTime}" label="Start Time" list="timeMap"  required="true"/>
+   		   <s:select name="appointment.endTime" value="%{retrieveAppointments[0].endTime}" label="End Time" list="timeMap"  required="true"/>
  		   <s:select name="appointment.status" value="%{retrieveAppointments[0].status}" list="#{'A':'Active', 'X':'Cancelled', 'V':'Visited'}" label="Status" required="true" />
  		</table> 		
  		<s:if test='isEdit==true'><s:submit value="Update" theme="simple"/></s:if>

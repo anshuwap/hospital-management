@@ -55,8 +55,8 @@
  		<s:textfield name="currentPatientID" value="%{currentPatientID}" label="Patient ID" readOnly="true" required="true" />
  		<s:hidden name="currentPatientHC" value="%{currentPatientHC}" />
    		<sx:datetimepicker name="appointmentDate" label="Date" displayFormat="yyyy-MM-dd" required="true" />
-   		<s:textfield name="appointment.startTime" label="Start Time" required="true" />
- 		<s:textfield name="appointment.endTime" label="End Time" required="true" />
+   		<s:select name="appointment.startTime" label="Start Time" list="timeMap"  required="true"/>
+   		<s:select name="appointment.endTime" label="End Time" list="timeMap"  required="true"/>
  		<s:select name="appointment.status" list="#{'A':'Active', 'X':'Cancelled', 'V':'Visited'}" label="Status" required="true" />
         <s:submit value="Create" />	
         </table>
