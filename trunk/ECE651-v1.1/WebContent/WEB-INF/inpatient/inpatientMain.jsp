@@ -32,6 +32,7 @@
 				<s:textfield name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" readonly="true"/>
 					<s:textfield name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" readonly="true"/>
 					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" readonly="true"/>
+					<s:textfield name="inpatient.nurse.firstName" label="Record Nurse" readonly="true"/>
 			</s:else>		
 			
            <s:if test='#session.CurrentUser.roleType=="D"'>
@@ -43,6 +44,7 @@
            </s:if>
            <s:else>
 				<s:textarea name="inpatient.dischargeSummary" label="Discharge Summary" cols="40" rows="10" readonly="true"/>
+				<s:textfield name="inpatient.inpatientDoctor.firstName" label="Record Doctor" readonly="true"/>
 			</s:else>
    	</table>
    <s:property value="operationStatus" />
