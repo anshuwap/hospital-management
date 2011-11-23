@@ -25,7 +25,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public AppointmentDaoImpl() {

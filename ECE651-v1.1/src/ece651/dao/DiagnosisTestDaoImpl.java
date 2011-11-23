@@ -27,7 +27,7 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public DiagnosisTestDaoImpl() {

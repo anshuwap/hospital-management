@@ -24,7 +24,7 @@ public class VisitationDaoImpl implements VisitationDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public VisitationDaoImpl() {

@@ -21,7 +21,7 @@ public class SurgeryDaoImpl implements SurgeryDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public SurgeryDaoImpl() {

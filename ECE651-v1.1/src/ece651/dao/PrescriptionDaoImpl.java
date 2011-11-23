@@ -21,7 +21,7 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public PrescriptionDaoImpl() {
