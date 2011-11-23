@@ -13,7 +13,8 @@
 			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
+	
+	<bean name="HibernateUtil" class="ece651.dao.HibernateUtil" scope="singleton"></bean>
 	<bean name="SingletonUserCache" class="ece651.services.SingletonUserCache" scope="singleton"></bean>
 
 </beans>
