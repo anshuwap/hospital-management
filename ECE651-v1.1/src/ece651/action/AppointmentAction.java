@@ -30,7 +30,6 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 	private Appointment appointment;
 	private String currentAppID;
 	private String doctorSelected;
-	private String currentSystemUserID;
 	private String currentPatientID;
 	private String currentPatientHC;
 	private String appointmentDate;
@@ -120,10 +119,6 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return doctorSelected;
 	}
 	
-	public void setCurrentSystemUserID (String sysID) {
-		this.currentSystemUserID = sysID;
-	}
-	
 	public String getCurrentSystemUserID () {
 		return ((SystemUser)(session.get("CurrentUser"))).getSystemUserId().toString();
 	}
@@ -191,8 +186,6 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		
 		if (currentNurse == null)
 			return "BackToLogin";
-		else
-			currentSystemUserID = currentNurse.getSystemUserId().toString();
 		
 		Patient currentPatient = (Patient)(session.get("CurrentPatient"));
 
@@ -214,7 +207,7 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		AppointmentDao appointmentDao = new AppointmentDaoImpl(); //initiate AppointmentDao instance
 		SystemUserDao systemUserDao = new SystemUserDaoImpl();
 		PatientDao patientDao = new PatientDaoImpl();
-		request.put("Operation", "Create New Apointment: (Doctor ID: " + doctorSelected + " Nurse ID: " + currentSystemUserID + " Patient ID: " + currentPatientID + ")");
+		request.put("Operation", "Create New Apointment: (Doctor ID: " + doctorSelected + " Nurse ID: " + getCurrentSystemUserID() + " Patient ID: " + currentPatientID + ")");
 		
 		try
 		{
@@ -231,7 +224,7 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 			    if (currentDoctor == null)
 			    	throw new Exception("Doctor is not found!");
 			    
-			    SystemUser currentNurse = systemUserDao.searchUserBySystemUserId(Integer.parseInt(currentSystemUserID));
+			    SystemUser currentNurse = systemUserDao.searchUserBySystemUserId(Integer.parseInt(getCurrentSystemUserID()));
 			    if (currentNurse == null)
 			    	throw new Exception("Nurse is not found!");
 			    

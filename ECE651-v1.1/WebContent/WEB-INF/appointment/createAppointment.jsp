@@ -20,7 +20,6 @@
     <s:form name="getDoctorsForm" action="getDoctors" namespace="/appointment" method="post">
        <table>
        <s:textfield name="doctorSelected" value="%{doctorSelected}" label="Doctor ID" readOnly="true" required="true" />
-       <s:hidden name="currentSystemUserID" value="%{currentSystemUserID}" />
        <s:hidden name="currentPatientID" value="%{currentPatientID}" />
        <s:hidden name="currentPatientHC" value="%{currentPatientHC}" />
        <s:submit value="Choose doctor" theme="simple" />
@@ -52,7 +51,7 @@
   	    <p>Create New Appointment</p>
   	    <table border="1">
   	    <s:hidden name="doctorSelected" value="%{doctorSelected}" />
- 		<s:textfield name="currentSystemUserID" value="%{currentSystemUserID}" label="Nurse ID" readOnly="true" required="true" />
+ 		<s:textfield value="%{currentSystemUserID}" label="Nurse ID" readOnly="true" required="true" />
  		<s:textfield name="currentPatientID" value="%{currentPatientID}" label="Patient ID" readOnly="true" required="true" />
  		<s:hidden name="currentPatientHC" value="%{currentPatientHC}" />
    		<sx:datetimepicker name="appointmentDate" label="Date" displayFormat="yyyy-MM-dd" required="true" />
