@@ -39,6 +39,7 @@
            </s:if>
            <s:else>
 				<s:textarea name="surgery.surgerySummary" label="Surgery Summary" cols="40" rows="10" readonly="true"/>
+				<s:textfield name="surgery.surgetyDoctor.firstName" label="Surgery Doctor" readonly="true"/>
 			</s:else>
    	</table>	
  
