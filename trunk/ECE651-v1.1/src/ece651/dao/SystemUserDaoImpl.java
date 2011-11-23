@@ -30,7 +30,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public SystemUserDaoImpl(){

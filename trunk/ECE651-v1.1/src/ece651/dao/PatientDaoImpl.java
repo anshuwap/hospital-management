@@ -25,7 +25,7 @@ public class PatientDaoImpl implements PatientDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public PatientDaoImpl(){

@@ -21,7 +21,7 @@ public class InpatientDaoImpl implements InpatientDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public InpatientDaoImpl() {

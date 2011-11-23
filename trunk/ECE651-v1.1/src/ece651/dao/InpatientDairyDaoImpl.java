@@ -27,7 +27,7 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 
 	public void cleanup(){
 		if (session != null) session.close();
-		HibernateUtil.shutdown();
+		//HibernateUtil.shutdown();
 	}
 
 	public InpatientDairyDaoImpl() {
