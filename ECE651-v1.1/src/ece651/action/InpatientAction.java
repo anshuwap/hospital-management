@@ -139,7 +139,8 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		}catch(Exception e){
 			this.setOperationStatus("Edit Inpatient Failed! Exception Happened:" + e.getMessage());
 			return ERROR;
-		}finally{
+		}
+		finally{
 			inpatientDao.cleanup();
 		}
 		if(inpatient.getInpatientDate()!=null)
