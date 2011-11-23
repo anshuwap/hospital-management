@@ -4,6 +4,7 @@ package ece651.action;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.sql.Date;
 import java.sql.Time;
 
@@ -177,6 +178,31 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 	
 	public String getOperationStatus() {
 		return operationStatus;
+	}
+	
+	public Map<String, String> getTimeMap()
+	{
+		Map<String, String> defScheduleMap = new TreeMap<String, String>();
+		defScheduleMap.put("08:00", "08:00");
+		defScheduleMap.put("08:30", "08:30");
+		defScheduleMap.put("09:00", "09:00");
+		defScheduleMap.put("09:30", "09:30");
+		defScheduleMap.put("10:00", "10:00");
+		defScheduleMap.put("10:30", "10:30");
+		defScheduleMap.put("11:00", "11:00");
+		defScheduleMap.put("11:30", "11:30");
+		defScheduleMap.put("12:00", "12:00");
+		defScheduleMap.put("12:30", "12:30");
+		defScheduleMap.put("13:00", "13:00");
+		defScheduleMap.put("13:30", "13:30");
+		defScheduleMap.put("14:00", "14:00");
+		defScheduleMap.put("14:30", "14:30");
+		defScheduleMap.put("15:00", "15:00");
+		defScheduleMap.put("15:30", "15:30");
+		defScheduleMap.put("16:00", "16:00");
+		defScheduleMap.put("16:30", "16:30");
+		defScheduleMap.put("17:00", "17:00");
+		return defScheduleMap;
 	}
 	
 	// Only for Nurse
