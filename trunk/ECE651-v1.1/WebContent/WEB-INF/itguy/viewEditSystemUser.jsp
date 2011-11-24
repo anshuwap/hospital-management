@@ -19,7 +19,7 @@
   </table>	
 </s:form>
 
-<s:if test='retrieveSystemUsers!=null'>
+<s:if test='retrieveSystemUsers!=null && retrieveSystemUsers.size()>0'>
    <s:if test='retrieveSystemUsers.size()==1'>
       <s:form name="editPatientForm" action="editSystemUserAction" method="post" namespace="/systemuser">
  		<table border="1">

@@ -216,7 +216,28 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		this.visitation = visitation;
 	}
 
-	// Only for Nurse
+	// For doctor
+	public String InitDoctorMainPage()
+	{
+		retrieveAppointments = null;
+		AppointmentDao appointmentDao = new AppointmentDaoImpl(); //initiate AppointmentDao instance
+		
+		try
+		{
+			java.util.Date todayDate = new java.util.Date();
+			java.sql.Date todaySQLDate = new java.sql.Date(todayDate.getTime());
+			retrieveAppointments = appointmentDao.searchAppListbyDidAndDate(Integer.parseInt(getCurrentSystemUserID()), todaySQLDate.toString());
+		}
+		catch (Exception e)
+		{
+			retrieveAppointments = null;
+		}
+
+		appointmentDao.cleanup();
+		return SUCCESS;
+	}
+	
+	// For Nurse
 	public String InitCreateAction()
 	{
 		SystemUser currentNurse = (SystemUser)(session.get("CurrentUser"));

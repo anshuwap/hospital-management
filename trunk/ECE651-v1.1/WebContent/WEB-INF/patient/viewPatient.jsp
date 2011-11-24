@@ -6,12 +6,15 @@
     <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
     
 	<body>
-		<s:form action="searchForViewPatient" method="post"
-			namespace="/patient">
-			<s:textfield name="healthCardID" label="HealthCardID" />
-			<s:token name="token"></s:token>
-			<s:submit value="Search" />
-		</s:form>
+	    <s:form action="searchForViewPatient" method="post" namespace="/patient">
+	      <table>
+	        <tr>
+	          <td>HealthCardID: </td>
+			  <td><s:textfield name="healthCardID" theme="simple"/></td>
+			  <td><s:submit value="Search" theme="simple"/></td>
+		    </tr>
+		  </table>
+	    </s:form>
 		<h2>
 			View Patient
 		</h2>
