@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
+import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
 public class VisitationDaoImpl implements VisitationDao {
@@ -78,6 +79,21 @@ public class VisitationDaoImpl implements VisitationDao {
 			throw new DAOException(e.getMessage());
 		}
 		return visitList;
+	}
+
+
+	public Visitation searchVisitListByAppId(int appointmentId) throws DAOException{
+	Visitation visit = null;
+	try {
+		Query hql = session.createQuery("from Visitation as visit where visit.appointment.appointmentId=?");
+		hql.setInteger(0, appointmentId);
+		if( hql.list().size()>0){
+			visit = (Visitation)hql.list().get(0);
+		}
+	} catch (HibernateException e) {
+		throw new DAOException(e.getMessage());
+	}
+	return visit;
 	}
 
 }
