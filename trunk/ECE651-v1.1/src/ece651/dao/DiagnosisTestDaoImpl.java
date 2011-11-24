@@ -16,7 +16,8 @@ import ece651.model.DiagnosisTest;
 import ece651.model.DiagnosisTestKey;
 
 public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	
+	private static final Logger log = Logger.getLogger(DiagnosisTestDaoImpl.class);
 	
 	private Session session; 
 	

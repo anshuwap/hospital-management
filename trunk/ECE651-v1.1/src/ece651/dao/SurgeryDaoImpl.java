@@ -10,7 +10,8 @@ import ece651.dao.HibernateUtil;
 import ece651.model.Surgery;
 
 public class SurgeryDaoImpl implements SurgeryDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	
+	private static final Logger log = Logger.getLogger(SurgeryDaoImpl.class);
 	
 	private Session session; 
 	

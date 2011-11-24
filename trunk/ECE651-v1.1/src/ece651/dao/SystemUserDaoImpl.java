@@ -15,7 +15,7 @@ import ece651.model.SystemUser;
 
 public class SystemUserDaoImpl implements SystemUserDao {
 
-	Logger log = Logger.getLogger(getClass().toString());
+	private static final Logger log = Logger.getLogger(SystemUserDaoImpl.class);
 	
 	private Session session; 
 	

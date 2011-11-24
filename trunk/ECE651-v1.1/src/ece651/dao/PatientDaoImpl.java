@@ -14,7 +14,7 @@ import ece651.model.Patient;
 
 public class PatientDaoImpl implements PatientDao {
 
-	Logger log = Logger.getLogger(getClass().toString());
+	private static final Logger log = Logger.getLogger(PatientDaoImpl.class);
 	
 	private Session session; 
 	
