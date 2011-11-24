@@ -3,6 +3,10 @@
 <%@ taglib uri="/struts-dojo-tags" prefix="sx"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+<head>
+
+</head>
+
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body>
@@ -41,9 +45,7 @@
 				<s:textarea name="surgery.surgerySummary" label="Surgery Summary" cols="40" rows="10" readonly="true"/>
 				<s:textfield name="surgery.surgetyDoctor.firstName" label="Surgery Doctor" readonly="true"/>
 			</s:else>
-   	</table>	
- 
-         		
+   	</table>	     		
   </body>
 </html>
 

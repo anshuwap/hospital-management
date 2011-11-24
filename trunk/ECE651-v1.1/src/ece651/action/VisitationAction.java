@@ -242,8 +242,12 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		finally{
 			visitationDao.cleanup();
 		}	
-		
-		this.setDiagnosisTestList(searchVisitation.getDiagnosisTestSet());
+		if (searchVisitation.getDiagnosisTestSet().isEmpty()){
+			this.setDiagnosisTestList(null);
+		}
+		else{
+			this.setDiagnosisTestList(searchVisitation.getDiagnosisTestSet());
+		}	
 		this.setVisitation(searchVisitation);
 		this.session.put("CurrentVisitation", visitation);
 		this.setOperationStatus("Visitation Found!");

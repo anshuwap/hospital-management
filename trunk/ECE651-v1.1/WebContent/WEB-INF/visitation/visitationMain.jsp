@@ -17,9 +17,9 @@
         </s:url>">Back to View Patient Page</a> 
       </s:if>
    
-      <h2>Visitation</h2><br>
+   <h2>Visitation</h2><br>
+    <table border="1">
       <s:form action="editVisitation" method="post" namespace="/visitation">
-       <table border="1">
  		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
  		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
  		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
@@ -34,9 +34,9 @@
  		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
            <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
  		</s:else>
- 	   </table>
    	  </s:form>
- 
+
+   	</table>
    	    <br>
 		Operation Status:
 		<s:property value="operationStatus" />
@@ -55,9 +55,8 @@
 			</tr>
 		</s:form>
 	</s:if>
-		
-		<s:if test="visitation.diagnosisTestSet!=null&&visitation.diagnosisTestSet.size()>0">
-			<table border="1">
+		<s:if test="${not empty visitation.diagnosisTestSet}">
+			<table border="1" >
 				<tr>
 					<td>Test Type</td>
 					<td>Issue Doctor</td>
@@ -83,26 +82,30 @@
 		
     <hr><br> 
     <s:if test='visitation.prescription==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+       <hr><br> 
        <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
     </s:if>
-    <s:else>
+    <s:elseif test="visitation.prescription!=null">
+        <hr><br> 
         <a href="<s:url value='prescription/searchPrescription.action'>
 						    <s:param name="prescriptionId" value="#session.CurrentVisitation.prescription.prescriptionId"/>  
                             </s:url>">View Prescription</a>
-    </s:else>
-    <hr><br> 
+    </s:elseif>
     <s:if test='visitation.surgery==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+       <hr><br>
        <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
     </s:if>
-    <s:else>
+    <s:elseif test ="visitation.surgery!=null">
+      <hr><br>
       <s:a href="surgery/searchSurgery.action" >View Surgery</s:a> 
-    </s:else>
-    <hr><br> 
+    </s:elseif> 
      <s:if test='visitation.inpatient==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+       <hr><br>      
        <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a>
      </s:if>
-     <s:else>
+      <hr><br>
+     <s:elseif test="visitation.inpatient!=null">
        <s:a href="inpatient/searchInpatient.action" >View Inpatient</s:a>
-     </s:else>    		
+     </s:elseif>    		
   </body>
 </html>
