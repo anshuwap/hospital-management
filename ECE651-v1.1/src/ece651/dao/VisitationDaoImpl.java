@@ -10,11 +10,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import ece651.dao.HibernateUtil;
-import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
 public class VisitationDaoImpl implements VisitationDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	private static final Logger log = Logger.getLogger(VisitationDaoImpl.class);
 	
 	private Session session; 
 	

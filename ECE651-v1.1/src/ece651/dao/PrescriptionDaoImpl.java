@@ -10,7 +10,8 @@ import ece651.dao.HibernateUtil;
 import ece651.model.Prescription;
 
 public class PrescriptionDaoImpl implements PrescriptionDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	
+	private static final Logger log = Logger.getLogger(PrescriptionDaoImpl.class);
 	
 	private Session session; 
 	

@@ -10,7 +10,8 @@ import ece651.dao.HibernateUtil;
 import ece651.model.Inpatient;
 
 public class InpatientDaoImpl implements InpatientDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	
+	private static final Logger log = Logger.getLogger(InpatientDaoImpl.class);
 	
 	private Session session; 
 	

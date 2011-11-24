@@ -16,7 +16,8 @@ import ece651.model.InpatientDairy;
 import ece651.model.InpatientDairyKey;
 
 public class InpatientDairyDaoImpl implements InpatientDairyDao {
-	Logger log = Logger.getLogger(getClass().toString());
+	
+	private static final Logger log = Logger.getLogger(InpatientDairyDaoImpl.class);
 	
 	private Session session; 
 	
