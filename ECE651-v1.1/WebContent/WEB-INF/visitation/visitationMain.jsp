@@ -26,7 +26,7 @@
    <s:form action="editVisitation" method="post" namespace="/visitation">
     <table border="1" align="center">
      <caption>VISITATION</caption> 
- 		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
+ 		<s:hidden value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
  		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
  		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
  		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Name" readonly="true" />
@@ -41,7 +41,7 @@
    	<s:else>
    	  <table border="1" align="center">
    	    <caption>VISITATION</caption>
-<!-- 		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>-->
+ 		<s:hidden value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
  		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
  		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
  		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Name" readonly="true" />
