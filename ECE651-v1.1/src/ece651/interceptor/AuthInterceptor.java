@@ -3,6 +3,7 @@ package ece651.interceptor;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
@@ -17,7 +18,7 @@ public class AuthInterceptor extends AbstractInterceptor {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Logger log = Logger.getLogger(getClass().toString());
+	private static final Logger log = Logger.getLogger(AuthInterceptor.class);
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
@@ -31,6 +32,8 @@ public class AuthInterceptor extends AbstractInterceptor {
 			return Action.LOGIN;  
 		}else{
 			log.info(user.getUsername() + " authentication check ok");
+			MDC.remove("USER_ID");
+			MDC.put("USER_ID", user.getUsername()==null? "": user.getUsername());
 			String result = invocation.invoke();			
 			return result;
 		}		
