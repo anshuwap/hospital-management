@@ -31,7 +31,7 @@
 			<caption>
 				Patient Information
 			</caption>
-			<s:textfield name="retrievePatient.patientId" label="PatientID"
+			<s:hidden name="retrievePatient.patientId" label="PatientID"
 				readonly="true" />
 			<s:textfield name="retrievePatient.patientName" label="Patient Name"
 				readonly="true" />
