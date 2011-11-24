@@ -183,6 +183,7 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		if(operationSuccess == true){
 		this.setVisitation(newVisitation);
 		this.session.put("CurrentVisitation", visitation);
+		this.session.put("AppointmentSearchType", "appID");
 		return SUCCESS;
 		}
 		else{
@@ -247,7 +248,14 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		}
 		else{
 			this.setDiagnosisTestList(searchVisitation.getDiagnosisTestSet());
-		}	
+		}
+		if(searchVisitation.getAppointment()!=null)
+		{
+			this.session.put("AppointmentSearchType", "appID");
+		}
+		else{
+			this.session.put("AppointmentSearchType", null);
+		}
 		this.setVisitation(searchVisitation);
 		this.session.put("CurrentVisitation", visitation);
 		this.setOperationStatus("Visitation Found!");
