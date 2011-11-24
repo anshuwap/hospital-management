@@ -131,4 +131,10 @@ public class TestVisitationDao extends TestCase {
 		Visitation visitation = visitList.get(0);
 		assertEquals("Bill Gates", visitation.getPatient().getPatientName());
 	}
+	
+	public void  testsearchApptListByAppId() throws DAOException{
+		VisitationDaoImpl visitationdao = new VisitationDaoImpl();
+		Visitation visit  = visitationdao.searchVisitListByAppId(1);
+		assertEquals("Bill Gates", visit.getPatient().getPatientName());
+	}
 }
