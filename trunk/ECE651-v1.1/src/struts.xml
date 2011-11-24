@@ -13,10 +13,6 @@
 	<include file="struts-systemuser.xml"/>
 	<include file="struts-visitation.xml"/>
 	<include file="struts-inpatientdairy.xml"/>
-	
-	
-
-
 
 	<package name="HmsPackage" extends="struts-default" namespace="/">
 		<interceptors>
@@ -42,6 +38,12 @@
 			<!--<interceptor-ref name="tokenSession"></interceptor-ref>-->
 			<interceptor-ref name="timer"></interceptor-ref>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="toMainPage" class="ece651.action.LoginAction" method="BackToMainPage" >
+			<result name="success" type="chain">${roleName}</result>
+			<result name="error">/login.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
  		<action name="NURSE">

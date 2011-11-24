@@ -5,7 +5,7 @@
 <div class="menucontainer">
   <div class="menu">
 	<ul>
-	  <li><s:a href="patient/toMainPage.action">Back to Main</s:a></li>
+	  <li><s:a href="toMainPage.action">Back to Main</s:a></li>
 	  <li><s:a href="patient/toViewPatientPage.action">View Patient</s:a></li>
 	  <li><s:a href="appointment/toViewEditAppointmentPage.action">View Appointments</s:a></li>
 	</ul>

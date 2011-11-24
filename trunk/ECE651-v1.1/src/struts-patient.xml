@@ -57,26 +57,5 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
-		<action name="toMainPage" class="ece651.action.PatientAction" method="BackToMainPage" >
-			<result name="success" type="chain">${roleName}</result>
-			<result name="error">/login.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>
-		
-		<action name="Doctor">
-			<result>/WEB-INF/doctor/doctorMain.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>
-		
-		<action name="Nurse">
-			<result>/WEB-INF/nurse/nurseMain.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>
-		
-		<action name="Lawyer">
-			<result>/WEB-INF/lawyer/lawyerMain.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>
-		
 	</package>
 </struts>

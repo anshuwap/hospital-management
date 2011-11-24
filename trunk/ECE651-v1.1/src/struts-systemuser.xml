@@ -41,15 +41,6 @@
 		<action name="toViewEditSystemUser">
 			<result name="success">/WEB-INF/itguy/viewEditSystemUser.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>
-		</action>			
-		
-		<action name="toMainPage" class="ece651.action.CachedSystemUserAction" method="BackToMainPage" >
-			<result name="success" type="chain">
-            	<param name="actionName">${roleName}</param>
-            	<param name="namespace">/</param>
-            </result>
-			<result name="error">/login.jsp</result>
-			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
 		</package>
