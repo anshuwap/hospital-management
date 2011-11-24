@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
  
-   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
+  <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
    
   <body>
   <br> 
@@ -14,23 +14,23 @@
    
    <h2>Visitation</h2><br>
     <table border="1">
- 		<s:textfield name="visitation.visitationId" label="PatientID" readonly="true"/>
- 		<s:textfield name="visitation.patient.patientName" label="Patient Name" readonly="true" />
- 		<s:textfield name="visitation.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
- 		<s:textfield name="visitation.doctor.firstName" label="Doctor Firstname" readonly="true" />
-   		<s:textfield name="visitation.visitationDate" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
-      	<s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
-      	<s:form action="editVisitation" method="post" namespace="/visitation">
-           <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
+      <s:form action="editVisitation" method="post" namespace="/visitation">
+ 		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
+ 		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
+ 		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
+ 		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Firstname" readonly="true" />
+   		<s:textfield value="%{visitation.visitationDate}" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
+ 		<s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+ 		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
            <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" />
-           <s:token name="token"></s:token>
  		   <s:submit value="Update"/>
- 		   </s:form>
  		</s:if>
-        <s:else>
-        <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
-        <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
-        </s:else>
+ 		<s:else>
+ 		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
+           <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
+ 		</s:else>
+   	  </s:form>
+
    	</table>
    	    <br>
 		Operation Status:
