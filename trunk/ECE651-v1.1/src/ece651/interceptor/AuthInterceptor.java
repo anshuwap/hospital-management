@@ -31,9 +31,9 @@ public class AuthInterceptor extends AbstractInterceptor {
 			log.info("User didn't login, please go to login page");
 			return Action.LOGIN;  
 		}else{
-			log.info(user.getUsername() + " authentication check ok");
 			MDC.put("USER_ID", user.getUsername());
-			String result = invocation.invoke();			
+			String result = invocation.invoke();
+			log.info(user.getUsername() + " authentication check ok");
 			return result;
 		}		
 	}
