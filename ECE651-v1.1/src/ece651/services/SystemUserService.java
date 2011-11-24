@@ -15,7 +15,7 @@ import ece651.dao.SystemUserDaoImpl;
 import ece651.model.SystemUser;
 
 public class SystemUserService {
-	private Logger log = Logger.getLogger(SystemUserService.class.getName());
+	private static final Logger log = Logger.getLogger(SystemUserService.class);
 	private Cache userCache;
 	
 	public SystemUserService() {

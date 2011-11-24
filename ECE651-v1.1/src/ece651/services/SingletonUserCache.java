@@ -16,7 +16,7 @@ import ece651.model.SystemUser;
 //First implementation in Singleton Pattern 
 //
 public class SingletonUserCache {
-	private static final Logger log = Logger.getLogger(SingletonUserCache.class.getName());
+	private static final Logger log = Logger.getLogger(SingletonUserCache.class);
 	private static CacheManager singletonManager;
 	
 	static {
