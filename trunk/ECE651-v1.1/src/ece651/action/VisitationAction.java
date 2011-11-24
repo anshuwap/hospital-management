@@ -23,6 +23,7 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	private int visitationId;
 	private Set<DiagnosisTest> diagnosisTestList;
 	private String queryDiagnosisTestList;
+	private int appointmentId;
 
 	
 	
@@ -98,6 +99,16 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 	}
 
 
+	public int getAppointmentId() {
+		return appointmentId;
+	}
+
+
+	public void setAppointmentId(int appointmentId) {
+		this.appointmentId = appointmentId;
+	}
+
+
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		
@@ -135,9 +146,51 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		this.setVisitation(newVisitation);
 		this.session.put("CurrentVisitation", visitation);
 		this.setOperationStatus("Create New Visitation Succeeded!");
+		return SUCCESS;	
+	}
+	
+	public String CreateVisitationFromAppointment() {
+		System.out.println("Create Visitation is Executed");
+		VisitationDao visitationDao = new VisitationDaoImpl();
+		Visitation newVisitation = new Visitation();
+		boolean operationSuccess = false;
+		try {
+			Object queryResult = QueryAppointment(appointmentId);
+			if (!(queryResult instanceof String)) {
+				Appointment tempAppointment = (Appointment) queryResult;
+				java.util.Date utilDate = new java.util.Date();
+				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+				newVisitation.setAppointment(tempAppointment);
+				newVisitation.setVisitationDate(tempAppointment
+						.getAppointmentDate());
+				newVisitation.setPatient(tempAppointment.getPatient());
+				newVisitation.setDoctor(tempAppointment.getDoctor());
+				newVisitation.setVisitationType("A");
+				visitationDao.saveVisitation(newVisitation);
+				operationSuccess = true;
+				this.setOperationStatus("Create New Visitation From Appointment Succeeded!");
+			} else {
+				this.setOperationStatus("Create New Visitation From Appointment Failed! Error:"
+						+ (String) queryResult);
+			}
+		} catch (Exception e) {
+			this.setOperationStatus("Create New Visitaiton From Appointment Failed! Error:" + e.getMessage());
+
+		} finally {
+			visitationDao.cleanup();
+		}
+
+		if(operationSuccess == true){
+		this.setVisitation(newVisitation);
+		this.session.put("CurrentVisitation", visitation);
 		return SUCCESS;
+		}
+		else{
+			return ERROR;
+		}
 		
 	}
+	
 	
 	//TODO update a visitation entry
 	public String EditVisitation(){
@@ -169,7 +222,6 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		return SUCCESS;
 	}
 	
-	
 	public String SearchVisitation(){
 		System.out.println("SearchVisitation is executed");
 		VisitationDao visitationDao = new VisitationDaoImpl();
@@ -197,4 +249,31 @@ public class VisitationAction extends ActionSupport implements SessionAware, Req
 		this.setOperationStatus("Visitation Found!");
 		return SUCCESS;
 	}
+	
+	public Object QueryAppointment(int appointmentId){
+		Object queryResult = new Object();
+		Appointment resultAppointment = new Appointment();
+		
+		AppointmentDao appointmentDao = new AppointmentDaoImpl();
+		
+		try{
+			resultAppointment = appointmentDao.searchAppointment(appointmentId);
+			if (resultAppointment == null)
+			{
+				queryResult=  "Appointment Not Found!";
+			}
+			else{
+			session.put("CurrentAppointment", resultAppointment);
+			   queryResult = resultAppointment;
+			}
+		}catch(Exception e){
+			queryResult ="Query Appointment Failed, Exception:"	+ e.getMessage();		
+		}finally{
+			appointmentDao.cleanup();
+		}
+		
+		return queryResult;
+	}
+	
+	
 }

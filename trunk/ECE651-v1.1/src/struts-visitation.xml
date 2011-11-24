@@ -20,6 +20,12 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
+		<action name="createVistationFromAppointment" class="ece651.action.VisitationAction" method="CreateVisitationFromAppointment">
+			<result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
+			<result name="error" type="dispatcher">/WEB-INF/appointment/viewEditAppointment.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
 		<action name="editVisitation" class="ece651.action.VisitationAction" method ="EditVisitation">
 		    <result name="success" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>
 			<interceptor-ref name="authStack"></interceptor-ref>

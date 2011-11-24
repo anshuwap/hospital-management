@@ -19,6 +19,8 @@ import ece651.dao.PatientDao;
 import ece651.dao.PatientDaoImpl;
 import ece651.dao.SystemUserDao;
 import ece651.dao.SystemUserDaoImpl;
+import ece651.dao.VisitationDao;
+import ece651.dao.VisitationDaoImpl;
 import ece651.model.Appointment;
 import ece651.model.Patient;
 import ece651.model.SystemUser;
@@ -39,6 +41,7 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 	private String operationStatus;
 	private List<SystemUser> retrieveDoctors;
 	private List<Appointment> retrieveAppointments;
+	private Visitation visitation;
 	
 	// search SystemUser Attributes Helper
 	private String searchContent;
@@ -205,6 +208,14 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return defScheduleMap;
 	}
 	
+	public Visitation getVisitation() {
+		return visitation;
+	}
+
+	public void setVisitation(Visitation visitation) {
+		this.visitation = visitation;
+	}
+
 	// Only for Nurse
 	public String InitCreateAction()
 	{
@@ -398,6 +409,22 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		}
 
 		appointmentDao.cleanup();
+		
+		if (retrieveAppointments.size()==1)
+		{
+			VisitationDao visitationDao = new VisitationDaoImpl();
+			
+			try{
+			Visitation queryVisitation = visitationDao.searchVisitListByAppId(retrieveAppointments.get(0).getAppointmentId());
+			visitation = queryVisitation;
+			}catch(Exception e){
+				visitation = null;
+			}
+			finally{
+				visitationDao.cleanup();
+			}
+		}
+		
 		return SUCCESS;
 	}
 
@@ -423,4 +450,8 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		doctorDao.cleanup();
 		return isOperationSucceed ? SUCCESS : ERROR;
 	}
+	
+	
+	
+	
 }

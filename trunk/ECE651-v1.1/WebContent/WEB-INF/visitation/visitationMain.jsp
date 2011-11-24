@@ -9,8 +9,13 @@
   <body>
   <br> 
      <a href="<s:url value='patient/searchForViewPatient.action'>
-      <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-      </s:url>">Back to View Patient Page</a>  
+        <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
+        </s:url>">Back to View Patient Page</a>  
+      <s:if test="visitation.appointment!=null">
+        <a href="<s:url value='appointment/searchForViewPatient.action'>
+        <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
+        </s:url>">Back to View Patient Page</a> 
+      </s:if>
    
    <h2>Visitation</h2><br>
     <table border="1">
