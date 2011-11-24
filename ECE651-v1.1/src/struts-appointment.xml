@@ -32,6 +32,16 @@
 			<interceptor-ref name="authStack"></interceptor-ref>
 		</action>
 		
+		<action name="searchAppointmentFromVisitation" class="ece651.action.AppointmentAction" method="SearchAppointment">
+			<result name="success" type="dispatcher">/WEB-INF/appointment/viewEditAppointment.jsp</result>
+			<result name="error" type="chain">
+				<param name="actionName">searchVisitation</param>
+				<param name="namespace">/visitation</param>
+			</result>
+			<result name="error" type="dispatcher"></result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+		
 		<action name="getDoctors" class="ece651.action.AppointmentAction" method="GetDoctors">
 			<result name="success" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>

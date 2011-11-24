@@ -13,49 +13,103 @@
                             <s:param name="visitationId" value="#session.CurrentVisitation.visitationId"/>  
                             </s:url>">Back To Visitation Page</a>
    
-   <h2>Inpatient</h2><br>
-    <table border="1">
-			<s:textfield name="inpatient.patient.patientName" label="Patient Name" readonly="true" />
-			<s:textfield name="inpatient.patient.healthCardId" label="Patient HealthCard ID" readonly="true" />
-			<s:textfield name="inpatient.issueDoctor.firstName" label="Issue Doctor" readonly="true" />
-			
-			<s:if test='#session.CurrentUser.roleType=="N"'>
-				<s:form action="editInpatient" method="post" namespace="/inpatient">
-					<sx:datetimepicker name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" />
-					<sx:datetimepicker name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" />
-					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" />
+		<s:if test='#session.CurrentUser.roleType!="N"&&#session.CurrentUser.roleType!="D"'>
+			<table border="1" align="center">
+				<caption>
+					Inpatient
+				</caption>
+				<s:textfield name="inpatient.patient.patientName"
+					label="Patient Name" readonly="true" />
+				<s:textfield name="inpatient.patient.healthCardId"
+					label="Patient HealthCard ID" readonly="true" />
+				<s:textfield name="inpatient.issueDoctor.firstName"
+					label="Issue Doctor" readonly="true" />
+				<s:if test="inpatient.nurse!=null">
+					<s:textfield name="inpatientDay" label="Inpatient Date"
+						displayFormat="yyyy-MM-dd" readonly="true" />
+					<s:textfield name="dischargeDay" label="Discharge Date"
+						displayFormat="yyyy-MM-dd" readonly="true" />
+					<s:textarea name="inpatient.arrangementDescription"
+						label="Inpatient Arrangement" cols="40" rows="10" readonly="true" />
+					<s:textfield name="inpatient.nurse.firstName" label="Record Nurse"
+						readonly="true" />
+				</s:if>
+				<s:if test="inpatient.inpatientDoctor!=null">
+					<s:textarea name="inpatient.dischargeSummary"
+						label="Discharge Summary" cols="40" rows="10" readonly="true" />
+					<s:textfield name="inpatient.inpatientDoctor.firstName"
+						label="Record Doctor" readonly="true" />
+				</s:if>
+				<s:property value="operationStatus" />
+			</table>
+		</s:if>
+
+		<s:elseif test='#session.CurrentUser.roleType=="N"'>
+			<s:form action="editInpatient" method="post" namespace="/inpatient">
+				<table border="1" align="center">
+					<caption>
+						Inpatient
+					</caption>
+					<s:textfield name="inpatient.patient.patientName"
+						label="Patient Name" readonly="true" />
+					<s:textfield name="inpatient.patient.healthCardId"
+						label="Patient HealthCard ID" readonly="true" />
+					<s:textfield name="inpatient.issueDoctor.firstName"
+						label="Issue Doctor" readonly="true" />
+					<sx:datetimepicker name="inpatientDay" label="Inpatient Date"
+						displayFormat="yyyy-MM-dd" />
+					<sx:datetimepicker name="dischargeDay" label="Discharge Date"
+						displayFormat="yyyy-MM-dd" />
+					<s:textarea name="inpatient.arrangementDescription"
+						label="Inpatient Arrangement" cols="40" rows="10" />
 					<s:token name="token"></s:token>
 					<s:submit value="Update" />
-				</s:form>
-			</s:if>
-			<s:else>
-				<s:textfield name="inpatientDay" label="Inpatient Date" displayFormat="yyyy-MM-dd" readonly="true"/>
-					<s:textfield name="dischargeDay" label="Discharge Date" displayFormat="yyyy-MM-dd" readonly="true"/>
-					<s:textarea name="inpatient.arrangementDescription" label="Inpatient Arrangement" cols="40" rows="10" readonly="true"/>
-					<s:textfield name="inpatient.nurse.firstName" label="Record Nurse" readonly="true"/>
-			</s:else>		
-			
-           <s:if test='#session.CurrentUser.roleType=="D"'>
-           		<s:form action="editInpatient" method="post" namespace="/inpatient">
-					<s:textarea name="inpatient.dischargeSummary" label="Discharge Summary" cols="40" rows="10" />
+					<s:property value="operationStatus" />
+				</table>
+			</s:form>
+		</s:elseif>
+
+
+		<s:elseif
+			test='#session.CurrentUser.roleType=="D"'>
+			<s:form action="editInpatient" method="post" namespace="/inpatient">
+				<table border="1" align="center">
+					<caption>
+						Inpatient
+					</caption>
+					<s:textfield name="inpatient.patient.patientName"
+						label="Patient Name" readonly="true" />
+					<s:textfield name="inpatient.patient.healthCardId"
+						label="Patient HealthCard ID" readonly="true" />
+					<s:textfield name="inpatient.issueDoctor.firstName"
+						label="Issue Doctor" readonly="true" />
+					<s:textfield name="inpatientDay" label="Inpatient Date"
+						displayFormat="yyyy-MM-dd" readonly="true" />
+					<s:textfield name="dischargeDay" label="Discharge Date"
+						displayFormat="yyyy-MM-dd" readonly="true" />
+					<s:textarea name="inpatient.arrangementDescription"
+						label="Inpatient Arrangement" cols="40" rows="10" readonly="true" />
+					<s:textfield name="inpatient.nurse.firstName" label="Record Nurse"
+						readonly="true" />
+					<s:textarea name="inpatient.dischargeSummary"
+						label="Discharge Summary" cols="40" rows="10" />
 					<s:token name="token"></s:token>
 					<s:submit value="Update" />
-				</s:form>
-           </s:if>
-           <s:else>
-				<s:textarea name="inpatient.dischargeSummary" label="Discharge Summary" cols="40" rows="10" readonly="true"/>
-				<s:textfield name="inpatient.inpatientDoctor.firstName" label="Record Doctor" readonly="true"/>
-			</s:else>
-   	</table>
-   <s:property value="operationStatus" />
+					<s:property value="operationStatus" />
+				</table>
+			</s:form>
+		</s:elseif>
+
    		
  <hr><br>
  		<s:if test='#session.CurrentUser.roleType=="N"'>
-			<s:a href="inpatientdairy/createInpatientDairy.action">Create New Inpatient Dairy</s:a>
+ 		<table align="center" >
+			<s:a href="inpatientdairy/createInpatientDairy.action">Create New Inpatient Dairy</s:a><br>
+			</table>
 		</s:if>
         
         <s:if test="currentInpatientDairySet!=null">
-			<table border="1">
+			<table border="1" align="center">
 				<tr>
 					<td>
 						Record Nurse

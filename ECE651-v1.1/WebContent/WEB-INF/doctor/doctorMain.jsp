@@ -8,7 +8,8 @@
   
   <br><br>
   <s:form action="searchForViewPatient" method="post" namespace="/patient">
-    <table>
+    <table align="center">
+    <caption>Search For Patients</caption>
       <tr>
         <td>HealthCardID: </td>
 		<td><s:textfield name="healthCardID" theme="simple"/></td>
@@ -16,11 +17,10 @@
 	  </tr>
 	</table>
   </s:form>
-  <br>
-  <h1>Today's Appointments:</h1>
-  <br>
+ 
   <s:if test='retrieveAppointments!=null && retrieveAppointments.size()>0'>
-   	   <table border="1">
+   	   <table border="1" align="center">
+   	   <caption>Appointments For Today</caption>
 	      <tr>
 			<td>Appointment ID</td>
 			<td>Patient Name</td>
@@ -48,6 +48,8 @@
 	     </table>
    </s:if>
    <s:else>
-     <h1>None</h1>
+     <table align="center">
+     <tr><td>No Appointment For Today</td></tr>
+     </table>
    </s:else>
 </html>

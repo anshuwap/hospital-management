@@ -9,7 +9,7 @@
 <body> 
 <s:form name="searchSystemUserForm" action="searchSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
   <s:token name="token"></s:token>
-  <table>
+  <table align="center">
     <tr>
       <td><s:textfield name="searchContent" label="System User" required="true" theme="simple" /></td>
       <td><s:select name="searchType" list="#{'userName':'User Name', 'userId':'User ID'}" theme="simple"/>
@@ -21,8 +21,9 @@
 
 <s:if test='retrieveSystemUsers!=null && retrieveSystemUsers.size()>0'>
    <s:if test='retrieveSystemUsers.size()==1'>
-      <s:form name="editPatientForm" action="editSystemUserAction" method="post" namespace="/systemuser">
- 		<table border="1">
+      <s:form name="editSystemUserForm" action="editSystemUserAction" method="post" namespace="/systemuser">
+ 		<table border="1" align="center">
+ 		<caption>Edit System User</caption>
  		   <s:textfield name="systemUser.systemUserId" value="%{retrieveSystemUsers[0].systemUserId}" label="System User ID (ReadOnly)" readonly="true"/>
  		   <s:textfield name="systemUser.username" value="%{retrieveSystemUsers[0].username}" label="User Name" required="true"/>
  		   <s:textfield name="systemUser.password" value="%{retrieveSystemUsers[0].password}" label="Password" required="true"/>
@@ -40,7 +41,8 @@
 	   </s:form>
    </s:if>
    <s:else>
-   	   <table border="1">
+   	   <table border="1" align="center">
+   	   <caption>System User List</caption>
 	      <tr>
 			<td>User ID</td>
 			<td>User Name</td>

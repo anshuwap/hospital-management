@@ -7,15 +7,30 @@
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body> 
-  <s:form action="searchForEditPatient" method="post" namespace="/patient">
-                  <s:textfield name="healthCardID" label="HealthCardID"/>
-                  <s:token name="token"></s:token>
- 		          <s:submit value="Search"/>
-                  </s:form>
+		<s:form action="searchForViewPatient" method="post"
+			namespace="/patient">
+			<table align="center">
+				<tr>
+					<td>
+						HealthCardID:
+					</td>
+					<td>
+						<s:textfield name="healthCardID" theme="simple" />
+					</td>
+					<td>
+						<s:submit value="Search" theme="simple" />
+					</td>
+					<td>
+					     <s:property value="operationStatus" />
+					</td>
+				</tr>
+			</table>
+		</s:form>
+		
  <hr><br>                 
-  <h2>Edit Patient</h2><br>
   <s:form name="editPatientForm" action="editPatient" method="post" namespace="/patient">
- 		<table border="1">
+ 		<table border="1" align="center">
+ 		<caption>Edit Patient</caption>
  		<s:textfield name="retrievePatient.patientId" label="PatientID (ReadOnly)" readonly="true"/>
  		<s:textfield name="retrievePatient.patientName" label="First Name" required="true" />
  		<s:radio list="#{'1':'male' ,'0': 'female'}" name="retrievePatient.gender" label="Gender"/>
