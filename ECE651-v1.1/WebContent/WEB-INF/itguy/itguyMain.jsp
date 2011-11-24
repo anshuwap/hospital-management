@@ -13,7 +13,7 @@
         <td>HealthCardID: </td>
 		<td><s:textfield name="healthCardID" theme="simple"/></td>
 		<td><s:submit value="Search" theme="simple"/></td>
-	  </tr>
+	  </tr> 
 	</table>
   </s:form>
 </html>

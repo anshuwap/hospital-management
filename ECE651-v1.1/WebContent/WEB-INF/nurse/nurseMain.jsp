@@ -5,7 +5,7 @@
 
 <html>
   <jsp:include page="/WEB-INF/mis/NurseMenuHeader.jsp"/>
-  
+   
   <br><br>
   <s:form action="searchForViewPatient" method="post" namespace="/patient">
     <table>
