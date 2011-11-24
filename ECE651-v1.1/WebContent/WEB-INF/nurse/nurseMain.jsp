@@ -8,7 +8,8 @@
    
   <br><br>
   <s:form action="searchForViewPatient" method="post" namespace="/patient">
-    <table>
+    <table align="center">
+    <caption>Search For Patients</caption>
       <tr>
         <td>HealthCardID: </td>
 		<td><s:textfield name="healthCardID" theme="simple"/></td>
