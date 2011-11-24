@@ -13,6 +13,7 @@ import ece651.dao.HibernateUtil;
 import ece651.model.Visitation;
 
 public class VisitationDaoImpl implements VisitationDao {
+	
 	private static final Logger log = Logger.getLogger(VisitationDaoImpl.class);
 	
 	private Session session; 
