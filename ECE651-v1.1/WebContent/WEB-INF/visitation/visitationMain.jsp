@@ -17,9 +17,9 @@
         </s:url>">Back to View Patient Page</a> 
       </s:if>
    
-   <h2>Visitation</h2><br>
-    <table border="1">
+      <h2>Visitation</h2><br>
       <s:form action="editVisitation" method="post" namespace="/visitation">
+       <table border="1">
  		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
  		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
  		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
@@ -34,9 +34,9 @@
  		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
            <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
  		</s:else>
+ 	   </table>
    	  </s:form>
-
-   	</table>
+ 
    	    <br>
 		Operation Status:
 		<s:property value="operationStatus" />
@@ -56,33 +56,19 @@
 		</s:form>
 	</s:if>
 		
-		<s:if test="visitation.diagnosisTestSet!=null">
+		<s:if test="visitation.diagnosisTestSet!=null&&visitation.diagnosisTestSet.size()>0">
 			<table border="1">
 				<tr>
-					<td>
-						Test Type
-					</td>
-					<td>
-						Issue Doctor
-					</td>
-					<td>
-					    Issue Date
-					</td>
-					<td>
-					    View
-					</td>
+					<td>Test Type</td>
+					<td>Issue Doctor</td>
+					<td>Issue Date</td>
+					<td>View</td>
 				</tr>
 				<s:iterator value="diagnosisTestList">
 					<tr>
-						<td>
-							<s:property value="testType" />
-						</td>
-						<td>
-							<s:property value="doctor.firstName" />
-						</td>
-						<td>
-						    <s:property value="issueDate"/>
-						</td>
+						<td><s:property value="testType" /></td>
+						<td><s:property value="doctor.firstName" /></td>
+						<td><s:property value="issueDate"/></td>
 						<td>
 						    <a href="<s:url value='diagnosistest/searchDiagnosisTest.action'>
 						    <s:param name="diagnosisTestId" value="diagnosisTestId"/>
