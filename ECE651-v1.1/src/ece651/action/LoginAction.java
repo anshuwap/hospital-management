@@ -2,6 +2,7 @@ package ece651.action;
 
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.apache.struts2.interceptor.SessionAware;
 
 import ece651.dao.DAOException;
@@ -13,7 +14,7 @@ import ece651.services.SystemUserService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class LoginAction extends ActionSupport implements SessionAware{
-	private Logger log = Logger.getLogger(getClass().toString());
+	private static final Logger log = Logger.getLogger(LoginAction.class);
 	private static final long serialVersionUID = 6066592355639005936L;
 	private Map<String, Object> session;
 	private SystemUser user;
@@ -185,6 +186,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 		if (session.containsKey("CurrentUser")){
 			session.remove("CurrentUser");
 		}
+		MDC.remove("USER_ID");
 		return SUCCESS;		
 	}
 	
