@@ -8,16 +8,17 @@
    
   <body>
   <br> 
-  <table>
+  <table width="300">
      <tr>
-     <td><a href="<s:url value='patient/searchForViewPatient.action'>
+    <td><a href="<s:url value='patient/searchForViewPatient.action'>
         <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-        </s:url>">Back to View Patient Page</a> </td>
+        </s:url>">To Patient Page</a>
+     </td>
       <s:if test="visitation.appointment!=null">
        <td><a href="<s:url value='appointment/searchAppointmentFromVisitation.action'>
         <s:param name="searchType" value="#session.AppointmentSearchType"/>  
         <s:param name="searchContent" value="%{visitation.appointment.appointmentId}"/>
-        </s:url>">Back to Appointment Page</a></td>
+        </s:url>">To Appointment Page</a></td>
       </s:if>
       </tr>
    </table>
@@ -114,6 +115,9 @@
 						    <s:param name="prescriptionId" value="#session.CurrentVisitation.prescription.prescriptionId"/>  
                             </s:url>">View</a></p></td>
     </s:elseif>
+    <s:elseif test="visitation.prescription==null">
+         <td>Has Not Been Issued</td>
+    </s:elseif>
     </tr>
     <tr>
     <td>Surgery</td>
@@ -122,6 +126,9 @@
     </s:if>
     <s:elseif test ="visitation.surgery!=null">
       <td><p style="text-align:center;"><s:a href="surgery/searchSurgery.action" >View</s:a></p></td>
+    </s:elseif>
+    <s:elseif test="visitation.surgery==null">
+    	<td>Has Not Been Issued</td>
     </s:elseif> 
     </tr>
     <tr>
@@ -131,6 +138,9 @@
      </s:if>
      <s:elseif test="visitation.inpatient!=null">
        <td><p style="text-align:center;"><s:a href="inpatient/searchInpatient.action" >View</s:a></p></td>
+     </s:elseif>
+     <s:elseif test="visitation.inpatient==null">
+         <td>Has Not Been Issued</td>
      </s:elseif>
      <tr>    
      </table>	 		
