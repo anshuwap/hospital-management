@@ -55,7 +55,8 @@
 			</tr>
 		</s:form>
 	</s:if>
-		<s:if test="${not empty visitation.diagnosisTestSet}">
+	
+		<s:if test="visitation.diagnosisTestSet!=null&&visitation.diagnosisTestSet.size()>0">
 			<table border="1" >
 				<tr>
 					<td>Test Type</td>
