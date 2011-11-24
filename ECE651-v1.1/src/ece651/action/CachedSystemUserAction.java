@@ -128,9 +128,9 @@ public class CachedSystemUserAction extends ActionSupport implements SessionAwar
 				(!systemUser.getGender().trim().isEmpty()) && 
 				(!systemUser.getActive().trim().isEmpty()))
 			{
-				if (!systemUserBirthday.isEmpty())
+				if (!systemUserBirthday.trim().isEmpty())
 				{
-					Date birthday =Date.valueOf(systemUserBirthday);
+					Date birthday =Date.valueOf(systemUserBirthday.trim());
 					systemUser.setBirthday(birthday);		
 				}
 				systemUser.setActive("A");
@@ -196,13 +196,14 @@ public class CachedSystemUserAction extends ActionSupport implements SessionAwar
 		}
 		finally
 		{
-			restoreSystemUser(systemUser);
+			//restoreSystemUser(systemUser);
 			//systemUserDao.cleanup();
 		}
 		
 		//if success return String "success"
 		if (isOperationSucceed)
 			this.setOperationStatus("Update System User Succeeded!");
+		restoreSystemUser(systemUser);
 		return isOperationSucceed ? SUCCESS : ERROR;
 	}
 	
