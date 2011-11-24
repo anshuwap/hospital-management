@@ -11,7 +11,8 @@
   <body>
   <s:if test='#session.CurrentUser.roleType=="N"||#session.CurrentUser.roleType=="L"'>
   <s:form name="searchAppointmentForm" action="searchAppointment" method="post" namespace="/appointment" onsubmit="">
-  <table>
+  <table align="center">
+  <caption>Search Appointment</caption>
     <tr>
       <td><s:textfield name="searchContent" label="Appoinment" required="true" theme="simple" /></td>
       <td><s:select name="searchType" list="#{'appID':'Appointment ID', 'docID':'Doctor ID', 'patID':'Patient ID'}" theme="simple"/>
@@ -23,9 +24,11 @@
   </s:if>
   <s:elseif test='#session.CurrentUser.roleType=="D"'>
     <s:form name="searchAppointmentForm" action="searchAppointment" method="post" namespace="/appointment" onsubmit="">
+      <table align="center">
       <s:hidden name="searchContent" value="%{currentSystemUserID}" />
       <s:hidden name="searchType" value="docID" />
   	  <s:submit value="View my appointments" theme="simple" />
+  	  </table>
   	</s:form>
   </s:elseif>
   
@@ -33,24 +36,24 @@
    <s:if test='retrieveAppointments.size()==1'>
       <s:form name="editAppointmentForm" action="editAppointment" method="post" namespace="/appointment">
         <p>Nurse:</p>
-        <table>
+        <table align="center">
         	<s:textfield value="%{retrieveAppointments[0].nurse.systemUserId}" label="ID" readonly="true"/>
         	<s:textfield value="%{retrieveAppointments[0].nurse.firstName}" label="First Name" readonly="true"/>
         	<s:textfield value="%{retrieveAppointments[0].nurse.lastName}" label="Last Name" readonly="true"/>
         </table>
         <p>Doctor:</p>
-        <table>
+        <table align="center">
         	<s:textfield value="%{retrieveAppointments[0].doctor.systemUserId}" label="ID" readonly="true"/>
         	<s:textfield value="%{retrieveAppointments[0].doctor.firstName}" label="First Name" readonly="true"/>
         	<s:textfield value="%{retrieveAppointments[0].doctor.lastName}" label="Last Name" readonly="true"/>
         </table>
         <p>Patient:</p>
-        <table>
+        <table align="center">
         	<s:textfield value="%{retrieveAppointments[0].patient.patientId}" label="Patient ID" readonly="true"/>
         	<s:textfield value="%{retrieveAppointments[0].patient.patientName}" label="Patient Name" readonly="true"/>
         </table>
-        <p>Appointment Information:</p>
- 		<table border="1">
+ 		<table border="1" align="center">
+ 		<caption>Appointment Information:</caption>
  		   <s:textfield name="currentAppID" value="%{retrieveAppointments[0].appointmentId}" label="Appointment ID" readonly="true"/>
    		   <sx:datetimepicker name="appointmentDate" value="%{retrieveAppointments[0].appointmentDate.toString()}" label="Date" displayFormat="yyyy-MM-dd" required="true" />
    		   <s:select name="appointment.startTime" value="%{retrieveAppointments[0].startTime}" label="Start Time" list="timeMap"  required="true"/>
@@ -71,7 +74,8 @@
 	   </s:form>
    </s:if>
    <s:else>
-   	   <table border="1">
+   	   <table border="1" align="center">
+   	   <caption>Retrieved Appointments</caption>
 	      <tr>
 			<td>Appointment ID</td>
 			<td>Patient Name</td>

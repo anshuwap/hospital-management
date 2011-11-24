@@ -6,20 +6,31 @@
     <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
     
 	<body>
-	    <s:form action="searchForViewPatient" method="post" namespace="/patient">
-	      <table>
-	        <tr>
-	          <td>HealthCardID: </td>
-			  <td><s:textfield name="healthCardID" theme="simple"/></td>
-			  <td><s:submit value="Search" theme="simple"/></td>
-		    </tr>
-		  </table>
-	    </s:form>
-		<h2>
-			View Patient
-		</h2>
+		<s:form action="searchForViewPatient" method="post"
+			namespace="/patient">
+			<table align="center">
+				<tr>
+					<td>
+						HealthCardID:
+					</td>
+					<td>
+						<s:textfield name="healthCardID" theme="simple" />
+					</td>
+					<td>
+						<s:submit value="Search" theme="simple" />
+					</td>
+					<td>
+					     <s:property value="operationStatus" />
+					</td>
+				</tr>
+			</table>
+		</s:form>
+
 		<br>
-		<table border="1">
+		<table border="1" align="center">
+			<caption>
+				Patient Information
+			</caption>
 			<s:textfield name="retrievePatient.patientId" label="PatientID"
 				readonly="true" />
 			<s:textfield name="retrievePatient.patientName" label="Patient Name"
@@ -51,22 +62,24 @@
 			<s:textarea name="retrievePatient.allergy" label="Allergy" cols="40"
 				rows="10" readonly="true" />
 		</table>
-		<br>
-		Operation Status:
-		<s:property value="operationStatus" />
+
 		<br>
 
-		<s:if test='#session.CurrentUser.roleType=="D"&&retrievePatient!=null'>
-			<s:a href="visitation/createVisitation.action">Create New Visitation</s:a>
-		</s:if>
-		
-		<s:if test='#session.CurrentUser.roleType=="N"&&retrievePatient!=null'>
-			<s:a href="appointment/toCreateAppointmentPage.action">Create New Appointment</s:a>
-		</s:if>
-		
+		<table align="center">
+			<s:if
+				test='#session.CurrentUser.roleType=="D"&&retrievePatient!=null'>
+				<s:a href="visitation/createVisitation.action">Create New Visitation</s:a>
+			</s:if>
+
+			<s:if
+				test='#session.CurrentUser.roleType=="N"&&retrievePatient!=null'>
+				<s:a href="appointment/toCreateAppointmentPage.action">Create New Appointment</s:a>
+			</s:if>
+		</table>
+
 		<br>
 		<s:if test="patientVisitation!=null">
-			<table border="1">
+			<table border="1" align="center">
 				<tr>
 					<td>
 						VisitationDate
@@ -75,7 +88,7 @@
 						Doctor
 					</td>
 					<td>
-					    View
+						View
 					</td>
 				</tr>
 				<s:iterator value="patientVisitation">
@@ -87,7 +100,8 @@
 							<s:property value="doctor.firstName" />
 						</td>
 						<td>
-						    <a href="<s:url value='/visitation/searchVisitation.action'>
+							<a
+								href="<s:url value='/visitation/searchVisitation.action'>
                             <s:param name="visitationId" value="visitationId"/>  
                             </s:url>">View</a>
 						</td>
@@ -95,8 +109,5 @@
 				</s:iterator>
 			</table>
 		</s:if>
-
-
-
 	</body>
 </html>

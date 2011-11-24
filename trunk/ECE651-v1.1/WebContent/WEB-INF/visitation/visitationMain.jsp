@@ -8,56 +8,78 @@
    
   <body>
   <br> 
-     <a href="<s:url value='patient/searchForViewPatient.action'>
+  <table>
+     <tr>
+     <td><a href="<s:url value='patient/searchForViewPatient.action'>
         <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-        </s:url>">Back to View Patient Page</a>  
+        </s:url>">Back to View Patient Page</a> </td>
       <s:if test="visitation.appointment!=null">
-        <a href="<s:url value='appointment/searchForViewPatient.action'>
-        <s:param name="healthCardID" value="visitation.patient.healthCardId"/>  
-        </s:url>">Back to View Patient Page</a> 
+       <td><a href="<s:url value='appointment/searchAppointmentFromVisitation.action'>
+        <s:param name="searchType" value="#session.AppointmentSearchType"/>  
+        <s:param name="searchContent" value="%{visitation.appointment.appointmentId}"/>
+        </s:url>">Back to Appointment Page</a></td>
       </s:if>
+      </tr>
+   </table>
    
-   <h2>Visitation</h2><br>
-    <table border="1">
-      <s:form action="editVisitation" method="post" namespace="/visitation">
+   <s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+   <s:form action="editVisitation" method="post" namespace="/visitation">
+    <table border="1" align="center">
+     <caption>VISITATION</caption> 
  		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>
  		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
  		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
- 		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Firstname" readonly="true" />
+ 		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Name" readonly="true" />
    		<s:textfield value="%{visitation.visitationDate}" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
- 		<s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
- 		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
-           <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" />
- 		   <s:submit value="Update"/>
- 		</s:if>
- 		<s:else>
- 		   <s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
-           <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
- 		</s:else>
-   	  </s:form>
-
+ 		<s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10"/>
+        <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" />
+ 		   <s:submit value="Update"/>	  	 
    	</table>
-   	    <br>
-		Operation Status:
-		<s:property value="operationStatus" />
-		<br>	
+   	 </s:form>
+   	</s:if>
+   	
+   	<s:else>
+   	  <table border="1" align="center">
+   	    <caption>VISITATION</caption>
+<!-- 		<s:textfield value="%{visitation.visitationId}" label="Visitation ID" readonly="true"/>-->
+ 		<s:textfield value="%{visitation.patient.patientName}" label="Patient Name" readonly="true" />
+ 		<s:textfield value="%{visitation.patient.healthCardId}" label="Patient HealthCard ID" readonly="true" />
+ 		<s:textfield value="%{visitation.doctor.firstName}" label="Doctor Name" readonly="true" />
+   		<s:textfield value="%{visitation.visitationDate}" label="Visitation Date" displayFormat="yyyy-MM-dd" readonly="true"/> 
+ 		<s:textarea name="visitation.symptomDescription" label="Symptom" cols="40" rows="10" readonly="true"/>
+        <s:textarea name="visitation.diagnosisResult" label="Diagnosis Result" cols="40" rows="10" readonly="true"/>
+   	</table>
+   	</s:else>
+	
+       <table align="center">
+       <tr>
+		<td>Operation Status:</td>
+		<td><s:property value="operationStatus" /></td>
+		</tr>
+	   </table>
+	   
     <hr><br> 
     
     <s:if test='#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
-       	<s:form action="createDiagnosisTest" method="post" namespace="/diagnosistest">
+     <s:form action="createDiagnosisTest" method="post" namespace="/diagnosistest">
+      <table align="center">
+      <caption>Issue New Diagnosis Test</caption>
+       <tr>
 			<s:select label="Select Test Type" name="diagnosisTest.testType"
 						headerKey="1" headerValue="-- Please Select --" value=""
 						list="#{'B UltraSound':'B UltraSound','Blood Test':'Blood Test','Urine Test':'Urine Test','X Ray':'X Ray',
-                                'CT Scan':'CT Scan'}" /><tr>
+                                'CT Scan':'CT Scan'}" /><td>
 			<s:token name="token"></s:token>
-			<tr>
+			
 				<s:submit value="Create New DiagnosisTest" /><td>
 			</tr>
-		</s:form>
+	</table>
+	</s:form>
 	</s:if>
 	
 		<s:if test="visitation.diagnosisTestSet!=null&&visitation.diagnosisTestSet.size()>0">
-			<table border="1" >
+			<table border="1" align="center">
+			<caption>View DiagnosisTest</caption>
 				<tr>
 					<td>Test Type</td>
 					<td>Issue Doctor</td>
@@ -79,34 +101,38 @@
 				</s:iterator>
 			</table>
 		</s:if>
-		
-		
-    <hr><br> 
-    <s:if test='visitation.prescription==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
-       <hr><br> 
-       <s:a href="prescription/createPrescription.action" >Issue Prescription</s:a> 
+	<hr><br> 
+	<table align="center">	
+	<caption>Treatments</caption>
+	<tr>
+	<td>Prescription</td>
+     <s:if test='visitation.prescription==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
+        <td><p style="text-align:center;"><s:a href="prescription/createPrescription.action" >Issue</s:a></p></td>
     </s:if>
     <s:elseif test="visitation.prescription!=null">
-        <hr><br> 
-        <a href="<s:url value='prescription/searchPrescription.action'>
+        <td><p style="text-align:center;"><a href="<s:url value='prescription/searchPrescription.action'>
 						    <s:param name="prescriptionId" value="#session.CurrentVisitation.prescription.prescriptionId"/>  
-                            </s:url>">View Prescription</a>
+                            </s:url>">View</a></p></td>
     </s:elseif>
+    </tr>
+    <tr>
+    <td>Surgery</td>
     <s:if test='visitation.surgery==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
-       <hr><br>
-       <s:a href="surgery/createSurgery.action" >Issue Surgery</s:a> 
+       <td><p style="text-align:center;"><s:a href="surgery/createSurgery.action" >Issue</s:a></p></td>
     </s:if>
     <s:elseif test ="visitation.surgery!=null">
-      <hr><br>
-      <s:a href="surgery/searchSurgery.action" >View Surgery</s:a> 
+      <td><p style="text-align:center;"><s:a href="surgery/searchSurgery.action" >View</s:a></p></td>
     </s:elseif> 
-     <s:if test='visitation.inpatient==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>
-       <hr><br>      
-       <s:a href="inpatient/createInpatient.action" >Issue Inpatient</s:a>
+    </tr>
+    <tr>
+    <td>Inpatient</td>
+     <s:if test='visitation.inpatient==null&&#session.CurrentUser.username==#session.CurrentVisitation.doctor.username'>     
+       <td><p style="text-align:center;"><s:a href="inpatient/createInpatient.action" >Issue</s:a></p></td>
      </s:if>
-      <hr><br>
      <s:elseif test="visitation.inpatient!=null">
-       <s:a href="inpatient/searchInpatient.action" >View Inpatient</s:a>
-     </s:elseif>    		
+       <td><p style="text-align:center;"><s:a href="inpatient/searchInpatient.action" >View</s:a></p></td>
+     </s:elseif>
+     <tr>    
+     </table>	 		
   </body>
 </html>

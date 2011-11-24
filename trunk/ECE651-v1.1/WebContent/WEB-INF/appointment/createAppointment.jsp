@@ -18,7 +18,8 @@
     <br/><br/>
   
     <s:form name="getDoctorsForm" action="getDoctors" namespace="/appointment" method="post">
-       <table>
+       <table align="center">
+       <caption>Retrieve Doctor</caption>
        <s:textfield name="doctorSelected" value="%{doctorSelected}" label="Doctor ID" readOnly="true" required="true" />
        <s:hidden name="currentPatientID" value="%{currentPatientID}" />
        <s:hidden name="currentPatientHC" value="%{currentPatientHC}" />
@@ -27,7 +28,8 @@
     </s:form>
     
     <s:if test='retrieveDoctors!=null'>
-       	  <table border="1">
+       	  <table border="1" align="center">
+       	  <caption>Select Doctor</caption>
 	      <tr>
 			<td>Doctor ID</td>
 			<td>First Name</td>
@@ -47,9 +49,9 @@
 	     </table>
     </s:if>
     
-  	<s:form name="createAppointmentForm" action="createAppointment" method="post" namespace="/appointment" onsubmit="">
-  	    <p>Create New Appointment</p>
-  	    <table border="1">
+  	<s:form name="createAppointmentForm" action="createAppointment" method="post" namespace="/appointment">
+  	    <table border="1" align="center">
+  	    <caption>Create New Appointment</caption>
   	    <s:hidden name="doctorSelected" value="%{doctorSelected}" />
  		<s:textfield value="%{currentSystemUserID}" label="Nurse ID" readOnly="true" required="true" />
  		<s:textfield name="currentPatientID" value="%{currentPatientID}" label="Patient ID" readOnly="true" required="true" />

@@ -7,9 +7,9 @@
     <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body> 
-  	<s:form name="createSystemUserForm" action="createSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
-  	    <p>Create New System User</p>
-  	    <table border="1">
+  	<s:form name="createSystemUserForm" action="createSystemUserAction" method="post" namespace="/systemuser">
+  	    <table border="1" align="center">
+  	    <caption>Create New System User</caption>
  		<s:textfield name="systemUser.username" label="User Name" required="true" />
  		<s:textfield name="systemUser.firstName" label="First Name" required="true" />
  		<s:textfield name="systemUser.lastName" label="Last Name" required="true" />

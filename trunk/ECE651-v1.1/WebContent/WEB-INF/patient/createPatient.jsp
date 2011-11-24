@@ -8,9 +8,9 @@
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body> 
-  	<s:form name="createPatientForm" action="createPatient" method="post" namespace="/patient" onsubmit="">
-  	<h2>Create New Patient</h2>
- 		<table border="1">
+  	<s:form name="createPatientForm" action="createPatient" method="post" namespace="/patient">
+ 		<table border="1" align="center">
+ 		<caption>Create New Patient</caption>
  		<s:textfield name="patient.patientName" label="First Name" required="true" />
  		<s:radio list="#{'1':'male' ,'0': 'female'}" name="patient.gender" value="1" label="Gender"/>
    		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/> 
