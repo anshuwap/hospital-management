@@ -6,14 +6,16 @@
 <html>
    <jsp:include page="/WEB-INF/mis/LawyerMenuHeader.jsp"/>
    
-  <br><br>
+   <br><br>
   <s:form action="searchForViewPatient" method="post" namespace="/patient">
-    <table>
+    <table align="center">
+    <caption>Search For Patients</caption>
       <tr>
         <td>HealthCardID: </td>
 		<td><s:textfield name="healthCardID" theme="simple"/></td>
 		<td><s:submit value="Search" theme="simple"/></td>
-	  </tr> 
+	  </tr>
 	</table>
   </s:form>
+  
 </html>
