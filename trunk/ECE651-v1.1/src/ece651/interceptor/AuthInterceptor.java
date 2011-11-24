@@ -32,8 +32,7 @@ public class AuthInterceptor extends AbstractInterceptor {
 			return Action.LOGIN;  
 		}else{
 			log.info(user.getUsername() + " authentication check ok");
-			MDC.remove("USER_ID");
-			MDC.put("USER_ID", user.getUsername()==null? "": user.getUsername());
+			MDC.put("USER_ID", user.getUsername());
 			String result = invocation.invoke();			
 			return result;
 		}		
