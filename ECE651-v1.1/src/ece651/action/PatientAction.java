@@ -19,7 +19,6 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 	private Patient patient;
 	private String healthCardID;
 	private Patient retrievePatient;
-	private String roleName;
 	private String patientBirthday;
 	private String operationStatus;
 	private ArrayList<Visitation> patientVisitation;
@@ -40,14 +39,6 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 
 	public void setHealthCardID(String healthCardID) {
 		this.healthCardID = healthCardID;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
 	}
 
 	public Patient getRetrievePatient() {
@@ -165,7 +156,6 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			else
 				retrievePatient.setGender("0");
 			this.setOperationStatus("Search Patient: Found.");
-			roleName = (String) session.get("Role");
 			healthCardID = null;
 			session.put("CurrentPatient", retrievePatient); 
 			return SUCCESS;
@@ -234,18 +224,6 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			return "Exception Happened"+e.getMessage();		
 		}		
 		return resultVisitationList;
-	}
-	
-
-	public String BackToMainPage(){
-		
-		roleName = (String) session.get("Role");
-		if (!roleName.isEmpty()){
-		return SUCCESS;
-		}
-		else {
-			return ERROR;
-		}
 	}
 }
 

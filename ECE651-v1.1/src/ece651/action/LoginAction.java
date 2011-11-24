@@ -17,6 +17,7 @@ public class LoginAction extends ActionSupport implements SessionAware{
 	private static final long serialVersionUID = 6066592355639005936L;
 	private Map<String, Object> session;
 	private SystemUser user;
+	private String roleName;
 	private String nextActionName;
 	private String errorMessage;
 	
@@ -26,6 +27,14 @@ public class LoginAction extends ActionSupport implements SessionAware{
 
 	public void setUser(SystemUser user) {
 		this.user = user;
+	}
+	
+	public String getRoleName() {
+		return roleName.toUpperCase();
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public Map<String, Object> getSession() {
@@ -177,5 +186,16 @@ public class LoginAction extends ActionSupport implements SessionAware{
 			session.remove("CurrentUser");
 		}
 		return SUCCESS;		
+	}
+	
+	public String BackToMainPage(){
+		
+		roleName = (String) session.get("Role");
+		if (!roleName.isEmpty()){
+		return SUCCESS;
+		}
+		else {
+			return ERROR;
+		}
 	}
 }
