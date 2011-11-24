@@ -29,7 +29,7 @@
   	</s:form>
   </s:elseif>
   
-  <s:if test='retrieveAppointments!=null || retrieveAppointments.size()>0'>
+  <s:if test='retrieveAppointments!=null && retrieveAppointments.size()>0'>
    <s:if test='retrieveAppointments.size()==1'>
       <s:form name="editAppointmentForm" action="editAppointment" method="post" namespace="/appointment">
         <p>Nurse:</p>

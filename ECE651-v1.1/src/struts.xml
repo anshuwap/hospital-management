@@ -50,7 +50,7 @@
  			<result>/WEB-INF/nurse/nurseMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action>
- 		<action name="DOCTOR">
+ 		<action name="DOCTOR" class="ece651.action.AppointmentAction" method="InitDoctorMainPage">
  			<result>/WEB-INF/doctor/doctorMain.jsp</result> 			
  			<interceptor-ref name="authStack"></interceptor-ref>
  		</action>
