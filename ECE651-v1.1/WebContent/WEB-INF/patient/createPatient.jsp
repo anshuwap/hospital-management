@@ -13,7 +13,7 @@
  		<caption>Create New Patient</caption>
  		<s:textfield name="patient.patientName" label="First Name" required="true" />
  		<s:radio list="#{'1':'male' ,'0': 'female'}" name="patient.gender" value="1" label="Gender"/>
-   		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/> 
+   		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd" require="true"/> 
  		<s:textfield name="patient.healthCardId" label="HealthCard ID" required="true"/>
  		<s:textarea name="patient.medication" label="Medication" cols="40" rows="10"/>
         <s:textarea name="patient.allergy" label="Allergy" cols="40" rows="10"/>
