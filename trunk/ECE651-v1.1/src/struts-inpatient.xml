@@ -14,6 +14,10 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>	
+			
 		<action name="createInpatient" class="ece651.action.InpatientAction" method="CreateInpatient">
 			<result name="success" type="dispatcher">/WEB-INF/inpatient/inpatientMain.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/visitation/visitationMain.jsp</result>

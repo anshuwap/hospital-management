@@ -14,6 +14,10 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+				
 		<action name="createInpatientDairy" class="ece651.action.InpatientDairyAction" method="CreateInpatientDairy">
 			<result name="success" type="dispatcher">/WEB-INF/inpatientdairy/inpatientdairyMain.jsp</result>
 			<result name="error" type="dispatcher">WEB-INF/inpatient/inpatientMain.jsp</result>
