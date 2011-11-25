@@ -74,25 +74,25 @@
 							value="%{retrieveAppointments[0].status}"
 							list="#{'A':'Active', 'X':'Cancelled', 'V':'Visited'}"
 							label="Status" required="true" />
+						<tr>
+						<td align="right">
 						<s:if test='#session.CurrentUser.roleType=="D"&&visitation==null'>
-							<a
-								href="<s:url value='visitation/createVistationFromAppointment.action'>
+							<a href="<s:url value='visitation/createVistationFromAppointment.action'>
 						    <s:param name="appointmentId" value="%{retrieveAppointments[0].appointmentId}"/> 
-                            </s:url>">Create
-								New Visitaiton</a>
+                            </s:url>">Create New Visitaiton</a>
 						</s:if>
 						<s:elseif test="visitation!=null">
-							<a
-								href="<s:url value='visitation/searchVisitation.action'>
+							<a href="<s:url value='visitation/searchVisitation.action'>
 						    <s:param name="visitationId" value="visitation.visitationId"/>   
-                            </s:url>">View
-								Visitation</a>
+                            </s:url>">View Visitation</a>
 						</s:elseif>
+						</td>
+						<td align="left">
 						<s:if test='isEdit==true'>
-							<tr>
 								<s:submit value="Update" theme="simple" />
-							</tr>
 						</s:if>
+						</td>
+						</tr>
 					</table>
 				</s:form>
 			</s:if>
