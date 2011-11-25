@@ -7,7 +7,7 @@
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
   <body> 
-		<s:form action="searchForViewPatient" method="post"
+		<s:form action="searchForEditPatient" method="post"
 			namespace="/patient">
 			<table align="center">
 				<tr>
