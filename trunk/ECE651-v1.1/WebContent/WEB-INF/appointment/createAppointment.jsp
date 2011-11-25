@@ -64,6 +64,12 @@
         </table>
 	 </s:form>
 
-Operation Status: <s:property value="operationStatus"/><br>
+<table align="center">
+  <tr>
+    <td>Operation Status: <s:property value="operationStatus"/></td>
+  </tr>
+</table>
+
+<br>
   </body>
 </html>

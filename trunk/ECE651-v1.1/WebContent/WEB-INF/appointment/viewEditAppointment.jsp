@@ -169,7 +169,7 @@
 
 		<hr><br>
  <table align="center">
-<tr><td><s:property value="operationStatus"/></td></tr>
+<s:property value="operationStatus"/>
 </table>
   
   </body>
