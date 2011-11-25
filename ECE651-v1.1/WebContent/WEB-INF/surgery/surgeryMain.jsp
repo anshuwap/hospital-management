@@ -31,7 +31,7 @@
 					displayFormat="yyyy-MM-dd" readonly="true" />
 				<s:textarea name="surgery.arrangementDescription"
 					label="Surgery Arrangement" cols="40" rows="10" readonly="true" />
-				<s:textfield name="surgery.nurse" label="Arranged Nurse" readonly="true"/>	
+				<s:textfield name="surgery.nurse.firstName" label="Arranged Nurse" readonly="true"/>	
 				<s:textarea name="surgery.surgerySummary" label="Surgery Summary"
 					cols="40" rows="10" readonly="true" />
 				<s:textfield name="surgery.surgetyDoctor.firstName"
@@ -77,7 +77,7 @@
 						displayFormat="yyyy-MM-dd" readonly="true" />
 					<s:textarea name="surgery.arrangementDescription"
 						label="Surgery Arrangement" cols="40" rows="10" readonly="true" />
-					<s:textfield name="surgery.nurse" label="Arranged Nurse" readonly="true"/>	
+					<s:textfield name="surgery.nurse.firstName" label="Arranged Nurse" readonly="true"/>	
 					<s:textarea name="surgery.surgerySummary" label="Surgery Summary"
 						cols="40" rows="10" />
 					<s:token name="token"></s:token>
