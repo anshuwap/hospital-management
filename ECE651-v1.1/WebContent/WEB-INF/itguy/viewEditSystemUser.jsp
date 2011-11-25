@@ -69,7 +69,7 @@
    </s:else>
 </s:if>
  
-Operation Status: <s:property value="operationStatus"/><br>
+<table align="center">Operation Status: <s:property value="operationStatus"/></table><br>
 
 </body>
 </html>
