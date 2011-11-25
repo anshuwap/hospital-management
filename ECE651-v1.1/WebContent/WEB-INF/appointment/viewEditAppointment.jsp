@@ -65,10 +65,10 @@
 							value="%{retrieveAppointments[0].appointmentDate.toString()}"
 							label="Date" displayFormat="yyyy-MM-dd" required="true" />
 						<s:select name="appointment.startTime"
-							value="%{retrieveAppointments[0].startTime}" label="Start Time"
+							value="%{retrieveAppointments[0].startTime.substring(0, 5)}" label="Start Time"
 							list="timeMap" required="true" />
 						<s:select name="appointment.endTime"
-							value="%{retrieveAppointments[0].endTime}" label="End Time"
+							value="%{retrieveAppointments[0].endTime.substring(0, 5)}" label="End Time"
 							list="timeMap" required="true" />
 						<s:select name="appointment.status"
 							value="%{retrieveAppointments[0].status}"
@@ -153,13 +153,11 @@
 								<s:property value="status" />
 							</td>
 							<td>
-								<a
-									href="<s:url value='/appointment/searchAppointment.action'>
+								<a href="<s:url value='/appointment/searchAppointment.action'>
 								<s:param name="searchType">appID</s:param> 
 								<s:param name="searchAll">false</s:param> 
 	                            <s:param name="searchContent" value="appointmentId" />
-	                            </s:url>">View<s:if
-										test='isEdit==true'>/Edit</s:if>
+	                            </s:url>">View<s:if test='isEdit==true'>/Edit</s:if>
 								</a>
 							</td>
 						</tr>
