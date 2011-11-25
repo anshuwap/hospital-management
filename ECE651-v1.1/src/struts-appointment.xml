@@ -14,6 +14,10 @@
 			</interceptor-stack>
 		</interceptors>
 		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>	
+			
 		<action name="createAppointment" class="ece651.action.AppointmentAction" method="CreateAppointment">
 			<result name="success" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/appointment/createAppointment.jsp</result>

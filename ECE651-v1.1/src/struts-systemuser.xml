@@ -13,7 +13,11 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-
+		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+		
 		<action name="createSystemUserAction" class="ece651.action.CachedSystemUserAction" method="CreateSystemUser">
 			<result name="success" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
 			<result name="error" type="dispatcher">/WEB-INF/itguy/createSystemUser.jsp</result>
