@@ -24,7 +24,7 @@
 			label="Issued Doctor Name" readonly="true" /><tr>
 		<s:textfield name="diagnosisTest.issueDate" label="Issued Date"
 			readonly="true" /><tr>		
-	    <s:textfield name="diagnosisTest.testType" label="Test Type" readonly="true" readonly="true"/><tr>
+	    <s:textfield name="diagnosisTest.testType" label="Test Type" readonly="true" /><tr>
         <s:if test="diagnosisTest.nurse!=null">
         <s:textfield name="diagnosisTest.nurse.firstName"
 				label="Test Operation Nurse" readonly="true" /><tr>
@@ -54,7 +54,7 @@
 							readonly="true" />
 					<tr>
 						<s:textfield name="diagnosisTest.testType" label="Test Type"
-							readonly="true" readonly="true" />
+							readonly="true" />
 					<tr>
 					<s:if test="diagnosisTest.nurse!=null">
 					 <s:textfield name="diagnosisTest.nurse.firstName"
