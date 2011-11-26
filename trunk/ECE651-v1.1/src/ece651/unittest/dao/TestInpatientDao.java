@@ -1,4 +1,4 @@
-package ece651.test.dao;
+package ece651.unittest.dao;
 
 import java.sql.Date;
 import junit.framework.TestCase;
