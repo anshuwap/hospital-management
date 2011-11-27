@@ -110,6 +110,7 @@
         
         <s:if test="currentInpatientDairySet!=null">
 			<table border="1" align="center">
+			<caption>Inpatient Dairies</caption>
 				<tr>
 					<td>
 						Record Nurse
