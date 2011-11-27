@@ -105,6 +105,13 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 				else
 					patient.setGender("M");
 				patient.setHealthCardId(patient.getHealthCardId().toLowerCase());
+
+				SystemUser user = (SystemUser) session.get("CurrentUser");
+				if (null!=user){
+					patient.setLastUpdtUser(user.getUsername());
+				}
+				patient.setVersion(1);
+				
 			  patientDao.savePatient(patient);
 		  }catch (Exception e){
 			//String errorInfo =  + e.getCause().toString();
@@ -177,6 +184,11 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 			else
 				retrievePatient.setGender("F");
 			retrievePatient.setHealthCardId(retrievePatient.getHealthCardId().toLowerCase());
+			
+			SystemUser user = (SystemUser) session.get("CurrentUser");
+			if (null!=user){
+				retrievePatient.setLastUpdtUser(user.getUsername());
+			}
 			
 			patientDao.updatePatient(retrievePatient);
 		}catch (Exception e){
