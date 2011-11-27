@@ -13,5 +13,6 @@
 		<property name="healthCardId" column="HealthCardId"/>
 		<property name="medication" column="Medication"/>
 		<property name="allergy" column="Allergy"/>	
+		<property name="lastUpdtUser" column="LastUpdtUser"/>	
 	</class>
 </hibernate-mapping>
