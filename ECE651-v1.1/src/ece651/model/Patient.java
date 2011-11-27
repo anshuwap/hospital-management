@@ -15,6 +15,7 @@ public class Patient implements Serializable{
 	private String healthCardId;
 	private String medication;
 	private String allergy;
+	private String lastUpdtUser;
 	private Integer version;
 	public Integer getPatientId() {
 		return patientId;
@@ -58,6 +59,12 @@ public class Patient implements Serializable{
 	public void setAllergy(String allergy) {
 		this.allergy = allergy;
 	}
+	public String getLastUpdtUser() {
+		return lastUpdtUser;
+	}
+	public void setLastUpdtUser(String lastUpdtUser) {
+		this.lastUpdtUser = lastUpdtUser;
+	}
 	public Integer getVersion() {
 		return version;
 	}
@@ -77,6 +84,8 @@ public class Patient implements Serializable{
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		result = prime * result
 				+ ((healthCardId == null) ? 0 : healthCardId.hashCode());
+		result = prime * result
+				+ ((lastUpdtUser == null) ? 0 : lastUpdtUser.hashCode());
 		result = prime * result
 				+ ((medication == null) ? 0 : medication.hashCode());
 		result = prime * result
@@ -115,6 +124,11 @@ public class Patient implements Serializable{
 				return false;
 		} else if (!healthCardId.equals(other.healthCardId))
 			return false;
+		if (lastUpdtUser == null) {
+			if (other.lastUpdtUser != null)
+				return false;
+		} else if (!lastUpdtUser.equals(other.lastUpdtUser))
+			return false;
 		if (medication == null) {
 			if (other.medication != null)
 				return false;
@@ -142,8 +156,9 @@ public class Patient implements Serializable{
 		return "Patient [patientId=" + patientId + ", patientName="
 				+ patientName + ", gender=" + gender + ", birthday=" + birthday
 				+ ", healthCardId=" + healthCardId + ", medication="
-				+ medication + ", allergy=" + allergy + ", version=" + version
-				+ "]";
+				+ medication + ", allergy=" + allergy + ", lastUpdtUser="
+				+ lastUpdtUser + ", version=" + version + "]";
 	}
+	
 
 }
