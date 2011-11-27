@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="ece651.model.AuditTrail" table="AuditTrail" >
+		<id name="auditId" column="auditId" unsaved-value="0">
+			<generator class="native"/>
+		</id>
+		<property name="tableName" column="tableName"/>
+		<property name="actionType" column="actionType"/>
+		<property name="oldVersion" column="oldVersion"/>
+		<property name="newVersion" column="newVersion"/>
+		<property name="tableKey" column="tableKey"/>
+		<property name="columnName" column="columnName"/>	
+		<property name="oldValue" column="oldValue"/>
+		<property name="newValue" column="newValue"/>
+		<property name="dbUser" column="dbUser"/>
+		<property name="lastUpdtUser" column="lastUpdtUser"/>
+		<property name="time" column="time"/>	
+	</class>
+</hibernate-mapping>
