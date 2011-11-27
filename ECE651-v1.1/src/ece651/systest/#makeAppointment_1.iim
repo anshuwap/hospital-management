@@ -1,0 +1,21 @@
+﻿VERSION BUILD=7511734
+TAB T=1
+TAB CLOSEALLOTHERS
+URL GOTO=http://localhost:8080/ECE651-v1.1/
+TAG POS=1 TYPE=INPUT:TEXT FORM=ID:login ATTR=ID:login_user_username CONTENT=chenli
+TAG POS=1 TYPE=INPUT:PASSWORD FORM=ID:login ATTR=ID:login_user_password CONTENT=0ZPVvrRSrxKDboXk0crHAmzHQGpKDEPmuCKHwJW6LJsfWNqV9VDpou9uPEvFM42il6wnAGBNvxX627Vyat+0Nw==
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:login ATTR=ID:login_0&&VALUE:Login
+TAG POS=1 TYPE=A ATTR=TXT:View<SP>Patient
+TAG POS=1 TYPE=INPUT:TEXT FORM=ID:searchForViewPatient ATTR=ID:searchForViewPatient_healthCardID CONTENT=OHIP888
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:searchForViewPatient ATTR=ID:searchForViewPatient_0&&VALUE:Search
+TAG POS=1 TYPE=A ATTR=TXT:Create<SP>New<SP>Appointment
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:getDoctors ATTR=ID:getDoctors_0&&VALUE:Choose<SP>doctor
+TAG POS=1 TYPE=A ATTR=TXT:select
+TAG POS=1 TYPE=IMG FORM=ID:createAppointment ATTR=SRC:http://localhost:8080/ECE651-v1.1/struts/dojo/src/widget/templates/images/dateI*
+TAG POS=29 TYPE=TD ATTR=CLASS:currentMonth
+TAG POS=1 TYPE=SELECT FORM=ID:createAppointment ATTR=ID:createAppointment_appointment_startTime CONTENT=%"08:30"
+TAG POS=1 TYPE=SELECT FORM=ID:createAppointment ATTR=ID:createAppointment_appointment_endTime CONTENT=%"12:00"
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:createAppointment ATTR=ID:createAppointment_0&&VALUE:Create
+TAG POS=1 TYPE=A ATTR=TXT:View<SP>Appointments
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:searchAppointment ATTR=ID:searchAppointment_searchAll&&VALUE:View<SP>all<SP>appointments
+WAIT SECONDS=10
