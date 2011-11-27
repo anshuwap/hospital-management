@@ -32,6 +32,7 @@
  		<table border="1" align="center">
  		<caption>Edit Patient</caption>
  		<s:textfield name="retrievePatient.patientId" label="PatientID (ReadOnly)" readonly="true"/>
+ 		<s:textfield name="retrievePatient.version" label="Version (ReadOnly)" readonly="true"/>
  		<s:textfield name="retrievePatient.patientName" label="First Name" required="true" />
  		<s:radio list="#{'1':'male' ,'0': 'female'}" name="retrievePatient.gender" label="Gender"/>
    		<s:textfield name="patientBirthday" label="Patient Birthday (Format:yyyy-mm-dd)" displayFormat="yyyy-MM-dd"/> 
