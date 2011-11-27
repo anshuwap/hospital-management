@@ -2,15 +2,16 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="ece651.model.Patient" table="Patient" >
+	<class name="ece651.model.Patient" table="Patient" optimistic-lock="version">
 		<id name="patientId" column="PatientId" unsaved-value="0">
 			<generator class="native"/>
 		</id>
+		<version name="version" column="Version"/>
 		<property name="patientName" column="PatientName"/>
 		<property name="gender" column="Gender"/>
 		<property name="birthday" column="Birthday"/>
 		<property name="healthCardId" column="HealthCardId"/>
 		<property name="medication" column="Medication"/>
-		<property name="allergy" column="Allergy"/>
+		<property name="allergy" column="Allergy"/>	
 	</class>
 </hibernate-mapping>
