@@ -53,5 +53,7 @@
 	<mapping resource="ece651/model/Appointment.hbm.xml" />
 	<mapping resource="ece651/model/Visitation.hbm.xml" />
 	<mapping resource="ece651/model/VisitationDependant.hbm.xml" />
+	<mapping resource="ece651/model/AuditTrail.hbm.xml" />
+	
 </session-factory>
 </hibernate-configuration>
