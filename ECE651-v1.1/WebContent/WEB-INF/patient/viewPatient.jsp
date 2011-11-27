@@ -33,6 +33,8 @@
 			</caption>
 			<s:hidden name="retrievePatient.patientId" label="PatientID"
 				readonly="true" />
+			<s:textfield name="retrievePatient.version" label="Version (ReadOnly)" readonly="true"/>
+			<s:textfield name="retrievePatient.lastUpdtUser" label="LastUpdtUser (ReadOnly)" readonly="true"/>
 			<s:textfield name="retrievePatient.patientName" label="Patient Name"
 				readonly="true" />
 			<s:if test="retrievePatient==null">
