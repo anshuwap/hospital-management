@@ -15,6 +15,7 @@ public class Patient implements Serializable{
 	private String healthCardId;
 	private String medication;
 	private String allergy;
+	private Integer version;
 	public Integer getPatientId() {
 		return patientId;
 	}
@@ -57,6 +58,12 @@ public class Patient implements Serializable{
 	public void setAllergy(String allergy) {
 		this.allergy = allergy;
 	}
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -76,6 +83,7 @@ public class Patient implements Serializable{
 				+ ((patientId == null) ? 0 : patientId.hashCode());
 		result = prime * result
 				+ ((patientName == null) ? 0 : patientName.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
 	@Override
@@ -122,6 +130,11 @@ public class Patient implements Serializable{
 				return false;
 		} else if (!patientName.equals(other.patientName))
 			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
 		return true;
 	}
 	@Override
@@ -129,8 +142,8 @@ public class Patient implements Serializable{
 		return "Patient [patientId=" + patientId + ", patientName="
 				+ patientName + ", gender=" + gender + ", birthday=" + birthday
 				+ ", healthCardId=" + healthCardId + ", medication="
-				+ medication + ", allergy=" + allergy + "]";
+				+ medication + ", allergy=" + allergy + ", version=" + version
+				+ "]";
 	}
-	
 
 }
