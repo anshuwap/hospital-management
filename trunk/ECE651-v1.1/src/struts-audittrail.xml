@@ -1,0 +1,30 @@
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+		<package name="audittrail" extends="struts-default"  namespace="/audittrail">
+		<interceptors>
+			<interceptor name="authInterceptor" class="ece651.interceptor.AuthInterceptor"></interceptor>            
+			<interceptor name="timer" class="com.opensymphony.xwork2.interceptor.TimerInterceptor"></interceptor>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authInterceptor"></interceptor-ref>				
+				<interceptor-ref name="timer"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>	
+			
+		
+		<action name="searchAuditTrailByPatientAndTable" class="ece651.action.AuditTrailAction" method ="SearchAuditTrailByPatientAndTable">
+		    <result name="success" type="dispatcher">/WEB-INF/patient/viewAuditTrail.jsp</result>
+		    <result name="error" type="dispatcher">/WEB-INF/patient/viewAuditTrail.jsp</result>
+			<interceptor-ref name="authStack"></interceptor-ref>
+		</action>
+			
+		
+		</package>
+</struts>

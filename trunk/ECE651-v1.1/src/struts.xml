@@ -13,6 +13,7 @@
 	<include file="struts-systemuser.xml"/>
 	<include file="struts-visitation.xml"/>
 	<include file="struts-inpatientdairy.xml"/>
+	<include file="struts-audittrail.xml"/>
 
 	<package name="HmsPackage" extends="struts-default" namespace="/">
 		<interceptors>
