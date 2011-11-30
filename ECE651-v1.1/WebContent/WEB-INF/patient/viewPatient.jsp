@@ -77,6 +77,11 @@
 				test='#session.CurrentUser.roleType=="N"&&retrievePatient!=null'>
 				<s:a href="appointment/toCreateAppointmentPage.action">Create New Appointment</s:a>
 			</s:if>
+			
+			<s:if test='#session.CurrentUser.roleType=="L"&&retrievePatient!=null'>
+			    <s:a href="audittrail/searchAuditTrailByPatientAndTable.action">View Patient Revision History</s:a>
+			</s:if>
+			
 		</table>
 
 		<br>
