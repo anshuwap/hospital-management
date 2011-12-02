@@ -20,10 +20,8 @@
 					<td>
 						<s:submit value="Search" theme="simple" />
 					</td>
-					<td>
-					     <s:property value="operationStatus" />
-					</td>
 				</tr>
+				<tr><td><s:property value="operationStatus" /></td></tr>
 			</table>
 		</s:form>
 		
@@ -46,7 +44,6 @@
  		</table> 		
 	 </s:form>
  <hr> 
- Operation Status: <s:property value="operationStatus"/><br>
 
 </body>
 </html>

@@ -7,6 +7,7 @@
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
 
 <body> 
+<s:debug> </s:debug>
 <s:form name="searchSystemUserForm" action="searchSystemUserAction" method="post" namespace="/systemuser" onsubmit="">
   <s:token name="token"></s:token>
   <table align="center">
