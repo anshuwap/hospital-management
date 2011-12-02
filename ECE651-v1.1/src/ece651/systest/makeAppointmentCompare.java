@@ -37,7 +37,7 @@ public class makeAppointmentCompare extends JFrame {
 		AppointmentDao appointmentdao = new AppointmentDaoImpl();
 		
 		try {
-			appointmentList = appointmentdao.searchAppListbyDidAndDate(1, "2011-11-30");
+			appointmentList = appointmentdao.searchAppListbyDidAndDate(1, "2011-12-30");
 		} catch (DAOException e) {
 			e.printStackTrace();
 		}finally{
