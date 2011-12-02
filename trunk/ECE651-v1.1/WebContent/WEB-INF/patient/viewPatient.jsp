@@ -19,14 +19,17 @@
 					<td>
 						<s:submit value="Search" theme="simple" />
 					</td>
-					<td>
-					     <s:property value="operationStatus" />
-					</td>
+					
 				</tr>
 			</table>
 		</s:form>
+		<table align="center">
+		<tr>
+		   <td><s:property value="operationStatus" /></td>
+		</tr>
+		</table>
 
-		<br>
+		<hr><br> 
 		<table border="1" align="center">
 			<caption>
 				Patient Information
