@@ -21,9 +21,12 @@
 						<s:submit value="Search" theme="simple" />
 					</td>
 				</tr>
-				<tr><td><s:property value="operationStatus" /></td></tr>
 			</table>
 		</s:form>
+		
+		<table align="center">
+		<tr><td><s:property value="operationStatus" /></td></tr>
+		</table>
 		
  <hr><br>                 
   <s:form name="editPatientForm" action="editPatient" method="post" namespace="/patient">
