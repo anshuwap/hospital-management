@@ -4,8 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-
 import junit.framework.TestCase;
 
 import ece651.dao.AppointmentDaoImpl;

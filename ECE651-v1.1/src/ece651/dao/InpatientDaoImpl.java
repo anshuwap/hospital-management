@@ -15,11 +15,13 @@ public class InpatientDaoImpl implements InpatientDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -30,6 +32,7 @@ public class InpatientDaoImpl implements InpatientDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public void saveInpatient(Inpatient inpatient) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -43,6 +46,7 @@ public class InpatientDaoImpl implements InpatientDao {
 		}
 	}
 
+	@Override
 	public Inpatient searchInpatient(int inpatientId)
 			throws DAOException {
 		Inpatient inpatient;
@@ -54,6 +58,7 @@ public class InpatientDaoImpl implements InpatientDao {
 		return inpatient;
 	}
 
+	@Override
 	public void updateInpatient(Inpatient inpatient) throws DAOException {
 		Transaction tran = null;
 		try{

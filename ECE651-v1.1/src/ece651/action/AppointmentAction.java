@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.sql.Date;
-import java.sql.Time;
-
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -75,6 +73,7 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return tempUser.getRoleType().compareTo("N") == 0 ? true : false; //Only Nurse can edit appointment
 	}
 	
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -83,6 +82,7 @@ public class AppointmentAction extends ActionSupport implements SessionAware, Re
 		return session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 	}

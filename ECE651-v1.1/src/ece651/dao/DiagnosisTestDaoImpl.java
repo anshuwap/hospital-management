@@ -21,11 +21,13 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -36,6 +38,7 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public DiagnosisTest searchDiagnosisTest(int diagnosisTestId, int visitationId)
 			throws DAOException {
 		DiagnosisTest diagnosisTest;
@@ -50,6 +53,7 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 		return diagnosisTest;
 	}
 
+	@Override
 	public void updateDiagnosisTest(DiagnosisTest diagnosisTest)
 			throws DAOException {
 		Transaction tran = null;
@@ -64,11 +68,12 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 		}
 	}
 
+	@Override
 	public synchronized void saveDiagnosisTest(DiagnosisTest diagnosisTest)
 			throws DAOException {
 		
 		int maxDiagId = 0;
-		SQLQuery sql = (SQLQuery) session
+		SQLQuery sql = session
 			.createSQLQuery("select max(Diag.DiagnosisTestId) as maxId from DiagnosisTest as Diag where Diag.VisitationId=?");
 		sql.setInteger(0, diagnosisTest.getVisitationId());
 		if(null!=sql.list()&&null!=sql.list().get(0)){
@@ -88,6 +93,7 @@ public class DiagnosisTestDaoImpl implements DiagnosisTestDao {
 		}
 	}
 
+	@Override
 	public synchronized void saveDiagnosisTest_(DiagnosisTest diagnosisTest)
 			throws DAOException {
 

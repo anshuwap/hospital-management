@@ -17,11 +17,13 @@ public class AuditTrailDaoImpl implements AuditTrailDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();

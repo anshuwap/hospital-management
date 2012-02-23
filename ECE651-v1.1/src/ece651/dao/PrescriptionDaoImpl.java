@@ -15,11 +15,13 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -30,6 +32,7 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public void savePrescription(Prescription prescription) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -43,6 +46,7 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 		}
 	}
 
+	@Override
 	public Prescription searchPrescription(int prescriptionId)
 			throws DAOException {
 		Prescription prescription;
@@ -54,6 +58,7 @@ public class PrescriptionDaoImpl implements PrescriptionDao {
 		return prescription;
 	}
 
+	@Override
 	public void updatePrescription(Prescription prescription)
 			throws DAOException {
 		Transaction tran = null;

@@ -15,11 +15,13 @@ public class SurgeryDaoImpl implements SurgeryDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -30,6 +32,7 @@ public class SurgeryDaoImpl implements SurgeryDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public void saveSurgery(Surgery surgery) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -43,6 +46,7 @@ public class SurgeryDaoImpl implements SurgeryDao {
 		}
 	}
 
+	@Override
 	public Surgery searchSurgery(int surgeryId) throws DAOException {
 		Surgery surgery;
 		try{
@@ -53,6 +57,7 @@ public class SurgeryDaoImpl implements SurgeryDao {
 		return surgery;
 	}
 
+	@Override
 	public void updateSurgery(Surgery surgery) throws DAOException {
 		Transaction tran = null;
 		try{

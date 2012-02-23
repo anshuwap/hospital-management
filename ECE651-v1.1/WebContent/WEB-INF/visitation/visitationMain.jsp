@@ -7,6 +7,7 @@
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
    
   <body>
+  <s:debug></s:debug>
   <br> 
   <table width="300">
      <tr>

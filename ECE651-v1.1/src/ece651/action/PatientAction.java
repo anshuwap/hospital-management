@@ -81,10 +81,12 @@ public class PatientAction extends ActionSupport implements SessionAware, Reques
 		this.patientVisitation = patientVisitation;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		

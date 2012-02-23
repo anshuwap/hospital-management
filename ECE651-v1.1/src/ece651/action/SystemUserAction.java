@@ -51,6 +51,7 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 		isSearchAll = searchAll.compareTo("View all users") == 0 ? true : false;
 	}
 	
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -59,6 +60,7 @@ public class SystemUserAction extends ActionSupport implements SessionAware, Req
 		return session;
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;	
 	}

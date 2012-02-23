@@ -200,7 +200,7 @@ public class TestSystemUserDao extends TestCase {
 		expectLastCall().andReturn(tran);
 		tran.begin();
 		expectLastCall();
-		session.delete((SystemUser) notNull());
+		session.delete(notNull());
 		expectLastCall();
 		tran.commit();
 		expectLastCall().andThrow(new HibernateException("mockTest"));

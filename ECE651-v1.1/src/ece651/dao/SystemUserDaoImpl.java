@@ -23,11 +23,13 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		this.session = session;
 	}
 
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -38,6 +40,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public SystemUser searchUserBySystemUserId(int SystemUserId)
 			throws DAOException {
 		SystemUser user;
@@ -50,6 +53,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		return user;
 	}
 
+	@Override
 	public SystemUser searchUserByUsername(String Username) throws DAOException {
 		SystemUser user = null;
 		try{
@@ -65,6 +69,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		return user;
 	}
 
+	@Override
 	public List<SystemUser> SearchUserByRole(String roleType) throws DAOException {
 		List<SystemUser> userList = new ArrayList<SystemUser>();
 		try{
@@ -77,6 +82,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		return userList;
 	}
 	
+	@Override
 	public List<SystemUser> searchAllUser() throws DAOException {
 		List<SystemUser> userList = new ArrayList<SystemUser>();
 		try{
@@ -88,6 +94,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		return userList;
 	}
 	
+	@Override
 	public void saveUser (SystemUser user) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -101,6 +108,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 	}
 	
+	@Override
 	public void updateUser(SystemUser user) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -114,6 +122,7 @@ public class SystemUserDaoImpl implements SystemUserDao {
 		}
 	}
 	
+	@Override
 	public void deleteUser(SystemUser user) throws DAOException {
 		Transaction tran = null;
 		try{

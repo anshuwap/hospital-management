@@ -5,16 +5,10 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
-import sun.org.mozilla.javascript.internal.Context;
-import sun.org.mozilla.javascript.internal.ContextAction;
-
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import ece651.dao.AuditTrailDao;
 import ece651.dao.AuditTrailDaoImpl;
-import ece651.dao.DiagnosisTestDao;
-import ece651.dao.DiagnosisTestDaoImpl;
 import ece651.model.AuditTrail;
 import ece651.model.Patient;
 
@@ -81,6 +75,7 @@ public class AuditTrailAction extends ActionSupport implements SessionAware {
 	}
 
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 		

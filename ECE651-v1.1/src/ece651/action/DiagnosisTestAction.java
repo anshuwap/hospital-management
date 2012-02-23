@@ -1,7 +1,5 @@
 package ece651.action;
 
-import java.util.ArrayList;
-import java.sql.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -11,8 +9,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import ece651.dao.DiagnosisTestDao;
 import ece651.dao.DiagnosisTestDaoImpl;
-import ece651.dao.VisitationDao;
-import ece651.dao.VisitationDaoImpl;
 import ece651.model.DiagnosisTest;
 import ece651.model.SystemUser;
 import ece651.model.Visitation;
@@ -20,9 +16,6 @@ import ece651.model.Visitation;
 public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		RequestAware {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Map<String, Object> session;
 	private Map<String, Object> request;
@@ -64,10 +57,12 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 		this.diagnosisTest = diagnosisTest;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		
@@ -152,9 +147,7 @@ public class DiagnosisTestAction extends ActionSupport implements SessionAware,
 			finally{
 				diagnosisTestDao.cleanup();
 			}	
-
 			return SUCCESS;
-
 	}
 	
 	
