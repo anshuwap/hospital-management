@@ -18,11 +18,13 @@ public class VisitationDaoImpl implements VisitationDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -33,6 +35,7 @@ public class VisitationDaoImpl implements VisitationDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public Visitation searchVisitation(int visitationId) throws DAOException {
 		Visitation visitation;
 		try{
@@ -43,6 +46,7 @@ public class VisitationDaoImpl implements VisitationDao {
 		return visitation;
 	}
 
+	@Override
 	public void saveVisitation(Visitation visitation) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -56,6 +60,7 @@ public class VisitationDaoImpl implements VisitationDao {
 		}
 	}
 
+	@Override
 	public void updateVisitation(Visitation visitation) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -69,6 +74,7 @@ public class VisitationDaoImpl implements VisitationDao {
 		}
 	}
 	
+	@Override
 	public List<Visitation> searchVisitListBypId(int patiendId)throws DAOException {
 		List<Visitation> visitList = new ArrayList<Visitation>();
 		try {
@@ -82,6 +88,7 @@ public class VisitationDaoImpl implements VisitationDao {
 	}
 
 
+	@Override
 	public Visitation searchVisitListByAppId(int appointmentId) throws DAOException{
 	Visitation visit = null;
 	try {

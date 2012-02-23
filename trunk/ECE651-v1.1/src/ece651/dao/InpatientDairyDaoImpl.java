@@ -21,11 +21,13 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -36,11 +38,12 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 		this.session = HibernateUtil.getSessionFactory().openSession(); 
 	}
 
+	@Override
 	public synchronized void saveInpatientDairy(InpatientDairy inpatientDairy)
 			throws DAOException {
 		
 		int maxInpdId = 0;
-		SQLQuery sql = (SQLQuery) session
+		SQLQuery sql = session
 			.createSQLQuery("select max(Inp.InpatientDairyId) from InpatientDairy as Inp where Inp.InpatientId=?");
 		sql.setInteger(0, inpatientDairy.getInpatientId());
 		if(null!=sql.list()&&null!=sql.list().get(0)){
@@ -60,6 +63,7 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 		}
 	}
 
+	@Override
 	public InpatientDairy searchInpatientDairy(int inpatientDairyId,
 			int inpatientId) throws DAOException {
 		InpatientDairy inpatientDairy;
@@ -74,6 +78,7 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 		return inpatientDairy;
 	}
 
+	@Override
 	public void updateInpatientDairy(InpatientDairy inpatientDairy)
 			throws DAOException {
 		Transaction tran = null;
@@ -88,6 +93,7 @@ public class InpatientDairyDaoImpl implements InpatientDairyDao {
 		}
 	}
 
+	@Override
 	public synchronized void saveInpatientDairy_(InpatientDairy inpatientDairy)
 			throws DAOException {
 		

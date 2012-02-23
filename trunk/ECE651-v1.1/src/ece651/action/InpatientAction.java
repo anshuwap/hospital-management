@@ -70,10 +70,12 @@ public class InpatientAction extends ActionSupport implements SessionAware,
 		this.currentInpatientDairySet = currentInpatientDairySet;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		

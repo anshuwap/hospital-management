@@ -18,11 +18,13 @@ public class PatientDaoImpl implements PatientDao {
 	
 	private Session session; 
 	
+	@Override
 	public Session getSession()
 	{
 		return this.session;
 	}
 
+	@Override
 	public void cleanup(){
 		if (session != null) session.close();
 		//HibernateUtil.shutdown();
@@ -34,6 +36,7 @@ public class PatientDaoImpl implements PatientDao {
 	}
 
 
+	@Override
 	public Patient searchPatient(int patientId) throws DAOException {
 		Patient patient;
 		try{
@@ -44,6 +47,7 @@ public class PatientDaoImpl implements PatientDao {
 		return patient;
 	}
 	
+	@Override
 	public Patient searchPatientByHId(String healthCardId) throws DAOException {
 		Patient patient = null;
 		try{
@@ -59,6 +63,7 @@ public class PatientDaoImpl implements PatientDao {
 		return patient;
 	}
 	
+	@Override
 	public List<Patient> searchAllPatient() throws DAOException {
 		List<Patient> patientList = new ArrayList<Patient>();
 		try{
@@ -70,6 +75,7 @@ public class PatientDaoImpl implements PatientDao {
 		return patientList;
 	}
 	
+	@Override
 	public void savePatient(Patient patient) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -83,6 +89,7 @@ public class PatientDaoImpl implements PatientDao {
 		}
 	}
 
+	@Override
 	public void deletePatient(Patient patient) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -96,6 +103,7 @@ public class PatientDaoImpl implements PatientDao {
 		}
 	}
 
+	@Override
 	public void updatePatient(Patient patient) throws DAOException {
 		Transaction tran = null;
 		try{
@@ -109,6 +117,7 @@ public class PatientDaoImpl implements PatientDao {
 		}
 	}
 
+	@Override
 	public Patient searchPatient(String healthCardID) throws DAOException {
 		Patient patient = null;
 		try{

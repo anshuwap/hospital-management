@@ -1,10 +1,7 @@
 package ece651.action;
 
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.Map;
-import java.util.Set;
-
 import org.apache.struts2.interceptor.RequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -12,17 +9,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import ece651.dao.InpatientDairyDao;
 import ece651.dao.InpatientDairyDaoImpl;
-import ece651.dao.InpatientDao;
-import ece651.dao.InpatientDaoImpl;
-import ece651.dao.PrescriptionDao;
-import ece651.dao.PrescriptionDaoImpl;
-import ece651.dao.SystemUserDao;
-import ece651.dao.SystemUserDaoImpl;
 import ece651.model.Inpatient;
 import ece651.model.InpatientDairy;
-import ece651.model.Prescription;
 import ece651.model.SystemUser;
-import ece651.model.Visitation;
 
 public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		RequestAware {
@@ -67,10 +56,12 @@ public class InpatientDairyAction extends ActionSupport implements SessionAware,
 		this.inpatientId = inpatientId;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		

@@ -8,12 +8,8 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import ece651.dao.PrescriptionDao;
-import ece651.dao.PrescriptionDaoImpl;
 import ece651.dao.SurgeryDao;
 import ece651.dao.SurgeryDaoImpl;
-import ece651.model.Patient;
-import ece651.model.Prescription;
 import ece651.model.Surgery;
 import ece651.model.SystemUser;
 import ece651.model.Visitation;
@@ -51,10 +47,12 @@ public class SurgeryAction extends ActionSupport implements SessionAware,
 		this.surgeryDate = surgeryDate;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		

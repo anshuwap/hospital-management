@@ -7,7 +7,8 @@
 
   <jsp:include page="/WEB-INF/mis/MainHeader.jsp"/>
   
-  <body> 
+  <body>
+  <s:debug></s:debug> 
   	<s:form name="createPatientForm" action="createPatient" method="post" namespace="/patient">
  		<table border="1" align="center">
  		<caption>Create New Patient</caption>

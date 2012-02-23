@@ -1,6 +1,5 @@
 package ece651.action;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.RequestAware;
@@ -8,13 +7,9 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import ece651.dao.DiagnosisTestDao;
-import ece651.dao.DiagnosisTestDaoImpl;
 import ece651.dao.PrescriptionDao;
 import ece651.dao.PrescriptionDaoImpl;
-import ece651.model.DiagnosisTest;
 import ece651.model.Prescription;
-import ece651.model.SystemUser;
 import ece651.model.Visitation;
 
 public class PrescriptionAction extends ActionSupport implements SessionAware,
@@ -50,10 +45,12 @@ public class PrescriptionAction extends ActionSupport implements SessionAware,
 		this.prescriptionId = prescriptionId;
 	}
 
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;
 		

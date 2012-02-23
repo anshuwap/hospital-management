@@ -10,7 +10,6 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import ece651.dao.*;
 import ece651.model.*;
 import ece651.services.SystemUserService;
 
@@ -52,6 +51,7 @@ public class CachedSystemUserAction extends ActionSupport implements SessionAwar
 		isSearchAll = searchAll.compareTo("View all users") == 0 ? true : false;
 	}
 	
+	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;	
 	}
@@ -60,6 +60,7 @@ public class CachedSystemUserAction extends ActionSupport implements SessionAwar
 		return session;
 	}
 	
+	@Override
 	public void setRequest(Map<String, Object> request) {
 		this.request = request;	
 	}

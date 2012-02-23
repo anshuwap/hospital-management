@@ -6,6 +6,7 @@ import ece651.model.SystemUser;
 
 public class UserComparator implements Comparator<Object> {
 
+	@Override
 	public int compare(Object arg0, Object arg1) {
 		SystemUser user0 = (SystemUser) arg0;
 		SystemUser user1 = (SystemUser) arg1;
